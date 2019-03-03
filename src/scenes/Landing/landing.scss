@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
+// colors
+$color-title:	#fff;
+
+// fonts
+$font-title: 'Quicksand', sans-serif;
+
+.landing-page {
+	position: relative;
+  min-height: 100vh;
+  overflow-x: hidden;
+
+  &:before {
+		content: '';
+    display: block;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(43,45,59,.9);
+    opacity: 0;
+    transition: opacity .3s ease;
+    z-index: -999;
+  }
+
+	.bg-wrap {
+		background-image: url("img/landing-users.png");
+		-webkit-animation: sidedownscroll 30s linear infinite;
+    animation: sidedownscroll 30s linear infinite;
+
+    &:before {
+    	content: '';
+	    display: block;
+	    position: absolute;
+	    top: 0;
+	    right: 0;
+	    bottom: 0;
+	    left: 0;
+	    background-color: rgba(255,94,58,.95);
+	    opacity: 1;
+	    z-index: auto;
+    }
+   }
+
+   &-wrap {
+   		min-height: 100vh;
+   		display: flex;
+   		align-items: center;
+   }
+}
+
+.bg-wrap {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	animation: slide 50s linear infinite;
+  will-change: background-position;
+}
+
+.landing-content {
+	color: $color-title;
+	font-family: $font-title;
+
+	&-title {
+		font-size: 35px;
+		margin-bottom: 20px;
+	}
+
+	p {
+		font-size: 16px;
+	}
+
+}
+
+@keyframes sidedownscroll {
+	0% {
+		background-position: 0 0;
+	}
+
+	100% {
+		background-position: -2000px 2000px;
+	}
+} 

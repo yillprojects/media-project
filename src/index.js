@@ -5,6 +5,8 @@ import { AppContainer } from 'react-hot-loader';
 
 import Routes from './Routes';
 
+import './styles.scss';
+
 ReactDOM.render(
   <AppContainer>
     <Routes />
