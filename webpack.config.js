@@ -8,15 +8,12 @@ const port = process.env.PORT || 3000;
 module.exports = {
   entry: ['react-hot-loader/patch', './src/index.js'],
   output: {
-    path: path.join(__dirname,'build'),
+    path: path.join(__dirname,'public'),
     filename: 'index.bundle.js'
   },
   mode: process.env.NODE_ENV || 'development',
   resolve: {
     modules: [path.resolve(__dirname, 'src'), 'node_modules']
-  },
-  devServer: {
-    contentBase: path.join(__dirname,'src')
   },
   module: {
     rules: [
@@ -47,6 +44,7 @@ module.exports = {
   ],
 
   devServer: {
+    contentBase: path.join(__dirname,'src'),
     host: 'localhost',
     port: port,
     historyApiFallback: true,
