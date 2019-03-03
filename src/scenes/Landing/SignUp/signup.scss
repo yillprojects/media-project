@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan');
+
+// colors
+$main-link: #000;
+$active-link: rgb(255,94,58);
+
+// fonts
+$font-links: 'Baloo Bhaijaan', cursive;
+
+.nav {
+	&-item {
+		flex-grow: 1;
+	}
+
+	&-link {
+		text-align: center;
+		text-transform: uppercase;
+		font-family: $font-links;
+		color: $main-link;
+
+		&.active {
+			color: $active-link !important;
+		}
+	}
+}
