@@ -40,6 +40,7 @@ export default class SignUp extends Component {
                   this.toggle('1');
                 }}
               >
+
                 Register
               </NavLink>
             </NavItem>
@@ -50,6 +51,7 @@ export default class SignUp extends Component {
                   this.toggle('2');
                 }}
               >
+
                 Login
               </NavLink>
             </NavItem>

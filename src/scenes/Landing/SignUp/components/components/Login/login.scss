@@ -1,12 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
+// colors
+$text-color: #777;
+$secondary-color: rgb(255, 94, 58);
+
+// fonts
+$text-font: 'Quicksand', sans-serif;
+
 .form-label-group {
   position: relative;
   margin-bottom: 1rem;
+
+  &:not(:first-of-type) {
+    margin-bottom: 2.5rem;
+  }
 }
 
 .form-label-group > input,
 .form-label-group > label {
   height: 3.125rem;
-  padding: .75rem;
+  padding: 0.75rem;
 }
 
 .form-label-group > label {
@@ -15,14 +28,14 @@
   left: 0;
   display: block;
   width: 100%;
-  margin-bottom: 0; 
+  margin-bottom: 0;
   line-height: 1.5;
   color: #495057;
   pointer-events: none;
-  cursor: text; 
+  cursor: text;
   border: 1px solid transparent;
-  border-radius: .25rem;
-  transition: all .1s ease-in-out;
+  border-radius: 0.25rem;
+  transition: all 0.1s ease-in-out;
 }
 
 .form-label-group input::placeholder {
@@ -31,14 +44,14 @@
 
 .form-label-group input:not(:placeholder-shown) {
   padding-top: 1.25rem;
-  padding-bottom: .25rem;
+  padding-bottom: 0.25rem;
 }
 
 .form-label-group input:not(:placeholder-shown) ~ label {
-  padding-top: .25rem;
-  padding-bottom: .25rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
   font-size: 12px;
-  color: #777;
+  color: $text-color;
 }
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
@@ -46,6 +59,39 @@
     display: none;
   }
   .form-label-group input:-ms-input-placeholder {
-    color: #777;
+    color: $text-color;
+  }
+}
+
+.form-check {
+  padding-left: 2rem !important;
+
+  &-input {
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    margin-top: 0 !important;
+    margin-left: -2rem !important;
+  }
+}
+
+.tab-section {
+  .reset-password {
+    a:hover {
+      color: $secondary-color;
+      transition: 0.2s;
+    }
+
+    @media (min-width: 576px) {
+      text-align: end;
+    }
+  }
+
+  .color-link {
+    color: $text-color;
+    font-size: 15px;
+    margin-bottom: 10px;
+    font-family: $text-font;
+    cursor: pointer;
   }
 }
