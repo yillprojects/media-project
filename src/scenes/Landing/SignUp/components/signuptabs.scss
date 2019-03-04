@@ -2,21 +2,20 @@
 
 // colors
 $bg-color: #fff;
-$secondary-color: rgb(255,94,58);
+$secondary-color: rgb(255, 94, 58);
 
 // fonts
 $font-title: 'Baloo Bhaijaan', cursive;
 
 .tab {
 	&-content {
-		min-height: 600px;
 		background-color: $bg-color;
 		border: 1px solid transparent;
-    border-bottom-left-radius: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
-        display: flex;
-    flex-direction: column;
-    justify-content: center;
+		border-bottom-left-radius: 0.25rem;
+		border-bottom-right-radius: 0.25rem;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 
 	&-pane {

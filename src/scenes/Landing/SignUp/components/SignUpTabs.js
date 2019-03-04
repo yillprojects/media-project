@@ -10,6 +10,11 @@ import './signuptabs.scss';
 export default class SignUpTabs extends Component {
   constructor(props) {
     super(props);
+    this.updateState = this.updateState.bind(this);
+  }
+
+  updateState(state = {}) {
+    this.props.update(state);
   }
 
   render() {
@@ -17,7 +22,7 @@ export default class SignUpTabs extends Component {
       <TabContent activeTab={this.props.activeTab}>
         <TabPane tabId="1" />
         <TabPane tabId="2">
-          <Login />
+          <Login update={this.updateState} />
         </TabPane>
       </TabContent>
     );
@@ -25,5 +30,6 @@ export default class SignUpTabs extends Component {
 }
 
 SignUpTabs.propTypes = {
+  update: PropTypes.func,
   activeTab: PropTypes.string
 };

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 
+import PropTypes from 'prop-types';
+
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { FaFacebookF, FaTwitter } from 'react-icons/fa';
 
 import './login.scss';
 
@@ -16,6 +19,7 @@ class Login extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.changeTab = this.changeTab.bind(this);
   }
 
   handleChange(event) {
@@ -28,6 +32,11 @@ class Login extends Component {
 
     this.setState({ submitted: true });
     const { username, password } = this.state;
+  }
+
+  changeTab(event) {
+    event.preventDefault();
+    this.props.update('1');
   }
 
   render() {
@@ -53,7 +62,7 @@ class Login extends Component {
               />
               <Label for="login-username">Username</Label>
             </FormGroup>
-            <FormGroup className="form-label-group">
+            <FormGroup className="form-label-group mb-4">
               <Input
                 type="password"
                 name="password"
@@ -67,7 +76,7 @@ class Login extends Component {
               <Label for="login-password">Password</Label>
             </FormGroup>
 
-            <div className="row">
+            <div className="row mb-4">
               <div className="col col-12 col-sm-6">
                 <FormGroup check>
                   <Label className="color-link" check>
@@ -76,9 +85,34 @@ class Login extends Component {
                 </FormGroup>
               </div>
               <div className="col col-12 col-sm-6 reset-password">
-                <a href="#" className="color-link">Forgot my password</a>
+                <a href="#" className="color-link">
+                  Forgot my password
+                </a>
               </div>
             </div>
+
+            <Button
+              className="tab-section-btn mb-4"
+              onClick={this.handleSubmit}
+            >
+              Login
+            </Button>
+            <div className="or" />
+            <Button className="tab-section-btn bg-facebook mb-2">
+              <FaFacebookF className="icon" />
+              Login with Facebook
+            </Button>
+            <Button className="tab-section-btn bg-twitter mb-3">
+              <FaTwitter className="icon" />
+              Login with Twitter
+            </Button>
+            <p className="tab-section-message">
+              Don’t you have an account?{' '}
+              <a href="" onClick={this.changeTab}>
+                Register Now!
+              </a>{' '}
+              it’s really simple and you can start enjoing all the benefits!
+            </p>
           </Form>
         </div>
       </div>
@@ -87,3 +121,7 @@ class Login extends Component {
 }
 
 export default Login;
+
+Login.propTypes = {
+  update: PropTypes.func
+};

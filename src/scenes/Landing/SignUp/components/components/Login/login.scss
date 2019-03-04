@@ -3,6 +3,8 @@
 // colors
 $text-color: #777;
 $secondary-color: rgb(255, 94, 58);
+$bg-facebook: #2f5b9d;
+$bg-twitter: #38bff1;
 
 // fonts
 $text-font: 'Quicksand', sans-serif;
@@ -12,7 +14,7 @@ $text-font: 'Quicksand', sans-serif;
   margin-bottom: 1rem;
 
   &:not(:first-of-type) {
-    margin-bottom: 2.5rem;
+    margin-bottom: 0;
   }
 }
 
@@ -93,5 +95,68 @@ $text-font: 'Quicksand', sans-serif;
     margin-bottom: 10px;
     font-family: $text-font;
     cursor: pointer;
+  }
+
+  &-btn {
+    width: 100%;
+
+    &.btn {
+      padding: 0.8rem 0.75rem;
+
+      &-secondary {
+        background-color: $secondary-color;
+        border-color: $secondary-color;
+        font-family: $text-font;
+        font-size: 15px;
+      }
+    }
+
+    &.bg {
+      &-facebook {
+        background-color: $bg-facebook;
+        border-color: $bg-facebook;
+      }
+
+      &-twitter {
+        background-color: $bg-twitter;
+        border-color: $bg-twitter;
+      }
+    }
+  }
+
+  .or {
+    position: relative;
+    width: 100%;
+    height: 1px;
+    margin: 1rem 0 2rem;
+    background-color: #e6ecf5;
+
+    &:after {
+      content: 'OR';
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 0 25px;
+      font-size: 10px;
+      z-index: 5;
+      color: $text-color;
+    }
+  }
+
+  .icon {
+    margin-right: 7px;
+    font-size: 17px;
+    margin-bottom: 3px;
+  }
+
+  &-message {
+    font-size: 14px;
+
+    a {
+      color: $secondary-color;
+    }
   }
 }
