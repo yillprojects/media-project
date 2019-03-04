@@ -17,7 +17,9 @@ export default class SignUp extends Component {
   }
 
   toggle(tab) {
-    if (this.state.activeTab !== tab) {
+    const { activeTab } = this.state;
+
+    if (activeTab !== tab) {
       this.setState({
         activeTab: tab
       });
@@ -25,34 +27,35 @@ export default class SignUp extends Component {
   }
 
   render() {
+    const { activeTab } = this.state;
+
     return (
       <div className="signup-section">
         <div className="inner">
-
-            <Nav tabs>
-              <NavItem>
-                <NavLink
-                  className={this.state.activeTab === '1' ? 'active' : ''}
-                  onClick={() => {
-                    this.toggle('1');
-                  }}
-                >
-                  Register
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink
-                  className={this.state.activeTab === '2' ? 'active' : ''}
-                  onClick={() => {
-                    this.toggle('2');
-                  }}
-                >
-                  Login
-                </NavLink>
-              </NavItem>
-            </Nav>
+          <Nav tabs>
+            <NavItem>
+              <NavLink
+                className={activeTab === '1' ? 'active' : ''}
+                onClick={() => {
+                  this.toggle('1');
+                }}
+              >
+                Register
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+                className={activeTab === '2' ? 'active' : ''}
+                onClick={() => {
+                  this.toggle('2');
+                }}
+              >
+                Login
+              </NavLink>
+            </NavItem>
+          </Nav>
         </div>
-        <SignUpTabs activeTab={this.state.activeTab} />
+        <SignUpTabs activeTab={activeTab} />
       </div>
     );
   }

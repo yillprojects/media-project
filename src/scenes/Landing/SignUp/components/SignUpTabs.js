@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { TabPane, TabContent } from 'reactstrap';
 
@@ -14,12 +15,15 @@ export default class SignUpTabs extends Component {
   render() {
     return (
       <TabContent activeTab={this.props.activeTab}>
-        <TabPane tabId="1">
-        </TabPane>
+        <TabPane tabId="1" />
         <TabPane tabId="2">
-        	<Login />
+          <Login />
         </TabPane>
       </TabContent>
     );
   }
 }
+
+SignUpTabs.propTypes = {
+  activeTab: PropTypes.string
+};
