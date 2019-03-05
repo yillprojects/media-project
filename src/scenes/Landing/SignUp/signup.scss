@@ -2,7 +2,9 @@
 
 // colors
 $main-link: #000;
-$active-link: rgb(255,94,58);
+$active-link: rgb(255, 94, 58);
+$secondary-color: #7c5ac2;
+
 
 // fonts
 $font-links: 'Baloo Bhaijaan', cursive;
@@ -17,9 +19,24 @@ $font-links: 'Baloo Bhaijaan', cursive;
 		text-transform: uppercase;
 		font-family: $font-links;
 		color: $main-link;
+		transition: .4s;
+
+		&:focus {
+			border-color: transparent !important;
+		}
+
+		&:hover {
+			border-color: transparent !important;
+			cursor: pointer;
+			color: white !important;
+		}
 
 		&.active {
 			color: $active-link !important;
 		}
+	}
+
+	&-tabs {
+		border-bottom: 0 !important;
 	}
 }

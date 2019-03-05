@@ -80,7 +80,7 @@ class Login extends Component {
               <div className="col col-12 col-sm-6">
                 <FormGroup check>
                   <Label className="color-link" check>
-                    <Input type="checkbox" /> Remember me
+                    <Input type="checkbox" value="1" check="checked"/> Remember me
                   </Label>
                 </FormGroup>
               </div>

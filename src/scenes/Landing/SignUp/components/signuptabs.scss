@@ -1,14 +1,15 @@
-@import url('https://fonts.googleapis.com/css?family=Baloo+Bhaijaan');
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
 
 // colors
 $bg-color: #fff;
 $secondary-color: rgb(255, 94, 58);
 
 // fonts
-$font-title: 'Baloo Bhaijaan', cursive;
+$font-title: 'Quicksand', sans-serif;
 
 .tab {
 	&-content {
+		min-height: 600px;
 		background-color: $bg-color;
 		border: 1px solid transparent;
 		border-bottom-left-radius: 0.25rem;
@@ -28,9 +29,9 @@ $font-title: 'Baloo Bhaijaan', cursive;
 
 		&-title {
 			text-align: center;
-			text-transform: uppercase;
 			font-family: $font-title;
 			margin-bottom: 30px;
+      font-weight: bold;
 
 			span {
 				color: $secondary-color;

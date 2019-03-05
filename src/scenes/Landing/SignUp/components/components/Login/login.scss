@@ -5,6 +5,7 @@ $text-color: #777;
 $secondary-color: rgb(255, 94, 58);
 $bg-facebook: #2f5b9d;
 $bg-twitter: #38bff1;
+$registration-color: #7c5ac2;
 
 // fonts
 $text-font: 'Quicksand', sans-serif;
@@ -13,7 +14,7 @@ $text-font: 'Quicksand', sans-serif;
   position: relative;
   margin-bottom: 1rem;
 
-  &:not(:first-of-type) {
+  &:last-of-type {
     margin-bottom: 0;
   }
 }
@@ -75,13 +76,44 @@ $text-font: 'Quicksand', sans-serif;
     margin-top: 0 !important;
     margin-left: -2rem !important;
   }
+
+  &-label {
+    a {
+      color: $secondary-color;
+    }
+  }
 }
 
 .tab-section {
+  &.registration {
+    .tab-section-btn {
+      &.btn {
+        &-secondary {
+          background-color: $registration-color;
+          border-color: $registration-color;
+
+          &:hover {
+            background-color: $registration-color;
+            border-color: $registration-color;
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+
+    .color-link {
+      margin-bottom: 0;
+    }
+  }
+
   .reset-password {
-    a:hover {
-      color: $secondary-color;
-      transition: 0.2s;
+    a {
+      color: $text-color;
+
+      &:hover {
+        color: $secondary-color;
+        transition: 0.3s;
+      }
     }
 
     @media (min-width: 576px) {
@@ -90,7 +122,6 @@ $text-font: 'Quicksand', sans-serif;
   }
 
   .color-link {
-    color: $text-color;
     font-size: 15px;
     margin-bottom: 10px;
     font-family: $text-font;
@@ -102,12 +133,19 @@ $text-font: 'Quicksand', sans-serif;
 
     &.btn {
       padding: 0.8rem 0.75rem;
+      font-size: 15px;
 
       &-secondary {
         background-color: $secondary-color;
         border-color: $secondary-color;
         font-family: $text-font;
-        font-size: 15px;
+        transition: 0.3s;
+
+        &:hover {
+          background-color: $secondary-color;
+          border-color: $secondary-color;
+          opacity: 0.8;
+        }
       }
     }
 
@@ -115,11 +153,23 @@ $text-font: 'Quicksand', sans-serif;
       &-facebook {
         background-color: $bg-facebook;
         border-color: $bg-facebook;
+
+        &:hover {
+          background-color: $bg-facebook;
+          border-color: $bg-facebook;
+          opacity: 0.75;
+        }
       }
 
       &-twitter {
         background-color: $bg-twitter;
         border-color: $bg-twitter;
+
+        &:hover {
+          background-color: $bg-twitter;
+          border-color: $bg-twitter;
+          opacity: 0.8;
+        }
       }
     }
   }
@@ -157,6 +207,12 @@ $text-font: 'Quicksand', sans-serif;
 
     a {
       color: $secondary-color;
+      transition: 0.3s;
+
+      &:hover {
+        color: $secondary-color;
+        opacity: 0.75;
+      }
     }
   }
 }

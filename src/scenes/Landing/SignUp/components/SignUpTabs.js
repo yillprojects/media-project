@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { TabPane, TabContent } from 'reactstrap';
 
 import Login from './components/Login/Login.js';
+import Register from './components/Register/Register.js';
 
 import './signuptabs.scss';
 
@@ -20,7 +21,9 @@ export default class SignUpTabs extends Component {
   render() {
     return (
       <TabContent activeTab={this.props.activeTab}>
-        <TabPane tabId="1" />
+        <TabPane tabId="1">
+          <Register />
+        </TabPane>
         <TabPane tabId="2">
           <Login update={this.updateState} />
         </TabPane>
