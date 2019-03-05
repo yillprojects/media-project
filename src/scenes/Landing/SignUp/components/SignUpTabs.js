@@ -15,12 +15,16 @@ export default class SignUpTabs extends Component {
   }
 
   updateState(state = {}) {
-    this.props.update(state);
+    const { update } = this.props;
+
+    update(state);
   }
 
   render() {
+    const { activeTab } = this.props;
+
     return (
-      <TabContent activeTab={this.props.activeTab}>
+      <TabContent activeTab={activeTab}>
         <TabPane tabId="1">
           <Register />
         </TabPane>

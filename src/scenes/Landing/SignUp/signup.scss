@@ -20,6 +20,7 @@ $font-links: 'Baloo Bhaijaan', cursive;
 		font-family: $font-links;
 		color: $main-link;
 		transition: .4s;
+		border: 0;
 
 		&:focus {
 			border-color: transparent !important;
@@ -33,6 +34,7 @@ $font-links: 'Baloo Bhaijaan', cursive;
 
 		&.active {
 			color: $active-link !important;
+			border: 0;
 		}
 	}
 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import {
+  Button, Form, FormGroup, Label, Input
+} from 'reactstrap';
 
 class Register extends Component {
   constructor(props) {
@@ -43,6 +45,8 @@ class Register extends Component {
       <div className="tab-section registration">
         <div className="container">
           <h2 className="tab-section-title">
+
+
             Register to our biggest social media!
           </h2>
 
@@ -91,10 +95,19 @@ class Register extends Component {
             </FormGroup>
             <FormGroup className="mb-4" check>
               <Label className="color-link" check>
-                <Input type="checkbox" /> I accept the{' '}
-                <a href="" className="color-link">
+                <Input type="checkbox" />
+                {' '}
+
+I accept the
+                {' '}
+                <a href="#" className="color-link">
+
+
                   Terms and Conditions
-                </a>{' '}
+                </a>
+                {' '}
+
+
                 of the website
               </Label>
             </FormGroup>
@@ -102,6 +115,8 @@ class Register extends Component {
               className="tab-section-btn"
               onClick={this.handleSubmit}
             >
+
+
               Complete Registration
             </Button>
           </Form>
