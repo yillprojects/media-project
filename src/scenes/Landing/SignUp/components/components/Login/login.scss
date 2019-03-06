@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
+// colors
+$text-color: #777;
+$secondary-color: rgb(255, 94, 58);
+$bg-facebook: #2f5b9d;
+$bg-twitter: #38bff1;
+$registration-color: #7c5ac2;
+
+// fonts
+$text-font: 'Quicksand', sans-serif;
+
+.form-label-group {
+  position: relative;
+  margin-bottom: 1rem;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
+
+.form-label-group > input,
+.form-label-group > label {
+  height: 3.125rem;
+  padding: 0.75rem;
+}
+
+.form-label-group > label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  margin-bottom: 0;
+  line-height: 1.5;
+  color: #495057;
+  pointer-events: none;
+  cursor: text;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  transition: all 0.1s ease-in-out;
+}
+
+.form-label-group input::placeholder {
+  color: transparent;
+}
+
+.form-label-group input:not(:placeholder-shown) {
+  padding-top: 1.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.form-label-group input:not(:placeholder-shown) ~ label {
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  font-size: 12px;
+  color: $text-color;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .form-label-group > label {
+    display: none;
+  }
+  .form-label-group input:-ms-input-placeholder {
+    color: $text-color;
+  }
+}
+
+.form-check {
+  padding-left: 2rem !important;
+
+  &-input {
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    margin-top: 0 !important;
+    margin-left: -2rem !important;
+  }
+
+  &-label {
+    a {
+      color: $secondary-color;
+    }
+  }
+}
+
+.tab-section {
+  &.registration {
+    .tab-section-btn {
+      &.btn {
+        &-secondary {
+          background-color: $registration-color;
+          border-color: $registration-color;
+
+          &:hover {
+            background-color: $registration-color;
+            border-color: $registration-color;
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+
+    .color-link {
+      margin-bottom: 0;
+    }
+  }
+
+  .reset-password {
+    a {
+      color: $text-color;
+
+      &:hover {
+        color: $secondary-color;
+        transition: 0.3s;
+      }
+    }
+
+    @media (min-width: 576px) {
+      text-align: end;
+    }
+  }
+
+  .color-link {
+    font-size: 15px;
+    margin-bottom: 10px;
+    font-family: $text-font;
+    cursor: pointer;
+  }
+
+  &-btn {
+    width: 100%;
+
+    &.btn {
+      padding: 0.8rem 0.75rem;
+      font-size: 15px;
+
+      &-secondary {
+        background-color: $secondary-color;
+        border-color: $secondary-color;
+        font-family: $text-font;
+        transition: 0.3s;
+
+        &:hover {
+          background-color: $secondary-color;
+          border-color: $secondary-color;
+          opacity: 0.8;
+        }
+      }
+    }
+
+    &.bg {
+      &-facebook {
+        background-color: $bg-facebook;
+        border-color: $bg-facebook;
+
+        &:hover {
+          background-color: $bg-facebook;
+          border-color: $bg-facebook;
+          opacity: 0.75;
+        }
+      }
+
+      &-twitter {
+        background-color: $bg-twitter;
+        border-color: $bg-twitter;
+
+        &:hover {
+          background-color: $bg-twitter;
+          border-color: $bg-twitter;
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+
+  .or {
+    position: relative;
+    width: 100%;
+    height: 1px;
+    margin: 1rem 0 2rem;
+    background-color: #e6ecf5;
+
+    &:after {
+      content: 'OR';
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 0 25px;
+      font-size: 10px;
+      z-index: 5;
+      color: $text-color;
+    }
+  }
+
+  .icon {
+    margin-right: 7px;
+    font-size: 17px;
+    margin-bottom: 3px;
+  }
+
+  &-message {
+    font-size: 14px;
+
+    a {
+      color: $secondary-color;
+      transition: 0.3s;
+
+      &:hover {
+        color: $secondary-color;
+        opacity: 0.75;
+      }
+    }
+  }
+}

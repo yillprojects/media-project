@@ -1,15 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
 import { AppContainer } from 'react-hot-loader';
 
-ReactDOM.render(
-   <AppContainer>
-  	<h1>Hello world!</h1>
-   </AppContainer>,
-  document.getElementById("root")
-);	
+import Routes from './Routes';
 
-if(module.hot){
-  module.hot.accept()
+import './styles.scss';
+
+ReactDOM.render(
+  <AppContainer>
+    <Routes />
+  </AppContainer>,
+  document.getElementById('root')
+);
+
+if (module.hot) {
+  module.hot.accept();
 }

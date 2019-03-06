@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
+
+// colors
+$bg-color: #fff;
+$secondary-color: rgb(255, 94, 58);
+
+// fonts
+$font-title: 'Quicksand', sans-serif;
+
+.tab {
+  &-content {
+    background-color: $bg-color;
+    border: 1px solid transparent;
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    @media (min-width: 992px) {
+      min-height: 630px;
+    }
+  }
+
+  &-pane {
+    height: inherit;
+  }
+
+  &-section {
+    height: inherit;
+    padding: 25px;
+
+    @media (min-width: 992px) {
+      padding: 35px;
+    }
+
+    &-title {
+      text-align: center;
+      font-family: $font-title;
+      margin-bottom: 30px;
+      font-weight: bold;
+
+      @media (max-width: 992px) {
+        margin-top: 5px;
+      }
+
+      span {
+        color: $secondary-color;
+      }
+    }
+  }
+}
