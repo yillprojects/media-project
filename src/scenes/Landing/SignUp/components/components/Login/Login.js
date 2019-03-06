@@ -49,7 +49,6 @@ class Login extends Component {
         <div className="container">
           <h2 className="tab-section-title">
 
-
             Welcome
             {' '}
             <span>back!</span>
@@ -88,8 +87,6 @@ class Login extends Component {
                   <Label className="color-link" check>
                     <Input type="checkbox" value="1" check="checked" />
                     {' '}
-
-
 Remember
                     me
                   </Label>
@@ -97,7 +94,6 @@ Remember
               </div>
               <div className="col col-12 col-sm-6 reset-password">
                 <a href="#" className="color-link">
-
 
                   Forgot my password
                 </a>
@@ -109,34 +105,27 @@ Remember
               onClick={this.handleSubmit}
             >
 
-
               Login
             </Button>
             <div className="or" />
             <Button className="tab-section-btn bg-facebook mb-2">
               <FaFacebookF className="icon" />
 
-
               Login with Facebook
             </Button>
             <Button className="tab-section-btn bg-twitter mb-3">
               <FaTwitter className="icon" />
 
-
               Login with Twitter
             </Button>
             <p className="tab-section-message">
 
-
               Don’t you have an account?
               {' '}
-              <button type="button" onClick={this.changeTab}>
-
-
+              <a href="#" onClick={this.changeTab}>
                 Register Now!
-              </button>
+              </a>
               {' '}
-
 
               it’s really simple and you can start enjoing all the benefits!
             </p>
