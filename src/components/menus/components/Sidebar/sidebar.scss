@@ -7,13 +7,32 @@ $color-border: #e6ecf5;
 
 .fixed-sidebar {
 	position: fixed;
-	z-index: 22;
+	z-index: 9999;
 	width: 70px;
 	min-height: 100vh;
 
 	@media (min-width: 769px) {
 		background-color: #fff;
 		box-shadow: 0 0 34px 0 rgba(63, 66, 87, 0.1);
+	}
+
+	.sidebar {
+		&-laptop {
+			.fixed-sidebar-header {
+				position: absolute;
+				z-index: 1;
+			}
+
+			@media (max-width: 768px) {
+				display: none;
+			}
+		}
+
+		&-mobile {
+			@media (min-width: 769px) {
+				display: none;
+			}
+		}
 	}
 
 	&-header {
@@ -65,7 +84,16 @@ $color-border: #e6ecf5;
 
 	.sidebar {
 		&-nav {
-			padding: 20px 0;
+			width: 70px;
+			padding: 90px 0 70px 0;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			overflow-y: scroll;
+
+			&::-webkit-scrollbar {
+				width: 0px;
+			}
 
 			&-link {
 				display: flex;
@@ -118,6 +146,10 @@ $color-border: #e6ecf5;
 }
 
 .fixed-sidebar-left {
+	&::-webkit-scrollbar {
+		width: 0px;
+	}
+
 	.ui-block-title {
 		margin: 15px 0;
 	}
@@ -150,11 +182,20 @@ $color-border: #e6ecf5;
 			padding-left: 12px;
 			font-size: 11px;
 		}
+
+		&:hover {
+			color: $color-secondary;
+		}
 	}
 
 	.sidebar-open {
 		background-color: transparent;
 		border: none;
+		transition: all 0.3s ease;
+
+		&:hover {
+			color: $color-secondary;
+		}
 	}
 
 	svg {
@@ -164,7 +205,15 @@ $color-border: #e6ecf5;
 	&.account-section {
 		.left-menu-title {
 			span {
+				transition: all 0.3s ease;
 				color: #000;
+				padding-bottom: 1px;
+			}
+
+			&:hover {
+				span {
+					color: $color-secondary;
+				}
 			}
 		}
 	}
@@ -175,7 +224,14 @@ $color-border: #e6ecf5;
 			padding: 10px 0 10px 25px;
 
 			span {
+				transition: all 0.3s ease;
 				padding-left: 0;
+			}
+
+			&:hover {
+				span {
+					color: $color-secondary;
+				}
 			}
 		}
 	}

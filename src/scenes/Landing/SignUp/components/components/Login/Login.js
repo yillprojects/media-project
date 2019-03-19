@@ -49,7 +49,7 @@ class Login extends Component {
             Welcome <span>back!</span>
           </h2>
 
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
             <FormGroup className="form-label-group">
               <Input
                 name="username"
