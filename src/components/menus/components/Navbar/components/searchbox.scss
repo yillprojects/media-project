@@ -1,35 +1,57 @@
 // colors
 $bg-searchbox: #494c62;
 $placeholder: #696d87;
+$color-secondary: rgb(255, 94, 58);
 
-.search-bar {
-  position: relative;
-  height: 70px;
-
-  input::placeholder {
-    color: $placeholder;
+.search-wrap {
+  height: inherit;
+  @media (min-width: 769px) {
+    width: 300px;
   }
 
-  input:hover::placeholder,
-  input:focus::placeholder {
-    transition: 0.3s;
-    color: #fff;
-  }
-
-  &.w-search {
-    background-color: $bg-searchbox;
-
+  .w-search {
     @media (max-width: 768px) {
       display: none;
     }
+  }
+
+  .m-search {
+    height: inherit;
+
+    @media (min-width: 769px) {
+      display: none;
+    }
+
+    &.open {
+      border-bottom: 5px solid $color-secondary;
+    }
 
     .search-bar-btn {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 100%;
-      width: 50px;
+      height: inherit;
 
+      svg {
+        vertical-align: baseline;
+        padding-top: 5px;
+      }
+    }
+  }
+
+  .search-bar {
+    position: relative;
+    width: inherit;
+    height: 70px;
+
+    input::placeholder {
+      color: $placeholder;
+    }
+
+    input:hover::placeholder,
+    input:focus::placeholder {
+      transition: 0.3s;
+      color: #fff;
+    }
+
+    &-btn {
       &.btn {
         font-size: 25px;
         padding: 10px;
@@ -58,56 +80,6 @@ $placeholder: #696d87;
           }
         }
       }
-
-      svg {
-        vertical-align: middle;
-        padding-bottom: 7px;
-        fill: $placeholder;
-      }
-    }
-  }
-
-  &-input {
-    &.form-control {
-      background-color: $bg-searchbox;
-      border: none;
-      border-radius: 0;
-      padding: 13px 15px;
-      font-size: 15px;
-      height: inherit;
-
-      &:focus {
-        background-color: $bg-searchbox;
-        border: none;
-        color: #fff;
-      }
-
-      &:not(:focus) {
-        color: #fff;
-      }
-    }
-
-    &.with-button {
-      padding-right: 50px;
-    }
-  }
-}
-
-.search-wrap {
-  width: 300px;
-
-  .search-bar {
-    position: relative;
-    height: 70px;
-
-    input::placeholder {
-      color: $placeholder;
-    }
-
-    input:hover::placeholder,
-    input:focus::placeholder {
-      transition: 0.3s;
-      color: #fff;
     }
 
     &.w-search {
@@ -119,35 +91,6 @@ $placeholder: #696d87;
         right: 0;
         height: 100%;
         width: 50px;
-
-        &.btn {
-          font-size: 25px;
-          padding: 10px;
-        }
-
-        &.btn-secondary {
-          background-color: transparent;
-          border-color: transparent;
-
-          &:not(:disabled):not(.disabled):active,
-          .btn-secondary:not(:disabled):not(.disabled).active,
-          .show > .btn-secondary.dropdown-toggle {
-            background-color: transparent;
-            border-color: transparent;
-          }
-
-          &:focus,
-          .btn-secondary:not(:disabled):active:focus {
-            box-shadow: none !important;
-          }
-
-          &:hover {
-            svg {
-              transition: 0.3s;
-              fill: #fff;
-            }
-          }
-        }
 
         svg {
           vertical-align: middle;
@@ -190,5 +133,12 @@ $placeholder: #696d87;
     &-item {
       padding: 20px 25px;
     }
+  }
+
+  .mobile-search-box {
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    right: 0;
   }
 }

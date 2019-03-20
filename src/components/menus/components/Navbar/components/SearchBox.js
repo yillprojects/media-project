@@ -64,9 +64,8 @@ class SearchBox extends Component {
 
     return (
       <div className="search-wrap">
-        <SearchLaptop handleInputChange={this.handleInputChange} />
-        <SearchMobile />
-        {query ? <Suggestions results={results} /> : ""}
+        <SearchLaptop handleInputChange={this.handleInputChange} query={query} results={results}/>
+        <SearchMobile handleInputChange={this.handleInputChange} query={query} results={results} />
       </div> 
     );
   }

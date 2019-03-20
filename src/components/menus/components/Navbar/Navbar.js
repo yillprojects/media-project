@@ -37,9 +37,11 @@ export default class NavbarMenu extends Component {
   render() {
     return (
       <Navbar light expand="md" fixed={`top`}>
-        <NavbarToggler onClick={this.toggle} />
-        {/*<Collapse isOpen={this.state.isOpen} navbar> */}
           <SearchBox />
+
+        {/*
+        <NavbarToggler onClick={this.toggle} />
+        <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar>
             <NavItem>
               <NavLink href="/components/">Components</NavLink>
@@ -61,7 +63,7 @@ export default class NavbarMenu extends Component {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-        {/* </Collapse> */}
+        </Collapse> */}
       </Navbar>
     );
   }
