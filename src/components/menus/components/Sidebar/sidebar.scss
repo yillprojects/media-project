@@ -4,6 +4,7 @@ $color-secondary: rgb(255, 94, 58);
 $color-icons: #9a9fbf;
 $color-hover: #3f4257;
 $color-border: #e6ecf5;
+$color-title: #515365;
 
 .fixed-sidebar {
 	position: fixed;
@@ -152,6 +153,18 @@ $color-border: #e6ecf5;
 
 	.ui-block-title {
 		margin: 15px 0;
+	}
+
+	.user {
+		padding: 15px 25px 0;
+
+		&-title {
+			color: $color-title;
+
+			svg {
+				display: none;	
+			}
+		}
 	}
 }
 

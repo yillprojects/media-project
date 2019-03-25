@@ -1,0 +1,100 @@
+//color
+$color-main: #fff;
+$color-secondary: #9a9fbf;
+$color-hover: #a8a8a8;
+$color-link: #888da8;
+$bg-online: #32e4cd;
+$bg-away: #ffd52f;
+$bg-disconnected: #ff4f60;
+$bg-invisible: #cbdfee;
+
+.user {
+	display: flex;
+	align-items: center;
+
+	&-thumb {
+		margin-right: 8px;
+	}
+
+	&-img {
+		border-radius: 100%;
+	}
+
+	&-name {
+		color: $color-main;
+		line-height: 8px;
+
+		.user-title {
+			transition: 0.3s;
+			display: flex;
+			align-items: flex-end;
+
+			h5 {
+				font-weight: 700;
+				font-size: 12px;
+			}
+
+			svg {
+				font-size: 11px;
+				margin-left: 5px;
+				padding-bottom: 2px;
+			}
+		}
+
+		.user-subtitle {
+			font-size: 9px;
+			color: $color-secondary;
+			font-weight: 500;
+		}
+	}
+
+	&:hover {
+		.user-title {
+			color: $color-hover;
+		}
+	}
+}
+
+.user-dropdown {
+	&.show {
+		.user-title {
+			color: $color-hover;
+		}
+	}
+
+	.dropdown-menu {
+		min-width: 200px !important;
+	}
+}
+
+.chat-settings {
+	padding: 15px 25px;
+
+	&-btn {
+		border: none;
+		background-color: transparent;
+		color: $color-link;
+		font-size: 12px;
+		font-weight: 600;
+		
+		.status {
+			vertical-align: middle;	
+		}
+
+		.icon-status {
+			&.online {
+				background-color: $bg-online;
+			}
+		}
+	}
+}
+
+.icon-status {
+	width: 6px;
+	height: 6px;
+	border-radius: 100%;
+	display: inline-block;
+	margin-right: 20px;
+	position: relative;
+	border: none;
+}

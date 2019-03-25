@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Button, Input, Form } from "reactstrap";
 import { FaSearch, FaTimes } from "react-icons/fa";
 
-import Suggestions from './components/Suggestions.js';
+import Suggestions from './Suggestions.js';
 
 class SearchMobile extends Component {
 	constructor(props) {

@@ -15,7 +15,11 @@ import {
   DropdownItem
 } from "reactstrap";
 
-import SearchBox from "./components/SearchBox.js";
+import SearchBox from "./components/SearchBox/SearchBox.js";
+import FriendsRequests from "./components/FriendsRequests/FriendsRequests.js";
+import Messages from "./components/Messages/Messages.js";
+import Notifications from "./components/Notifications/Notifications.js";
+import UserDropdown from "./components/UserDropdown/UserDropdown.js";
 
 import "./navbar.scss";
 
@@ -36,34 +40,23 @@ export default class NavbarMenu extends Component {
 
   render() {
     return (
-      <Navbar light expand="md" fixed={`top`}>
-          <SearchBox />
+      <Navbar light fixed={`top`}>
+        <SearchBox />
 
-        {/*
-        <NavbarToggler onClick={this.toggle} />
-        <Collapse isOpen={this.state.isOpen} navbar>
-          <Nav className="ml-auto" navbar>
-            <NavItem>
-              <NavLink href="/components/">Components</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="https://github.com/reactstrap/reactstrap">
-                GitHub
-              </NavLink>
-            </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Options
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Reset</DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </Nav>
-        </Collapse> */}
+        <Nav navbar>
+          <NavItem>
+            <FriendsRequests />
+          </NavItem>
+          <NavItem>
+            <Messages />
+          </NavItem>
+          <NavItem>
+            <Notifications />
+          </NavItem>
+          <NavItem>
+            <UserDropdown />
+          </NavItem>
+        </Nav>
       </Navbar>
     );
   }

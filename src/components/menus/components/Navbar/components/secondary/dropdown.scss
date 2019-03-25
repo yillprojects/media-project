@@ -1,0 +1,205 @@
+//colors
+$color-main: #515365;
+$color-secondary: rgb(255, 94, 58);
+$accept-request: #38a9ff;
+$color-text: #9a9fbf;
+
+.dropdown {
+	height: 100%;
+
+	&.show {
+		.dropdown-btn {
+			@media (max-width: 768px) {
+				border-bottom: 5px solid $color-secondary;
+			}
+
+			svg {
+				transition: 0.3s;
+				fill: $color-secondary;
+			}
+		}
+	}
+
+	&-header {
+		padding: 10px 20px !important;
+		font-size: 9px !important;
+
+		&-nav {
+			display: flex !important;
+			justify-content: space-between;
+			align-items: center;
+			border-bottom: 1px solid #e9ecef;
+
+			.title {
+				font-size: 9px;
+				text-transform: uppercase;
+				color: $color-text;
+				font-weight: 700;
+				line-height: 13px;
+			}
+
+			.header-secondary {
+				a {
+					color: $color-main;
+					font-size: 9px;
+					text-transform: uppercase;
+					margin-left: 15px;
+					padding: 0;
+					font-weight: 700;
+
+					&:hover {
+						transition: 0.3s;
+						color: $color-secondary;
+					}
+				}
+			}
+		}
+	}
+
+	&-btn {
+		height: 100%;
+		margin-left: 5px;
+
+		&.btn {
+			font-size: 25px;
+			border-width: 5px;
+		}
+
+		&.btn-secondary {
+			background-color: transparent;
+			border-color: transparent;
+
+			&:not(:disabled):not(.disabled):active,
+			.btn-secondary:not(:disabled):not(.disabled).active,
+			.show > .btn-secondary.dropdown-toggle {
+				background-color: transparent;
+				border-color: transparent;
+			}
+
+			&:focus,
+			.btn-secondary:not(:disabled):active:focus {
+				box-shadow: none !important;
+			}
+
+			&:hover {
+				background-color: transparent;
+				border-color: transparent;
+
+				svg {
+					transition: 0.3s;
+				}
+			}
+		}
+
+		svg {
+			vertical-align: sub;
+			padding-bottom: 5px;
+		}
+	}
+
+	&-menu {
+		min-width: 310px !important;
+		padding: 0 !important;
+		box-shadow: 0 0 34px 0 rgba(63, 66, 87, 0.1);
+		transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+		border: 0 !important;
+
+		@media (min-width: 768px) {
+			margin-top: -12px !important;
+			min-width: 350px !important;
+		}
+
+		&-btn {
+			width: 100%;
+
+			&.btn {
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+				padding: 20px;
+				font-size: 12px;
+
+				&-secondary {
+					transition: 0.4s;
+
+					&:hover {
+						opacity: 0.8;
+					}
+				}
+			}
+		}
+
+		&-list {
+			max-height: 300px;
+			overflow-y: scroll;
+			padding: 5px 0;
+
+			&::-webkit-scrollbar {
+				width: 0px;
+			}
+		}
+	}
+
+	&-item {
+		display: flex !important;
+		align-items: center;
+		padding: 15px 25px !important;
+		white-space: normal !important;
+
+		&:not(:last-child) {
+			border-bottom: 1px solid #e9ecef !important;
+		}
+
+		&-img {
+			border-radius: 100%;
+		}
+
+		.notification {
+			&-event {
+				padding-left: 15px;
+				width: 55%;
+				margin-bottom: 4px;
+
+				.chat-message-item {
+					font-size: 12px;
+					line-height: 12px;
+					margin-top: -2px;
+					color: $color-text;
+				}
+			}
+
+			&-friend {
+				padding: 0;
+				font-size: 14px;
+				color: $color-main;
+				font-weight: 700;
+			}
+
+			&-icon {
+				width: 35%;
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-end;
+
+				.accept-request {
+					background-color: $accept-request;
+					border-color: $accept-request;
+				}
+
+				.request-del {
+					background-color: $color-text;
+					border-color: $color-text;
+				}
+
+				.btn {
+					margin-left: 3px;
+
+					svg {
+						font-size: 15px;
+						margin-bottom: 5px;
+						fill: #fff;
+					}
+				}
+			}
+		}
+	}
+}

@@ -15,6 +15,8 @@ import {
   FaSignOutAlt
 } from "react-icons/fa";
 
+import User from './../Navbar/components/UserDropdown/User.js';
+
 export default class SidebarMobile extends Component {
   constructor(props) {
     super(props);
@@ -68,6 +70,7 @@ export default class SidebarMobile extends Component {
               </Link>
             </h2>
           </header>
+          <User />
           <div className="ui-block-title">
             <h6 className="title">Main sections</h6>
           </div>

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
-import SearchMobile from './SearchMobile.js';
-import SearchLaptop from './SearchLaptop.js';
+import SearchMobile from './components/SearchMobile.js';
+import SearchLaptop from './components/SearchLaptop.js';
 import Suggestions from "./components/Suggestions.js";
 
 import "./searchbox.scss";

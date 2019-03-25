@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Button, Form, Input, Label } from "reactstrap";
 import { FaSearch } from "react-icons/fa";
 
-import Suggestions from "./components/Suggestions.js";
+import Suggestions from "./Suggestions.js";
 
 class SearchLaptop extends Component {
   constructor(props) {
