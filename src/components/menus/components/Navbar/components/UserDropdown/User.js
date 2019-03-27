@@ -5,7 +5,7 @@ import { FaChevronDown } from "react-icons/fa";
 
 import UserImg from "./../FriendsRequests/50.png";
 
-export default class User extends Component {
+export default class User extends Component {	
 	render() {
 		return (
 			<div className="user">
@@ -17,15 +17,15 @@ export default class User extends Component {
 						style={{ width: 35, height: 35 }}
 						className="user-img"
 					/>
-					<span className="icon-status">{""}</span>
+					<span className={`icon-status  ${this.props.status ? this.props.status : "online"}`}>{""}</span>
 				</div>
-				<p  className="user-name">
+				<div className="user-name">
 					<div className="user-title">
 						<h5>Kames Spiegel</h5>
 						<FaChevronDown />
 					</div>
 					<span className="user-subtitle">Space cowboy</span>
-				</p>
+				</div>
 			</div>
 		);
 	}

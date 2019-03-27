@@ -1,19 +1,29 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import { AppContainer } from 'react-hot-loader';
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { Provider } from "react-redux";
 
-import Routes from './Routes';
+import rootReducer from "./redux/reducers";
 
-import './styles.scss';
+import { AppContainer } from "react-hot-loader";
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+import Routes from "./Routes.js";
+
+import "./styles.scss";
 
 ReactDOM.render(
-  <AppContainer>
-    <Routes />
-  </AppContainer>,
-  document.getElementById('root')
+	<Provider store={store}>
+		<AppContainer>
+			<Routes />
+		</AppContainer>
+	</Provider>,
+	document.getElementById("root")
 );
 
 if (module.hot) {
-  module.hot.accept();
+	module.hot.accept();
 }

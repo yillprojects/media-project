@@ -158,6 +158,12 @@ $color-title: #515365;
 	.user {
 		padding: 15px 25px 0;
 
+		&-thumb {
+			.icon-status {
+				border-color: #fff;
+			}
+		}
+
 		&-title {
 			color: $color-title;
 

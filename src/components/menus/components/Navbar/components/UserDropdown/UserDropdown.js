@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
+import { connect } from "react-redux";
+
+import { userActions } from "redux/actions/index.js";
+
 import {
 	Dropdown,
 	DropdownToggle,
@@ -15,17 +19,25 @@ import User from "./User.js";
 
 import "./userdropdown.scss";
 
-export default class UserDropdown extends Component {
+class UserDropdown extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
-			dropdownOpen: false
+			dropdownOpen: false,
+			status: ""
 		};
 
 		this.toggle = this.toggle.bind(this);
 		this.onMouseEnter = this.onMouseEnter.bind(this);
 		this.onMouseLeave = this.onMouseLeave.bind(this);
+		this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
+	}
+
+	componentWillMount() {
+		this.setState({
+			status: this.props.status
+		})
 	}
 
 	toggle() {
@@ -42,8 +54,19 @@ export default class UserDropdown extends Component {
 		this.setState({ dropdownOpen: false });
 	}
 
+	onRadioBtnClick(rSelected) {
+		if (this.state.status !== rSelected) {
+			this.setState({
+				status: rSelected
+			});
+
+			const { dispatch } = this.props;
+			dispatch(userActions.changeStatus(rSelected));
+		}
+	}
+
 	render() {
-		const { dropdownOpen } = this.state;
+		const { dropdownOpen, status } = this.state;
 
 		return (
 			<Dropdown
@@ -58,7 +81,7 @@ export default class UserDropdown extends Component {
 					data-toggle="dropdown"
 					aria-expanded={dropdownOpen}
 				>
-					<User />
+					<User status={status} />
 				</DropdownToggle>
 				<DropdownMenu>
 					<div className="ui-block-title">
@@ -89,26 +112,42 @@ export default class UserDropdown extends Component {
 					</div>
 					<ul className="chat-settings">
 						<li>
-							<button type="button" className="chat-settings-btn">
+							<button
+								type="button"
+								onClick={() => this.onRadioBtnClick("online")}
+								className={`chat-settings-btn ${status === "online" ? "disabled" : ""}`}
+							>
 								<span className="icon-status online">{""}</span>
 								<span className="status">Online</span>
 							</button>
 						</li>
 						<li>
-							<button type="button" className="chat-settings-btn">
+							<button
+								type="button"
+								onClick={() => this.onRadioBtnClick("away")}
+								className={`chat-settings-btn ${status === "away" ? "disabled" : ""}`}
+							>
 								<span className="icon-status away">{""}</span>
 								<span className="status">Away</span>
 							</button>
 						</li>
 						<li>
-							<button type="button" className="chat-settings-btn">
+							<button
+								type="button"
+								onClick={() => this.onRadioBtnClick("disconnected")}
+								className={`chat-settings-btn ${status === "disconnected" ? "disabled" : ""}`}
+							>
 								<span className="icon-status disconnected">{""}</span>
 								<span className="status">Disconnected</span>
 							</button>
 						</li>
 						<li>
-							<button type="button" className="chat-settings-btn">
-								<span className="icon-status invisible">{""}</span>
+							<button
+								type="button"
+								onClick={() => this.onRadioBtnClick("invisibly")}
+								className={`chat-settings-btn ${status === "invisibly" ? "disabled" : ""}`}
+							>
+								<span className="icon-status invisibly">{""}</span>
 								<span className="status">Invisible</span>
 							</button>
 						</li>
@@ -143,3 +182,12 @@ export default class UserDropdown extends Component {
 		);
 	}
 }
+
+const mapStateToProps = state => {
+	const { status } = state.status;
+	return {
+		status
+	};
+};
+
+export default connect(mapStateToProps)(UserDropdown);

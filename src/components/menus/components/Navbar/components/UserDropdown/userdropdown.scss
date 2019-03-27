@@ -6,7 +6,7 @@ $color-link: #888da8;
 $bg-online: #32e4cd;
 $bg-away: #ffd52f;
 $bg-disconnected: #ff4f60;
-$bg-invisible: #cbdfee;
+$bg-invisibly: #cbdfee;
 
 .user {
 	display: flex;
@@ -14,6 +14,17 @@ $bg-invisible: #cbdfee;
 
 	&-thumb {
 		margin-right: 8px;
+		position: relative;
+
+		.icon-status {
+			position: absolute;
+			margin-right: 0;
+			left: 0;
+			top: 2px;
+			border: 1px solid #3f4257; 
+			width: 8px;
+			height: 8px;
+		}
 	}
 
 	&-img {
@@ -73,18 +84,28 @@ $bg-invisible: #cbdfee;
 	&-btn {
 		border: none;
 		background-color: transparent;
-		color: $color-link;
 		font-size: 12px;
 		font-weight: 600;
-		
+	
+		&.disabled {
+			color: $color-link;
+			cursor: default !important;
+		}
+	
+		&:hover {
+			.status {
+				color: rgba(0, 0, 0, 0.6);
+			}
+		}
+
 		.status {
-			vertical-align: middle;	
+			transition: 0.3s;
+			vertical-align: middle;
 		}
 
 		.icon-status {
-			&.online {
-				background-color: $bg-online;
-			}
+			position: relative;
+			border: none;
 		}
 	}
 }
@@ -95,6 +116,20 @@ $bg-invisible: #cbdfee;
 	border-radius: 100%;
 	display: inline-block;
 	margin-right: 20px;
-	position: relative;
-	border: none;
+
+	&.online {
+		background-color: $bg-online;
+	}
+
+	&.away {
+		background-color: $bg-away;
+	}
+
+	&.disconnected {
+		background-color: $bg-disconnected;
+	}
+
+	&.invisibly {
+		background-color: $bg-invisibly;
+	}
 }
