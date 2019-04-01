@@ -49,9 +49,13 @@ $color-secondary: rgb(255, 94, 58);
 
 		.more {
 			height: 20.8px;
+			width: fit-content;
+			margin: auto;
 
 			.dropdown {
 				&.show {
+					padding: 0 20px 20px 20px;
+					
 					.btn-secondary {
 						color: $color-secondary;
 					}

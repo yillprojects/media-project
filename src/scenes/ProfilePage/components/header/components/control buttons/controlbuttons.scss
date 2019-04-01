@@ -1,0 +1,81 @@
+//colors
+$fill-color: #fff;
+$bg-blue: #38a9ff;
+$bg-purple: #7c5ac2;
+$bg-orange: #ff5e3a;
+$link-color: #515365;
+$color-secondary: rgb(255, 94, 58);
+
+.control-block-button {
+	position: absolute;
+	right: 38px;
+	top: -31px;
+
+	.btn {
+		color: $fill-color;
+		margin-right: 20px;
+		transition: 0.2s;
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		&:hover {
+			color: $fill-color;
+			background-color: rgba(56, 169, 255, 0.6);
+		}
+
+		&-control {
+			border-radius: 100%;
+			width: 50px;
+			height: 50px;
+			line-height: 54px;
+			padding: 0;
+
+			svg {
+				font-size: 20px;
+				width: 20px;
+				height: 20px;
+				vertical-align: initial;
+			}
+		}
+
+		&.bg {
+			&-blue {
+				background-color: $bg-blue;
+			}
+			&-purple {
+				background-color: $bg-purple;
+			}
+			&-orange {
+				background-color: $bg-orange;
+			}
+		}
+	}
+
+	.dropdown {
+		.btn {
+			margin-right: 0;
+			margin-bottom: 5px;
+		}
+
+		.more-settings {
+			padding: 15px 20px;
+
+			.settings-link {
+				padding: 7px 0;
+				font-size: 12px;
+				display: block;
+				font-weight: 700;
+				color: $link-color;
+				line-height: 16px;
+				white-space: nowrap;
+				transition: 0.2s;
+
+				&:hover {
+					color: $color-secondary;
+				}
+			}
+		}
+	}
+}

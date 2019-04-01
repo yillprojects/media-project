@@ -1,6 +1,6 @@
 import React from "react";
 
-import ProfileMenu from "./components/menu/ProfileMenu.js";
+import ProfileMenu from "./components/ProfileMenu.js";
 
 import TopHeader from "./../../img/top-header1.jpg";
 import './profileheader.scss';

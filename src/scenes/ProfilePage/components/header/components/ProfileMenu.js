@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
-import {
-	Dropdown,
-	DropdownToggle,
-	DropdownMenu,
-	DropdownItem
-} from "reactstrap";
+import ProfileControlButtons from "./control buttons/ProfileControlButtons.js";
+
+import { Dropdown, DropdownToggle, DropdownMenu } from "reactstrap";
 import { FaEllipsisH } from "react-icons/fa";
 
-import './profilemenu.scss';
+import "./profilemenu.scss";
 
 export default class ProfileMenu extends Component {
 	constructor(props) {
@@ -17,6 +14,8 @@ export default class ProfileMenu extends Component {
 
 		this.toggle = this.toggle.bind(this);
 		this.changeActiveTab = this.changeActiveTab.bind(this);
+		this.onMouseEnter = this.onMouseEnter.bind(this);
+		this.onMouseLeave = this.onMouseLeave.bind(this);
 
 		this.state = {
 			dropdownOpen: false,
@@ -28,6 +27,14 @@ export default class ProfileMenu extends Component {
 		this.setState(prevState => ({
 			dropdownOpen: !prevState.dropdownOpen
 		}));
+	}
+
+	onMouseEnter() {
+		this.setState({ dropdownOpen: true });
+	}
+
+	onMouseLeave() {
+		this.setState({ dropdownOpen: false });
 	}
 
 	changeActiveTab(tab) {
@@ -93,7 +100,12 @@ export default class ProfileMenu extends Component {
 							</li>
 							<li className="list-item">
 								<div className="more">
-									<Dropdown isOpen={dropdownOpen} toggle={this.toggle}>
+									<Dropdown
+										onMouseOver={this.onMouseEnter}
+										onMouseLeave={this.onMouseLeave}
+										isOpen={dropdownOpen}
+										toggle={this.toggle}
+									>
 										<DropdownToggle className="transparent-btn">
 											<FaEllipsisH />
 										</DropdownToggle>
@@ -117,6 +129,7 @@ export default class ProfileMenu extends Component {
 						</ul>
 					</div>
 				</div>
+				<ProfileControlButtons />
 			</div>
 		);
 	}
