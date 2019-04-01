@@ -1,9 +1,11 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { Button, Form, Input, Label } from "reactstrap";
-import { FaSearch } from "react-icons/fa";
+import {
+  Button, Form, Input, Label
+} from 'reactstrap';
+import { FaSearch } from 'react-icons/fa';
 
-import Suggestions from "./Suggestions.js";
+import Suggestions from './Suggestions.js';
 
 class SearchLaptop extends Component {
   constructor(props) {
@@ -11,7 +13,7 @@ class SearchLaptop extends Component {
 
     this.state = {
       focused: false
-    }
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onFocus = this.onFocus.bind(this);
@@ -55,12 +57,13 @@ class SearchLaptop extends Component {
           className="search-bar-input with-button"
         />
         <Label for="search-box" className="sr-only">
+
           Search
         </Label>
         <Button className="search-bar-btn">
           <FaSearch />
         </Button>
-        {(query && focused) ? <Suggestions results={results} /> : ""}
+        {(query && focused) ? <Suggestions results={results} /> : ''}
       </Form>
     );
   }

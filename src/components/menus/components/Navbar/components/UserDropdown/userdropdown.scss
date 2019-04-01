@@ -67,6 +67,8 @@ $bg-invisibly: #cbdfee;
 }
 
 .user-dropdown {
+	height: 100%;
+
 	&.show {
 		.user-title {
 			color: $color-hover;
@@ -75,6 +77,7 @@ $bg-invisibly: #cbdfee;
 
 	.dropdown-menu {
 		min-width: 200px !important;
+		margin-top: -12px;
 	}
 }
 

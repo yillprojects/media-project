@@ -1,6 +1,8 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import {
+  Button, Form, FormGroup, Label, Input
+} from 'reactstrap';
 
 class Register extends Component {
   constructor(props) {
@@ -8,9 +10,9 @@ class Register extends Component {
 
     this.state = {
       user: {
-        email: "",
-        username: "",
-        password: ""
+        email: '',
+        username: '',
+        password: ''
       },
       submitted: false
     };
@@ -43,6 +45,7 @@ class Register extends Component {
       <div className="tab-section registration">
         <div className="container">
           <h2 className="tab-section-title">
+
             Register to our biggest social media!
           </h2>
 
@@ -53,8 +56,8 @@ class Register extends Component {
                 id="register-username"
                 placeholder={
                   submitted && !user.username
-                    ? "Username is required"
-                    : "Username"
+                    ? 'Username is required'
+                    : 'Username'
                 }
                 value={user.username}
                 onChange={this.handleChange}
@@ -67,7 +70,7 @@ class Register extends Component {
                 name="email"
                 id="register-email"
                 placeholder={
-                  submitted && !user.email ? "Email is required" : "Email"
+                  submitted && !user.email ? 'Email is required' : 'Email'
                 }
                 value={user.email}
                 onChange={this.handleChange}
@@ -81,8 +84,8 @@ class Register extends Component {
                 id="register-password"
                 placeholder={
                   submitted && !user.password
-                    ? "Password is required"
-                    : "Password"
+                    ? 'Password is required'
+                    : 'Password'
                 }
                 value={user.password}
                 onChange={this.handleChange}
@@ -91,14 +94,21 @@ class Register extends Component {
             </FormGroup>
             <FormGroup className="mb-4" check>
               <Label className="color-link" check>
-                <Input type="checkbox" /> I accept the{" "}
+                <Input type="checkbox" />
+                {' '}
+I accept the
+                {' '}
                 <a href="#" className="color-link">
+
                   Terms and Conditions
-                </a>{" "}
+                </a>
+                {' '}
+
                 of the website
               </Label>
             </FormGroup>
             <Button className="tab-section-btn" onClick={this.handleSubmit}>
+
               Complete Registration
             </Button>
           </Form>

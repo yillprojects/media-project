@@ -1,8 +1,6 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
 
 import {
-  Collapse,
   Navbar,
   NavbarToggler,
   NavbarBrand,
@@ -13,15 +11,15 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem
-} from "reactstrap";
+} from 'reactstrap';
 
-import SearchBox from "./components/SearchBox/SearchBox.js";
-import FriendsRequests from "./components/FriendsRequests/FriendsRequests.js";
-import Messages from "./components/Messages/Messages.js";
-import Notifications from "./components/Notifications/Notifications.js";
-import UserDropdown from "./components/UserDropdown/UserDropdown.js";
+import SearchBox from './components/SearchBox/SearchBox.js';
+import FriendsRequests from './components/FriendsRequests/FriendsRequests.js';
+import Messages from './components/Messages/Messages.js';
+import Notifications from './components/Notifications/Notifications.js';
+import UserDropdown from './components/UserDropdown/UserDropdown.js';
 
-import "./navbar.scss";
+import './navbar.scss';
 
 export default class NavbarMenu extends Component {
   constructor(props) {
@@ -32,6 +30,7 @@ export default class NavbarMenu extends Component {
       isOpen: false
     };
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen
@@ -40,7 +39,7 @@ export default class NavbarMenu extends Component {
 
   render() {
     return (
-      <Navbar light fixed={`top`}>
+      <Navbar light fixed="top">
         <SearchBox />
 
         <Nav navbar>

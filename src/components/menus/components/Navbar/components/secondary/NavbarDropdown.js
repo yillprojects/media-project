@@ -1,9 +1,11 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import { Dropdown, DropdownToggle, DropdownMenu, Button } from "reactstrap";
+import {
+  Dropdown, DropdownToggle, DropdownMenu, Button
+} from 'reactstrap';
 
-import "./dropdown.scss";
+import './dropdown.scss';
 
 export default class NavbarDropdown extends Component {
   constructor(props) {
@@ -44,9 +46,10 @@ export default class NavbarDropdown extends Component {
         onMouseLeave={this.onMouseLeave}
         isOpen={this.state.dropdownOpen}
         toggle={this.toggle}
+        className="navbar-dropdown"
       >
-        <DropdownToggle className="dropdown-btn">
-          <Icon style={dropdownOpen ? {fill: data.color} : null} />
+        <DropdownToggle className="dropdown-btn transparent-btn">
+          <Icon style={dropdownOpen ? { fill: data.color } : null} />
         </DropdownToggle>
         <DropdownMenu right>
           <header className="dropdown-header dropdown-header-nav">

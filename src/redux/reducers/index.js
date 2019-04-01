@@ -1,9 +1,9 @@
-import { combineReducers } from "redux";
+import { combineReducers } from 'redux';
 
-import { status } from "./status.reducer";
+import { status } from './status.reducer';
 
 const rootReducer = combineReducers({
-	status
+  status
 });
 
 export default rootReducer;

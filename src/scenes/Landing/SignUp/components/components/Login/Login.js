@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import {
+  Button, Form, FormGroup, Label, Input
+} from 'reactstrap';
 import { FaFacebookF, FaTwitter } from 'react-icons/fa';
 
 import './login.scss';
@@ -46,7 +48,9 @@ class Login extends Component {
       <div className="tab-section">
         <div className="container">
           <h2 className="tab-section-title">
-            Welcome <span>back!</span>
+
+            Welcome
+            <span>back!</span>
           </h2>
 
           <Form onSubmit={this.handleSubmit}>
@@ -80,13 +84,16 @@ class Login extends Component {
               <div className="col col-12 col-sm-6">
                 <FormGroup check>
                   <Label className="color-link" check>
-                    <Input type="checkbox" value="1" check="checked" /> Remember
+                    <Input type="checkbox" value="1" check="checked" />
+                    {' '}
+Remember
                     me
                   </Label>
                 </FormGroup>
               </div>
               <div className="col col-12 col-sm-6 reset-password">
                 <a href="#" className="color-link">
+
                   Forgot my password
                 </a>
               </div>
@@ -96,22 +103,30 @@ class Login extends Component {
               className="tab-section-btn mb-4"
               onClick={this.handleSubmit}
             >
+
               Login
             </Button>
             <div className="or" />
             <Button className="tab-section-btn bg-facebook mb-2">
               <FaFacebookF className="icon" />
+
               Login with Facebook
             </Button>
             <Button className="tab-section-btn bg-twitter mb-3">
               <FaTwitter className="icon" />
+
               Login with Twitter
             </Button>
             <p className="tab-section-message">
-              Don’t you have an account?{' '}
+
+              Don’t you have an account?
+              {' '}
               <a href="#" onClick={this.changeTab}>
+
                 Register Now!
-              </a>{' '}
+              </a>
+              {' '}
+
               it’s really simple and you can start enjoing all the benefits!
             </p>
           </Form>

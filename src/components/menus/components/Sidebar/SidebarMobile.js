@@ -1,10 +1,8 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import { userActions } from "redux/actions/index.js";
-
-import { IoIosCube } from "react-icons/io";
+import { IoIosCube } from 'react-icons/io';
 import {
   FaTimes,
   FaHome,
@@ -16,9 +14,9 @@ import {
   FaRegChartBar,
   FaSlidersH,
   FaSignOutAlt
-} from "react-icons/fa";
+} from 'react-icons/fa';
 
-import User from "./../Navbar/components/UserDropdown/User.js";
+import User from '../Navbar/components/UserDropdown/User.js';
 
 class SidebarMobile extends Component {
   constructor(props) {
@@ -45,11 +43,12 @@ class SidebarMobile extends Component {
       <div className="sidebar-mobile">
         <header
           className={`fixed-sidebar-header sidebar-left-header ${
-            isSidebarOpen === true ? "active" : ""
+            isSidebarOpen === true ? 'active' : ''
           }`}
         >
           <h1>
             <button
+              type="button"
               onClick={() => {
                 this.toggle();
               }}
@@ -62,7 +61,7 @@ class SidebarMobile extends Component {
         </header>
         <div
           className={`fixed-sidebar-left ${
-            isSidebarOpen === true ? "active" : ""
+            isSidebarOpen === true ? 'active' : ''
           }`}
         >
           <header className="fixed-sidebar-header">
@@ -82,6 +81,7 @@ class SidebarMobile extends Component {
             <ul className="left-menu">
               <li>
                 <button
+                  type="button"
                   onClick={() => {
                     this.toggle();
                   }}
@@ -189,7 +189,7 @@ class SidebarMobile extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { status } = state.status;
   return {
     status

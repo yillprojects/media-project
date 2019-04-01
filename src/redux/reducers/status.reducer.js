@@ -1,6 +1,6 @@
-import { statusConstants } from './../constants';
+import { statusConstants } from '../constants';
 
-export const status = (state = {status: "online"}, action) => {
+export const status = (state = { status: 'online' }, action) => {
   switch (action.type) {
     case statusConstants.CURRENT_STATUS:
       return {

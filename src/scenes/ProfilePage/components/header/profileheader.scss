@@ -1,0 +1,33 @@
+.ui-block {
+	background-color: #fff;
+	border-radius: 5px;
+	border: 1px solid #e6ecf5;
+	margin-bottom: 15px;
+}
+
+.top-header,
+.top-header-thumb {
+	position: relative;
+}
+
+.top-header-thumb {
+	img {
+		width: 100%;
+		border-radius: 5px 5px 0 0;
+		overflow: hidden;
+		max-width: 100%;
+		height: auto;
+		display: inline-block;
+	}
+
+	&:after {
+		content: "";
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		box-shadow: inset 0 -120px 55px -30px rgba(0, 0, 0, 0.5);
+	}
+}

@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import { IoIosCube } from "react-icons/io";
+import { IoIosCube } from 'react-icons/io';
 import {
   FaHome,
   FaUser,
@@ -10,17 +10,17 @@ import {
   FaHeadphonesAlt,
   FaRegCalendarAlt,
   FaRegChartBar
-} from "react-icons/fa";
+} from 'react-icons/fa';
 
-import SidebarMobile from "./SidebarMobile.js";
-import "./sidebar.scss";
+import SidebarMobile from './SidebarMobile.js';
+import './sidebar.scss';
 
 export default class Sidebar extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeTab: "1"
+      activeTab: '1'
     };
 
     this.toggle = this.toggle.bind(this);
@@ -33,7 +33,9 @@ export default class Sidebar extends Component {
   }
 
   toggle(tab) {
-    if (this.state.activeTab !== tab) {
+    const { activeTab } = this.state;
+
+    if (activeTab !== tab) {
       this.setState({
         activeTab: tab
       });
@@ -59,10 +61,10 @@ export default class Sidebar extends Component {
               <Link
                 to="/home"
                 className={`sidebar-nav-link ${
-                  activeTab === "1" ? "active " : ""
+                  activeTab === '1' ? 'active ' : ''
                 }`}
                 onClick={() => {
-                  this.toggle("1");
+                  this.toggle('1');
                 }}
               >
                 <FaHome />
@@ -73,10 +75,10 @@ export default class Sidebar extends Component {
               <Link
                 to="/user"
                 className={`sidebar-nav-link ${
-                  activeTab === "2" ? "active " : ""
+                  activeTab === '2' ? 'active ' : ''
                 }`}
                 onClick={() => {
-                  this.toggle("2");
+                  this.toggle('2');
                 }}
               >
                 <FaUser />
@@ -87,10 +89,10 @@ export default class Sidebar extends Component {
               <Link
                 to="/favourite"
                 className={`sidebar-nav-link ${
-                  activeTab === "3" ? "active " : ""
+                  activeTab === '3' ? 'active ' : ''
                 }`}
                 onClick={() => {
-                  this.toggle("3");
+                  this.toggle('3');
                 }}
               >
                 <FaRegStar />
@@ -101,10 +103,10 @@ export default class Sidebar extends Component {
               <Link
                 to="/groups"
                 className={`sidebar-nav-link ${
-                  activeTab === "4" ? "active " : ""
+                  activeTab === '4' ? 'active ' : ''
                 }`}
                 onClick={() => {
-                  this.toggle("4");
+                  this.toggle('4');
                 }}
               >
                 <FaRegGrinWink />
@@ -115,10 +117,10 @@ export default class Sidebar extends Component {
               <Link
                 to="/playlist"
                 className={`sidebar-nav-link ${
-                  activeTab === "5" ? "active " : ""
+                  activeTab === '5' ? 'active ' : ''
                 }`}
                 onClick={() => {
-                  this.toggle("5");
+                  this.toggle('5');
                 }}
               >
                 <FaHeadphonesAlt />
@@ -129,10 +131,10 @@ export default class Sidebar extends Component {
               <Link
                 to="/calendar"
                 className={`sidebar-nav-link ${
-                  activeTab === "6" ? "active " : ""
+                  activeTab === '6' ? 'active ' : ''
                 }`}
                 onClick={() => {
-                  this.toggle("6");
+                  this.toggle('6');
                 }}
               >
                 <FaRegCalendarAlt />
@@ -143,10 +145,10 @@ export default class Sidebar extends Component {
               <Link
                 to="/statistic"
                 className={`sidebar-nav-link ${
-                  activeTab === "7" ? "active " : ""
+                  activeTab === '7' ? 'active ' : ''
                 }`}
                 onClick={() => {
-                  this.toggle("7");
+                  this.toggle('7');
                 }}
               >
                 <FaRegChartBar />

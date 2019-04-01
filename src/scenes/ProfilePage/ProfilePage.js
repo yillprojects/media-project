@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { Component } from "react";
 
-const ProfilePage = () => {
-	return (
-		<h1>hi</h1>
-	);
-};
+import ProfileHeader from './components/header/ProfileHeader.js';
+
+class ProfilePage extends Component {
+	render() {
+		return (
+			<div className="container">
+				<div className="mt-4 row">
+					<ProfileHeader />
+				</div>
+			</div>
+		);
+	}
+}
 
 export default ProfilePage;
