@@ -46,7 +46,7 @@ export default class ProfileControlButtons extends Component {
 				<Dropdown
 					onMouseOver={this.onMouseEnter}
 					onMouseLeave={this.onMouseLeave}
-					direction="up"
+					direction={screen.width < 768 ? "down" : "up"}
 					isOpen={dropdownOpen}
 					toggle={this.toggle}
 					className="btn btn-control bg-orange"

@@ -6,7 +6,7 @@ $color-secondary: rgb(255, 94, 58);
 .profile {
 	&-section {
 		position: relative;
-		padding: 38px 0;
+		padding: 35px 0;
 	}
 
 	&-menu {
@@ -55,7 +55,7 @@ $color-secondary: rgb(255, 94, 58);
 			.dropdown {
 				&.show {
 					padding: 0 20px 20px 20px;
-					
+
 					.btn-secondary {
 						color: $color-secondary;
 					}
