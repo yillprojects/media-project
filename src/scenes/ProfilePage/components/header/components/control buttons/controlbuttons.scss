@@ -8,6 +8,8 @@ $color-secondary: rgb(255, 94, 58);
 
 .control-block-button {
 	position: absolute;
+	display: flex;	
+	justify-content: center;
 	right: 38px;
 	top: -31px;
 
@@ -21,7 +23,10 @@ $color-secondary: rgb(255, 94, 58);
 	.btn {
 		color: $fill-color;
 		margin-right: 15px;
-		transition: 0.2s;
+		transition: 0.25s;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
 		&:last-child {
 			margin-right: 0;
@@ -43,7 +48,6 @@ $color-secondary: rgb(255, 94, 58);
 				font-size: 20px;
 				width: 20px;
 				height: 20px;
-				vertical-align: sub;
 			}
 		}
 
@@ -68,6 +72,7 @@ $color-secondary: rgb(255, 94, 58);
 
 		.more-settings {
 			padding: 15px 20px;
+			width: 180px;
 
 			.settings-link {
 				padding: 7px 0;

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 import ProfileHeader from './components/header/ProfileHeader.js';
+import ProfileTimeline from './components/timeline/ProfileTimeline.js';
 
 class ProfilePage extends Component {
 	render() {
@@ -8,6 +9,7 @@ class ProfilePage extends Component {
 			<div className="container">
 				<div className="mt-4 row">
 					<ProfileHeader />
+					<ProfileTimeline />
 				</div>
 			</div>
 		);
