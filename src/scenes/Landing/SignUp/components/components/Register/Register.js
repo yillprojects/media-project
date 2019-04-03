@@ -46,11 +46,10 @@ class Register extends Component {
         <div className="container">
           <h2 className="tab-section-title">
 
-
             Register to our biggest social media!
           </h2>
 
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
             <FormGroup className="form-label-group">
               <Input
                 name="username"
@@ -97,25 +96,18 @@ class Register extends Component {
               <Label className="color-link" check>
                 <Input type="checkbox" />
                 {' '}
-
 I accept the
                 {' '}
                 <a href="#" className="color-link">
-
 
                   Terms and Conditions
                 </a>
                 {' '}
 
-
                 of the website
               </Label>
             </FormGroup>
-            <Button
-              className="tab-section-btn"
-              onClick={this.handleSubmit}
-            >
-
+            <Button className="tab-section-btn" onClick={this.handleSubmit}>
 
               Complete Registration
             </Button>

@@ -1,16 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { AppContainer } from 'react-hot-loader';
+import { createStore, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { Provider } from 'react-redux';
 
-import Routes from './Routes';
+import { AppContainer } from 'react-hot-loader';
+import rootReducer from './redux/reducers';
+
+
+import Routes from './Routes.js';
 
 import './styles.scss';
 
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
 ReactDOM.render(
-  <AppContainer>
-    <Routes />
-  </AppContainer>,
+  <Provider store={store}>
+    <AppContainer>
+      <Routes />
+    </AppContainer>
+  </Provider>,
   document.getElementById('root')
 );
 
