@@ -10,7 +10,7 @@ import {
 	FaTrophy
 } from "react-icons/fa";
 
-import User from "./../../../img/author-main1.jpg";
+import User from "./../../../../img/author-main1.jpg";
 
 import "./post.scss";
 
