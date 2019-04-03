@@ -1,0 +1,138 @@
+//color
+$color-main: #fff;
+$color-secondary: #9a9fbf;
+$color-hover: #a8a8a8;
+$color-link: #888da8;
+$bg-online: #32e4cd;
+$bg-away: #ffd52f;
+$bg-disconnected: #ff4f60;
+$bg-invisibly: #cbdfee;
+
+.user {
+	display: flex;
+	align-items: center;
+
+	&-thumb {
+		margin-right: 8px;
+		position: relative;
+
+		.icon-status {
+			position: absolute;
+			margin-right: 0;
+			left: 0;
+			top: 2px;
+			border: 1px solid #3f4257; 
+			width: 8px;
+			height: 8px;
+		}
+	}
+
+	&-img {
+		border-radius: 100%;
+	}
+
+	&-name {
+		color: $color-main;
+		line-height: 8px;
+
+		.user-title {
+			transition: 0.3s;
+			display: flex;
+			align-items: flex-end;
+
+			h5 {
+				font-weight: 700;
+				font-size: 12px;
+			}
+
+			svg {
+				font-size: 11px;
+				margin-left: 5px;
+				padding-bottom: 2px;
+			}
+		}
+
+		.user-subtitle {
+			font-size: 9px;
+			color: $color-secondary;
+			font-weight: 500;
+		}
+	}
+
+	&:hover {
+		.user-title {
+			color: $color-hover;
+		}
+	}
+}
+
+.user-dropdown {
+	height: 100%;
+
+	&.show {
+		.user-title {
+			color: $color-hover;
+		}
+	}
+
+	.dropdown-menu {
+		min-width: 200px !important;
+		margin-top: -12px;
+	}
+}
+
+.chat-settings {
+	padding: 15px 25px;
+
+	&-btn {
+		border: none;
+		background-color: transparent;
+		font-size: 12px;
+		font-weight: 600;
+	
+		&.disabled {
+			color: $color-link;
+			cursor: default !important;
+		}
+	
+		&:hover {
+			.status {
+				color: rgba(0, 0, 0, 0.6);
+			}
+		}
+
+		.status {
+			transition: 0.3s;
+			vertical-align: middle;
+		}
+
+		.icon-status {
+			position: relative;
+			border: none;
+		}
+	}
+}
+
+.icon-status {
+	width: 6px;
+	height: 6px;
+	border-radius: 100%;
+	display: inline-block;
+	margin-right: 20px;
+
+	&.online {
+		background-color: $bg-online;
+	}
+
+	&.away {
+		background-color: $bg-away;
+	}
+
+	&.disconnected {
+		background-color: $bg-disconnected;
+	}
+
+	&.invisibly {
+		background-color: $bg-invisibly;
+	}
+}

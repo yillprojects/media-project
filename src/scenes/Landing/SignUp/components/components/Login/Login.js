@@ -50,11 +50,10 @@ class Login extends Component {
           <h2 className="tab-section-title">
 
             Welcome
-            {' '}
             <span>back!</span>
           </h2>
 
-          <Form>
+          <Form onSubmit={this.handleSubmit}>
             <FormGroup className="form-label-group">
               <Input
                 name="username"
@@ -123,6 +122,7 @@ Remember
               Don’t you have an account?
               {' '}
               <a href="#" onClick={this.changeTab}>
+
                 Register Now!
               </a>
               {' '}
