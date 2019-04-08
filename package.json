@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack": "webpack",
-    "start": "webpack-dev-server --open",
+    "start": "webpack-dev-server --mode development --config ./webpack.config.js",
     "lint": "eslint src"
   },
   "repository": "https://github.com/yillprojects/media-project.git",
