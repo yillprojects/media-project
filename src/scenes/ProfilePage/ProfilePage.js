@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import ProfileHeader from './components/header/ProfileHeader.js';
 import ProfileTimeline from './components/timeline/ProfileTimeline.js';
+import AboutUser from './components/about/AboutUser.js';
 
 class ProfilePage extends Component {
 	render() {
@@ -9,7 +11,8 @@ class ProfilePage extends Component {
 			<div className="container">
 				<div className="mt-4 row">
 					<ProfileHeader />
-					<ProfileTimeline />
+					<Route path='/user/timeline' component={ProfileTimeline} />
+					<Route path='/user/about' component={AboutUser} />
 				</div>
 			</div>
 		);
