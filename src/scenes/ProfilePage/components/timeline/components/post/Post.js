@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 import { Dropdown, DropdownToggle, DropdownMenu, Button } from "reactstrap";
 import {
@@ -32,8 +33,7 @@ export default class Post extends Component {
 	}
 
 	render() {
-		const { dropdownOpen } = this.state;
-
+		const { dropdownOpen, users } = this.state;
 		return (
 			<div className="ui-block">
 				<article className="post">
@@ -46,7 +46,7 @@ export default class Post extends Component {
 							/>
 							<div className="author-date">
 								<Link to="/user" className="author-name">
-									<h6>James Spiegel</h6>
+									<h6>{users ? users[0].username : 'Andrew'}</h6>
 								</Link>
 								<div className="post-date">
 									<span>18 hours ago</span>
