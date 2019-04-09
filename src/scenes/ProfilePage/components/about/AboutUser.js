@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import UserInfo from "./components/UserInfo.js";
 import "./aboutUser.scss";
 
@@ -118,6 +119,13 @@ const AboutUser = () => {
 		</div>
 	];
 >>>>>>> 8fc60dd... started aboutUser page
+=======
+import UserInfo from "./components/UserInfo.js";
+import "./aboutUser.scss";
+
+const AboutUser = () => {
+	return [<UserInfo />];
+>>>>>>> 3583c9c... added hobbies section
 };
 
 export default AboutUser;
