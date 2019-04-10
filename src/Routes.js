@@ -1,11 +1,12 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Redirect } from 'react-router';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Redirect } from "react-router";
 
-import Menus from './components/menus/Menus.js';
-import LandingPage from './scenes/Landing/LandingPage.js';
-import NotFound from './scenes/404/NotFound.js';
-import ProfilePage from './scenes/ProfilePage/ProfilePage.js';
+import Menus from "./components/menus/Menus.js";
+import LandingPage from "./scenes/Landing/LandingPage.js";
+import NotFound from "./scenes/404/NotFound.js";
+import ProfilePage from "./scenes/ProfilePage/ProfilePage.js";
+import ProfileTimeline from "./scenes/ProfilePage/components/timeline/ProfileTimeline.js";
 
 const Routes = () => {
   const DefaultLayout = ({ component: Component }) => (
@@ -25,7 +26,8 @@ const Routes = () => {
     <Router>
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <DefaultLayout path="/user" component={ProfilePage} />
+        <DefaultLayout path="/user/" component={ProfilePage} />
+        <Route component={NotFound} />
       </Switch>
     </Router>
   );
