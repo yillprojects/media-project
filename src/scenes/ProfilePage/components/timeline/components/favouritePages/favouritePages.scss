@@ -1,10 +1,36 @@
+//colors
+$color-title: #515365;
+$color-secondary: rgb(255, 94, 58); 
+
 .w-favourite-pages {
 	li {
 		padding: 15px;
-		
 	}
 
 	.post-author {
 		margin-bottom: 0;
+
+		.user-title {
+			.author-thumb {
+				img {
+					margin-right: 0;
+				}
+			}
+
+			.notification-event {
+				padding-left: 8px;
+
+				.title {
+						a {
+							color: $color-title;
+							transition: 0.3;
+
+							&:hover {
+								color: $color-secondary;
+							}
+						}
+				}
+			}
+		}
 	}
 }
