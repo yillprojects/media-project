@@ -7,6 +7,7 @@ import _map from "lodash/map";
 import { FaRegStar, FaStar } from "react-icons/fa";
 
 import PageImg from "./../../../../img/35.png";
+import './favouritePages.scss';
 
 class PageItem extends Component {
 	constructor(props) {
