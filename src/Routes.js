@@ -1,22 +1,14 @@
-import React from 'react';
-import axios from 'axios';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Redirect } from 'react-router';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Redirect } from "react-router";
 
-import Menus from './components/menus/Menus.js';
-import LandingPage from './scenes/Landing/LandingPage.js';
-import NotFound from './scenes/404/NotFound.js';
-import ProfilePage from './scenes/ProfilePage/ProfilePage.js';
+import Menus from "./components/menus/Menus.js";
+import LandingPage from "./scenes/Landing/LandingPage.js";
+import NotFound from "./scenes/404/NotFound.js";
+import ProfilePage from "./scenes/ProfilePage/ProfilePage.js";
+import ProfileTimeline from "./scenes/ProfilePage/components/timeline/ProfileTimeline.js";
 
 const Routes = () => {
-  // axios.post("http://localhost:8000/api/users/", {
-  //   username: 'a',
-  //   email: 'a@ukr.net',
-  //   password: '726721gfd',
-  //   id: '3'
-  // }).then(res => console.log(res.data));
-  // axios.get("http://localhost:8000/api/users/").then(res => console.log(res.data));
-
   const DefaultLayout = ({ component: Component }) => (
     <Route
       render={props => (
@@ -34,7 +26,8 @@ const Routes = () => {
     <Router>
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <DefaultLayout path="/user" component={ProfilePage} />
+        <DefaultLayout path="/user/" component={ProfilePage} />
+        <Route component={NotFound} />
       </Switch>
     </Router>
   );

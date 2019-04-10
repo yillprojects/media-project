@@ -8,10 +8,6 @@ $bg-dribbble: #f74881;
 	.ui-block {
 		&-content {
 			.w-personal-info {
-				li {
-					padding: 15px 0;
-				}
-
 				.text {
 					font-size: 12px;
 					overflow: hidden;
@@ -22,44 +18,50 @@ $bg-dribbble: #f74881;
 					-webkit-box-orient: vertical;
 				}
 			}
+		}
+	}
+}
 
-			.w-socials {
-				.title {
-					margin-bottom: 15px;
-				}
+.w-personal-info {
+	li {
+		padding: 15px 0;
+	}
+}
 
-				.social-item {
-					font-size: 11px;
-					color: #fff;
-					padding: 7px 15px;
-					display: block;
-					border-radius: 3px;
-					margin-bottom: 15px;
-					text-align: center;
-					transition: 0.2s;
+.w-socials {
+	.title {
+		margin-bottom: 15px;
+	}
 
-					&:last-child {
-						margin-bottom: 0;
-					}
+	.social-item {
+		font-size: 11px;
+		color: #fff;
+		padding: 7px 15px;
+		display: block;
+		border-radius: 3px;
+		margin-bottom: 15px;
+		text-align: center;
+		transition: 0.2s;
 
-					&:hover {
-						opacity: 0.9;
-					}
+		&:last-child {
+			margin-bottom: 0;
+		}
 
-					&.bg {
-						&-facebook {
-							background-color: $bg-facebook;
-						}
+		&:hover {
+			opacity: 0.9;
+		}
 
-						&-twitter {
-							background-color: $bg-twitter;
-						}
+		&.bg {
+			&-facebook {
+				background-color: $bg-facebook;
+			}
 
-						&-dribbble {
-							background-color: $bg-dribbble;
-						}
-					}
-				}
+			&-twitter {
+				background-color: $bg-twitter;
+			}
+
+			&-dribbble {
+				background-color: $bg-dribbble;
 			}
 		}
 	}

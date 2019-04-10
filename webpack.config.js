@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { BaseHrefWebpackPlugin } = require('base-href-webpack-plugin');
 
 const port = process.env.PORT || 3000;
 
@@ -40,7 +41,8 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(__dirname,'public','index.html')
-    })
+    }),
+    new BaseHrefWebpackPlugin({ baseHref: '/' })
   ],
 
   devServer: {
