@@ -7,10 +7,11 @@ from django.contrib.auth.models import User
 from .serializers import UserSerializer
 
 
-def create_response_data(req_message='', req_data=None):
+def create_response_data(req_message='', req_data=None, is_success=False):
     return {
         'message': req_message,
-        'data': req_data
+        'data': req_data,
+        'success': is_success
     }
 
 
@@ -26,25 +27,25 @@ def general(request):
             serialized = UserSerializer(data=request.data)
             if serialized.is_valid():
                 serialized.save()
-                return Response(create_response_data('user registered', request.data), status.HTTP_201_CREATED)
+                return Response(create_response_data('User registered', request.data, True), status.HTTP_201_CREATED)
 
             return Response(create_response_data('invalid data', request.data), status=status.HTTP_400_BAD_REQUEST)
 
-        return Response(create_response_data('busy username', request.data), status.HTTP_200_OK)
+        return Response(create_response_data('Username is busy', request.data), status.HTTP_200_OK)
 
     if request.data['appointment'] == 'check':
 
         is_user_registered = \
             len(User.objects.filter(username=request.data['username'])) != 0
         if not is_user_registered:
-            return Response(create_response_data('no user', request.data), status=status.HTTP_200_OK)
+            return Response(create_response_data('Username is unknown', request.data), status=status.HTTP_200_OK)
 
         is_password_match = \
-            User.objects.filter(username=request.data['username'])[0] == request.data['password']
+            len(User.objects.filter(username=request.data['username']).filter(password=request.data['password'])) != 0
         if not is_password_match:
-            return Response(create_response_data('wrong password', request.data), status=status.HTTP_200_OK)
+            return Response(create_response_data('Wrong password', request.data), status=status.HTTP_200_OK)
 
-        return Response(create_response_data('match', request.data), status=status.HTTP_200_OK)
+        return Response(create_response_data('User logged in', request.data, True), status=status.HTTP_200_OK)
 
 
 
