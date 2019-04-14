@@ -4,11 +4,6 @@ import PropTypes from "prop-types";
 
 import axios from 'axios';
 
-import {
-  Button, Form, FormGroup, Label, Input
-} from 'reactstrap';
-import { FaFacebookF, FaTwitter } from 'react-icons/fa';
-
 import "./login.scss";
 
 class Login extends Component {
