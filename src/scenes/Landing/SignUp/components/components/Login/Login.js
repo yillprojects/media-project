@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { FaFacebookF, FaTwitter } from "react-icons/fa";
+import axios from 'axios';
 
 import "./login.scss";
 
@@ -29,9 +30,15 @@ class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    this.setState({ submitted: true });
     const { username, password } = this.state;
+    axios
+      .post("http://localhost:8000/api/", {
+        username,
+        password,
+        appointment: 'check'
+      })
+      .then(res => alert(res.data.message))
+      .catch(err => console.log(err));
   }
 
   changeTab(event) {

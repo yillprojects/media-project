@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import {
   Button, Form, FormGroup, Label, Input
@@ -34,8 +35,13 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    this.setState({ submitted: true });
+    axios
+      .post("http://localhost:8000/api/", {
+        ...this.state.user,
+        appointment: 'register'
+      })
+      .then(res => alert(res.data.message))
+      .catch(err => console.log(err));
   }
 
   render() {
