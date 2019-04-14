@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 
 import { UncontrolledTooltip, Button } from "reactstrap";
-import Tooltip from "@material-ui/core/Tooltip";
 
 import _map from "lodash/map";
 import { FaRegStar, FaStar } from "react-icons/fa";

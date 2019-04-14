@@ -2,8 +2,6 @@ import React, { Component } from "react";
 
 import PropTypes from "prop-types";
 
-import { Button, Form, FormGroup, Label, Input } from "reactstrap";
-import { FaFacebookF, FaTwitter } from "react-icons/fa";
 import axios from 'axios';
 
 import {

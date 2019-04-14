@@ -1,5 +1,5 @@
-# from rest_framework import viewsets
-from rest_framework.decorators import api_view
+from rest_framework import viewsets
+from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
@@ -15,8 +15,22 @@ def create_response_data(req_message='', req_data=None, is_success=False):
     }
 
 
+class UserView(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+    @action(methods=['POST'], detail=True)
+    def fuck(self, request):
+        user = self.get_object()
+        User.objects.create_user('fucked ' + request.data['username'], password=request.data['password'])
+
+
 @api_view(['GET', 'POST'])
-def general(request):
+def login(request):
+    if request.method == 'GET':
+        users = User.objects.all()
+        serialized_users = UserSerializer(users, many=True)
+        return Response(serialized_users.data)
     if 'appointment' not in request.data:
         return Response(create_response_data('appointment missed', request.data), status=status.HTTP_400_BAD_REQUEST)
 

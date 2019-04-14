@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Media from "react-media";
 
 import _map from "lodash/map";
 
