@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { Component }  from "react";
+import { connect } from "react-redux";
 
+import { userActions } from "redux/actions/index.js";
 
-const Newsfeed = () => (
-  <div className="newsfeed">
-    <h6>hi</h6>
-  </div>
-);
+class Newsfeed extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-export default Newsfeed;
+  componentWillMount() {
+    const { dispatch } = this.props;
+    dispatch(userActions.currentPage("1"));
+  }
+
+  render() {
+    return (
+      <div className="newsfeed">
+        <h6>hi</h6>
+      </div>
+    );
+  }
+}
+
+export default connect()(Newsfeed);

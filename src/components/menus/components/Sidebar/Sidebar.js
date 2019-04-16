@@ -21,7 +21,7 @@ import {
 import SidebarMobile from "./SidebarMobile.js";
 import "./sidebar.scss";
 
-class SidebarNo extends Component {
+class SidebarItem extends Component {
   constructor(props) {
     super(props);
 
@@ -57,6 +57,9 @@ class SidebarNo extends Component {
 
     const { dispatch } = this.props;
     dispatch(userActions.currentPage(tab));
+    if (tab == 2) {
+      dispatch(userActions.currentProfileTab("1"));
+    }
   }
 
   render() {
@@ -201,6 +204,6 @@ const mapStateToProps = state => {
   };
 };
 
-const Sidebar = withRouter(SidebarNo);
+const Sidebar = withRouter(SidebarItem);
 
 export default connect(mapStateToProps)(Sidebar);

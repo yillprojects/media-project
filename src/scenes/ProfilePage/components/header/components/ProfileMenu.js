@@ -22,7 +22,7 @@ class ProfileMenu extends Component {
 
 		this.state = {
 			dropdownOpen: false,
-			activeTab: '1'
+			activeTab: "1"
 		};
 	}
 
@@ -32,6 +32,9 @@ class ProfileMenu extends Component {
 		this.setState({
 			activeTab: userTab
 		});
+
+		const { dispatch } = this.props;
+		dispatch(userActions.currentPage("2"));
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -69,8 +72,6 @@ class ProfileMenu extends Component {
 
 	render() {
 		const { dropdownOpen, activeTab } = this.state;
-		console.log(this.props.userTab);
-
 		return (
 			<div className="profile-section">
 				<div className="row">
@@ -80,10 +81,10 @@ class ProfileMenu extends Component {
 								<Link
 									to="/user/timeline"
 									className={`profile-menu-link ${
-										activeTab === '1' ? "active" : ""
+										activeTab === "1" ? "active" : ""
 									}`}
 									onClick={() => {
-										this.changeActiveTab('1');
+										this.changeActiveTab("1");
 									}}
 								>
 									Timeline
@@ -93,10 +94,10 @@ class ProfileMenu extends Component {
 								<Link
 									to="/user/about"
 									className={`profile-menu-link ${
-										activeTab === '2' ? "active" : ""
+										activeTab === "2" ? "active" : ""
 									}`}
 									onClick={() => {
-										this.changeActiveTab('2');
+										this.changeActiveTab("2");
 									}}
 								>
 									About
@@ -110,10 +111,10 @@ class ProfileMenu extends Component {
 								<Link
 									to="/user/friends"
 									className={`profile-menu-link ${
-										activeTab === '3' ? "active" : ""
+										activeTab === "3" ? "active" : ""
 									}`}
 									onClick={() => {
-										this.changeActiveTab('3');
+										this.changeActiveTab("3");
 									}}
 								>
 									Friends
