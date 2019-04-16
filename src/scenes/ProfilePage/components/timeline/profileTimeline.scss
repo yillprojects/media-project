@@ -23,3 +23,15 @@ $title-color: #515365;
 		}
 	}
 }
+
+.display-sm-none {
+	@media (max-width: 767.5px) {
+		display: none;
+	}
+}
+
+.display-md-none {
+	@media (max-width: 991px) {
+		display: none;
+	}
+}

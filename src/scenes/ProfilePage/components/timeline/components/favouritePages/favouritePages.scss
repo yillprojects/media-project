@@ -1,10 +1,11 @@
 //colors
 $color-title: #515365;
-$color-secondary: rgb(255, 94, 58); 
+$color-secondary: rgb(255, 94, 58);
+$color-hover: #ffc923;
 
 .w-favourite-pages {
 	li {
-		padding: 15px;
+		padding: 15px 20px;
 	}
 
 	.post-author {
@@ -19,17 +20,50 @@ $color-secondary: rgb(255, 94, 58);
 
 			.notification-event {
 				padding-left: 8px;
+				max-width: 80%;
+				display: grid;
+			}
+		}
+	}
 
-				.title {
-						a {
-							color: $color-title;
-							transition: 0.3;
+	.notification-event {
+		font-size: 11px;
 
-							&:hover {
-								color: $color-secondary;
-							}
-						}
+		.title {
+			font-size: 13px;
+
+			a {
+				color: $color-title;
+				transition: 0.3s;
+				font-weight: 700;
+				line-height: 14px;
+
+				&:hover {
+					color: $color-secondary;
 				}
+			}
+		}
+
+		.chat-message-item {
+			line-height: 12px;
+		}
+	}
+
+	.notification-icon {
+		.btn {
+			padding: 0;
+			display: flex;	
+
+			&-secondary {
+				color: $color-title;
+			}
+		}
+
+		svg {
+			transition: 0.3s;
+
+			&:hover {
+				color: $color-hover;
 			}
 		}
 	}

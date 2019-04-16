@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import axios from "axios";
 
-import SearchMobile from './components/SearchMobile.js';
-import SearchLaptop from './components/SearchLaptop.js';
-import Suggestions from './components/Suggestions.js';
+import SearchMobile from "./components/SearchMobile.js";
+import SearchLaptop from "./components/SearchLaptop.js";
+import Suggestions from "./components/Suggestions.js";
 
-import './searchbox.scss';
+import "./searchbox.scss";
 
 class SearchBox extends Component {
   constructor(props) {
@@ -14,17 +14,23 @@ class SearchBox extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
 
     this.state = {
-      query: '',
+      query: "",
       info: [],
       results: []
     };
   }
 
   componentDidMount() {
-    axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
+    axios.get("https://jsonplaceholder.typicode.com/users").then(res => {
       const info = res.data;
       this.setState({ info });
     });
+  }
+
+  componentWillUnmount() {
+    this.setState = (state, callback) => {
+      return;
+    };
   }
 
   handleInputChange(event) {
@@ -38,17 +44,17 @@ class SearchBox extends Component {
         const { query, info } = this.state;
 
         if (query && query.length > 1) {
-          const filteredData = info.filter((item) => {
+          const filteredData = info.filter(item => {
             const options = [item.name, item.username];
-            let isItemFound = 'notfound';
+            let isItemFound = "notfound";
 
-            options.map((data) => {
+            options.map(data => {
               if (data.toLowerCase().includes(query)) {
-                isItemFound = 'found';
+                isItemFound = "found";
               }
             });
 
-            return isItemFound == 'found' ? item : '';
+            return isItemFound == "found" ? item : "";
           });
 
           this.setState({
@@ -64,8 +70,16 @@ class SearchBox extends Component {
 
     return (
       <div className="search-wrap">
-        <SearchLaptop handleInputChange={this.handleInputChange} query={query} results={results} />
-        <SearchMobile handleInputChange={this.handleInputChange} query={query} results={results} />
+        <SearchLaptop
+          handleInputChange={this.handleInputChange}
+          query={query}
+          results={results}
+        />
+        <SearchMobile
+          handleInputChange={this.handleInputChange}
+          query={query}
+          results={results}
+        />
       </div>
     );
   }

@@ -1,9 +1,11 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux";
 
-import { status } from './status.reducer';
+import { status } from "./status.reducer";
+import { direction } from "./direction.reducer";
 
 const rootReducer = combineReducers({
-  status
+	status: status,
+	direction: direction
 });
 
 export default rootReducer;
