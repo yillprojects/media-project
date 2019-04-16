@@ -1,7 +1,13 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { withRouter } from "react-router";
 
-import { IoIosCube } from 'react-icons/io';
+import { userActions } from "redux/actions/index.js";
+
+import Tooltip from "@material-ui/core/Tooltip";
+
+import { IoIosCube } from "react-icons/io";
 import {
   FaHome,
   FaUser,
@@ -10,20 +16,28 @@ import {
   FaHeadphonesAlt,
   FaRegCalendarAlt,
   FaRegChartBar
-} from 'react-icons/fa';
+} from "react-icons/fa";
 
-import SidebarMobile from './SidebarMobile.js';
-import './sidebar.scss';
+import SidebarMobile from "./SidebarMobile.js";
+import "./sidebar.scss";
 
-export default class Sidebar extends Component {
+class SidebarItem extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeTab: '1'
+      activeTab: "1"
     };
 
     this.toggle = this.toggle.bind(this);
+  }
+
+  componentWillMount() {
+    const { page } = this.props;
+
+    this.setState({
+      activeTab: page
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -40,6 +54,12 @@ export default class Sidebar extends Component {
         activeTab: tab
       });
     }
+
+    const { dispatch } = this.props;
+    dispatch(userActions.currentPage(tab));
+    if (tab == 2) {
+      dispatch(userActions.currentProfileTab("1"));
+    }
   }
 
   render() {
@@ -50,7 +70,7 @@ export default class Sidebar extends Component {
         <div className="sidebar-laptop">
           <header className="fixed-sidebar-header">
             <h1>
-              <Link to="/home" className="sidebar-logo sidebar-logo-icon">
+              <Link to="/newsfeed" className="sidebar-logo sidebar-logo-icon">
                 <IoIosCube />
                 <span className="sr-only">Website logo</span>
               </Link>
@@ -59,29 +79,33 @@ export default class Sidebar extends Component {
           <ul className="sidebar-nav">
             <li className="sidebar-nav-item">
               <Link
-                to="/home"
+                to="/newsfeed"
                 className={`sidebar-nav-link ${
-                  activeTab === '1' ? 'active ' : ''
+                  activeTab === "1" ? "active " : ""
                 }`}
                 onClick={() => {
-                  this.toggle('1');
+                  this.toggle("1");
                 }}
               >
-                <FaHome />
-                <span className="sr-only">Home</span>
+                <Tooltip title="NEWSFEED" placement="right">
+                  <FaHome />
+                </Tooltip>
+                <span className="sr-only">Newsfeed</span>
               </Link>
             </li>
             <li className="sidebar-nav-item">
               <Link
-                to="/user"
+                to="/user/timeline"
                 className={`sidebar-nav-link ${
-                  activeTab === '2' ? 'active ' : ''
+                  activeTab === "2" ? "active " : ""
                 }`}
                 onClick={() => {
-                  this.toggle('2');
+                  this.toggle("2");
                 }}
               >
-                <FaUser />
+                <Tooltip title="PROFILE PAGE" placement="right">
+                  <FaUser />
+                </Tooltip>
                 <span className="sr-only">User page</span>
               </Link>
             </li>
@@ -89,13 +113,15 @@ export default class Sidebar extends Component {
               <Link
                 to="/favourite"
                 className={`sidebar-nav-link ${
-                  activeTab === '3' ? 'active ' : ''
+                  activeTab === "3" ? "active " : ""
                 }`}
                 onClick={() => {
-                  this.toggle('3');
+                  this.toggle("3");
                 }}
               >
-                <FaRegStar />
+                <Tooltip title="FAV PAGES" placement="right">
+                  <FaRegStar />
+                </Tooltip>
                 <span className="sr-only">Fav pages</span>
               </Link>
             </li>
@@ -103,13 +129,15 @@ export default class Sidebar extends Component {
               <Link
                 to="/groups"
                 className={`sidebar-nav-link ${
-                  activeTab === '4' ? 'active ' : ''
+                  activeTab === "4" ? "active " : ""
                 }`}
                 onClick={() => {
-                  this.toggle('4');
+                  this.toggle("4");
                 }}
               >
-                <FaRegGrinWink />
+                <Tooltip title="FRIEND GROUPS" placement="right">
+                  <FaRegGrinWink />
+                </Tooltip>
                 <span className="sr-only">Friend groups</span>
               </Link>
             </li>
@@ -117,13 +145,15 @@ export default class Sidebar extends Component {
               <Link
                 to="/playlist"
                 className={`sidebar-nav-link ${
-                  activeTab === '5' ? 'active ' : ''
+                  activeTab === "5" ? "active " : ""
                 }`}
                 onClick={() => {
-                  this.toggle('5');
+                  this.toggle("5");
                 }}
               >
-                <FaHeadphonesAlt />
+                <Tooltip title="MUSIC & PLAYLISTS" placement="right">
+                  <FaHeadphonesAlt />
+                </Tooltip>
                 <span className="sr-only">Music and playlists</span>
               </Link>
             </li>
@@ -131,13 +161,15 @@ export default class Sidebar extends Component {
               <Link
                 to="/calendar"
                 className={`sidebar-nav-link ${
-                  activeTab === '6' ? 'active ' : ''
+                  activeTab === "6" ? "active " : ""
                 }`}
                 onClick={() => {
-                  this.toggle('6');
+                  this.toggle("6");
                 }}
               >
-                <FaRegCalendarAlt />
+                <Tooltip title="CALENDAR & EVENTS" placement="right">
+                  <FaRegCalendarAlt />
+                </Tooltip>
                 <span className="sr-only">Calendar and events</span>
               </Link>
             </li>
@@ -145,13 +177,15 @@ export default class Sidebar extends Component {
               <Link
                 to="/statistic"
                 className={`sidebar-nav-link ${
-                  activeTab === '7' ? 'active ' : ''
+                  activeTab === "7" ? "active " : ""
                 }`}
                 onClick={() => {
-                  this.toggle('7');
+                  this.toggle("7");
                 }}
               >
-                <FaRegChartBar />
+                <Tooltip title="ACCOUNT STATS" placement="right">
+                  <FaRegChartBar />
+                </Tooltip>
                 <span className="sr-only">Statisic</span>
               </Link>
             </li>
@@ -162,3 +196,14 @@ export default class Sidebar extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  const { page } = state.direction;
+  return {
+    page
+  };
+};
+
+const Sidebar = withRouter(SidebarItem);
+
+export default connect(mapStateToProps)(Sidebar);

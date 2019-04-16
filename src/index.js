@@ -1,29 +1,26 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-import { createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
-import { Provider } from 'react-redux';
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/lib/integration/react";
+import { AppContainer } from "react-hot-loader";
 
-import { AppContainer } from 'react-hot-loader';
-import rootReducer from './redux/reducers';
+import { persistor, store } from "./redux/store";
+import Routes from "./Routes.js";
 
-
-import Routes from './Routes.js';
-
-import './styles.scss';
-
-const store = createStore(rootReducer, applyMiddleware(thunk));
+import "./styles.scss";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <AppContainer>
-      <Routes />
-    </AppContainer>
-  </Provider>,
-  document.getElementById('root')
+	<Provider store={store}>
+		<PersistGate loading={<Routes />} persistor={persistor}>
+			<AppContainer>
+				<Routes />
+			</AppContainer>
+		</PersistGate>
+	</Provider>,
+	document.getElementById("root")
 );
 
 if (module.hot) {
-  module.hot.accept();
+	module.hot.accept();
 }

@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
+import { userActions } from "redux/actions/index.js";
 
 import ProfileControlButtons from "./control buttons/ProfileControlButtons.js";
 
@@ -8,7 +11,7 @@ import { FaEllipsisH } from "react-icons/fa";
 
 import "./profilemenu.scss";
 
-export default class ProfileMenu extends Component {
+class ProfileMenu extends Component {
 	constructor(props) {
 		super(props);
 
@@ -19,8 +22,25 @@ export default class ProfileMenu extends Component {
 
 		this.state = {
 			dropdownOpen: false,
-			activeTab: 1
+			activeTab: "1"
 		};
+	}
+
+	componentWillMount() {
+		const { userTab } = this.props;
+
+		this.setState({
+			activeTab: userTab
+		});
+
+		const { dispatch } = this.props;
+		dispatch(userActions.currentPage("2"));
+	}
+
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			activeTab: nextProps.userTab
+		});
 	}
 
 	toggle() {
@@ -45,11 +65,13 @@ export default class ProfileMenu extends Component {
 				activeTab: tab
 			});
 		}
+
+		const { dispatch } = this.props;
+		dispatch(userActions.currentProfileTab(tab));
 	}
 
 	render() {
 		const { dropdownOpen, activeTab } = this.state;
-
 		return (
 			<div className="profile-section">
 				<div className="row">
@@ -59,10 +81,10 @@ export default class ProfileMenu extends Component {
 								<Link
 									to="/user/timeline"
 									className={`profile-menu-link ${
-										activeTab === 1 ? "active" : ""
+										activeTab === "1" ? "active" : ""
 									}`}
 									onClick={() => {
-										this.changeActiveTab(1);
+										this.changeActiveTab("1");
 									}}
 								>
 									Timeline
@@ -72,10 +94,10 @@ export default class ProfileMenu extends Component {
 								<Link
 									to="/user/about"
 									className={`profile-menu-link ${
-										activeTab === 2 ? "active" : ""
+										activeTab === "2" ? "active" : ""
 									}`}
 									onClick={() => {
-										this.changeActiveTab(2);
+										this.changeActiveTab("2");
 									}}
 								>
 									About
@@ -89,10 +111,10 @@ export default class ProfileMenu extends Component {
 								<Link
 									to="/user/friends"
 									className={`profile-menu-link ${
-										activeTab === 3 ? "active" : ""
+										activeTab === "3" ? "active" : ""
 									}`}
 									onClick={() => {
-										this.changeActiveTab(3);
+										this.changeActiveTab("3");
 									}}
 								>
 									Friends
@@ -134,3 +156,12 @@ export default class ProfileMenu extends Component {
 		);
 	}
 }
+
+const mapStateToProps = state => {
+	const { userTab } = state.direction;
+	return {
+		userTab
+	};
+};
+
+export default connect(mapStateToProps)(ProfileMenu);

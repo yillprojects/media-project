@@ -73,38 +73,36 @@ const data = {
 
 const UserInfo = () => {
 	return (
-		<div className="col col-xl-4 order-xl-1 col-lg-4 order-lg-1 col-md-12 order-md-2 col-sm-12 col-12">
-			<div className="about-user ui-block">
-				<div className="ui-block-title">
-					<h6 className="title">Personal Info</h6>
-				</div>
-				<div className="ui-block-content">
-					<ul className="widget w-personal-info">
-						{_map(titles, (item, index) => (
-							<li key={item.key}>
-								<span className="title">{item.title}: </span>
-								{item.title === "Website" || item.title === "Email" ? (
-									<a href="#" className="text">
-										{data[item.key]}
-									</a>
-								) : (
-									<span className="text">{data[item.key]}</span>
-								)}
-							</li>
-						))}
-					</ul>
-					<div className="w-socials">
-						<h6 className="title">Other Social Networks: </h6>
-						<a href="#" className="social-item bg-facebook">
-							<FaFacebookF className="mr-1" /> Facebook
-						</a>
-						<a href="#" className="social-item bg-twitter">
-							<FaTwitter className="mr-1" /> Twitter
-						</a>
-						<a href="#" className="social-item bg-dribbble">
-							<FaDribbble className="mr-1" /> Dribbble
-						</a>
-					</div>
+		<div className="about-user ui-block">
+			<div className="ui-block-title">
+				<h6 className="title">Personal Info</h6>
+			</div>
+			<div className="ui-block-content">
+				<ul className="widget w-personal-info">
+					{_map(titles, (item, index) => (
+						<li key={item.key}>
+							<span className="title">{item.title}: </span>
+							{item.title === "Website" || item.title === "Email" ? (
+								<a href="#" className="text">
+									{data[item.key]}
+								</a>
+							) : (
+								<span className="text">{data[item.key]}</span>
+							)}
+						</li>
+					))}
+				</ul>
+				<div className="w-socials">
+					<h6 className="title">Other Social Networks: </h6>
+					<a href="#" className="social-item bg-facebook">
+						<FaFacebookF className="mr-1" /> Facebook
+					</a>
+					<a href="#" className="social-item bg-twitter">
+						<FaTwitter className="mr-1" /> Twitter
+					</a>
+					<a href="#" className="social-item bg-dribbble">
+						<FaDribbble className="mr-1" /> Dribbble
+					</a>
 				</div>
 			</div>
 		</div>

@@ -1,0 +1,4 @@
+export const pageConstants = {
+	CURRENT_PAGE: "USER_CURRENT_PAGE",
+	CURRENT_PROFILE_TAB: "PROFILE_CURRENT_TAB"
+};
