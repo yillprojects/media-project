@@ -47,6 +47,7 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:3000/'
 )
 
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
