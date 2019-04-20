@@ -70,7 +70,14 @@ function login(username, password) {
   }
 }
 
+function logout() {
+  return {
+    type: authenticationConstants.LOGOUT
+  };
+}
+
 export const authenticationActions = {
   register,
-  login
+  login,
+  logout
 };

@@ -57,6 +57,7 @@ class Register extends Component {
   render() {
     const { user, submitted } = this.state;
     const { registering } = this.props;
+    console.log(this.props.alert);
 
     return (
       <div className="tab-section registration">
@@ -167,9 +168,10 @@ class Register extends Component {
 
 const mapStateToProps = state => {
   const { registering } = state.registration;
+  const { alert } = state.alert;
 
   return {
-    registering
+    registering, alert
   };
 };
 
