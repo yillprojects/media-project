@@ -73,7 +73,7 @@ $font-title: "Quicksand", sans-serif;
 
 .has-error {
   color: $color-error;
-  
+
   .form-control {
     border-color: $color-error !important;
   }
@@ -94,10 +94,6 @@ $font-title: "Quicksand", sans-serif;
       left: 50%;
       transform: translate(-50%, 0);
       margin-top: 20px;
-
-      .MuiCircularProgress-colorPrimary-14 {
-        color: $secondary-color !important;
-      }
     }
   }
 }

@@ -1,12 +1,15 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import { Nav, NavItem, NavLink } from "reactstrap";
+
+import { alertActions } from "redux/actions/index.js";
 
 import SignUpTabs from "./components/SignUpTabs.js";
 
 import "./signup.scss";
 
-export default class SignUp extends Component {
+class SignUp extends Component {
   constructor(props) {
     super(props);
 
@@ -60,3 +63,5 @@ export default class SignUp extends Component {
     );
   }
 }
+
+export default connect()(SignUp);

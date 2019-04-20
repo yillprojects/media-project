@@ -16,6 +16,7 @@ class SignUpTabs extends Component {
   constructor(props) {
     super(props);
     this.updateState = this.updateState.bind(this);
+    this.clearMessage = this.clearMessage.bind(this);
 
     this.state = {
       flashClass: false
@@ -36,17 +37,7 @@ class SignUpTabs extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-
     const { activeTab, alert } = this.props;
-    if (activeTab != nextProps.activeTab && alert.type != "alert-success") {
-      const { dispatch } = this.props;
-      dispatch(alertActions.clear());
-
-      this.setState({
-        flashClass: false
-      });
-    }
 
     if (alert.message != nextProps.alert.message) {
       setTimeout(() => {
@@ -54,12 +45,19 @@ class SignUpTabs extends Component {
           this.updateState("2");
         }
         this.setState({ flashClass: true });
-      }, 150);
-
+      }, 300);
       setTimeout(() => {
         this.setState({ flashClass: false });
       }, 5000);
+      this.clearMessage();
     }
+  }
+
+  clearMessage() {
+    setTimeout(() => {
+      const { dispatch } = this.props;
+      dispatch(alertActions.clear());
+    }, 5300);
   }
 
   updateState(state = {}) {
@@ -69,10 +67,8 @@ class SignUpTabs extends Component {
 
   render() {
     const { flashClass } = this.state;
-    console.log(flashClass);
     const { activeTab, alert, registering } = this.props;
     const flash = flashClass ? "alert-open" : "";
-    console.log(flash);
 
     return (
       <TabContent activeTab={activeTab}>
@@ -81,6 +77,8 @@ class SignUpTabs extends Component {
         ) : (
           ""
         )}
+
+        {alert.message ? console.log("should be a message") : ""}
         <TabPane tabId="1">
           <Register />
         </TabPane>
