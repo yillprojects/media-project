@@ -1,9 +1,11 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import axios from "axios";
 
-import {
-  Button, Form, FormGroup, Label, Input
-} from 'reactstrap';
+import { authenticationActions } from "redux/actions/index.js";
+
+import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 class Register extends Component {
   constructor(props) {
@@ -11,9 +13,10 @@ class Register extends Component {
 
     this.state = {
       user: {
-        email: '',
-        username: '',
-        password: ''
+        email: "",
+        username: "",
+        password: "",
+        checkbox: false
       },
       submitted: false
     };
@@ -23,8 +26,12 @@ class Register extends Component {
   }
 
   handleChange(event) {
-    const { name, value } = event.target;
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
     const { user } = this.state;
+
     this.setState({
       user: {
         ...user,
@@ -35,88 +42,122 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    axios
-      .post("http://localhost:8000/api/", {
-        ...this.state.user,
-        appointment: 'register'
-      })
-      .then(res => alert(res.data.message))
-      .catch(err => console.log(err));
+
+    this.setState({
+      submitted: true
+    });
+
+    const { user } = this.state;
+    const { dispatch } = this.props;
+
+    if (user.email && user.username && user.password && user.checkbox) {
+      dispatch(authenticationActions.register(user));
+    }
   }
 
   render() {
     const { user, submitted } = this.state;
+    const { registering } = this.props;
 
     return (
       <div className="tab-section registration">
         <div className="container">
           <h2 className="tab-section-title">
-
             Register to our biggest social media!
           </h2>
 
           <Form onSubmit={this.handleSubmit}>
-            <FormGroup className="form-label-group">
+            <FormGroup
+              className={`form-label-group ${
+                submitted && !user.username ? "has-error" : ""
+              }`}
+            >
               <Input
                 name="username"
                 id="register-username"
                 placeholder={
                   submitted && !user.username
-                    ? 'Username is required'
-                    : 'Username'
+                    ? "Username is required"
+                    : "Username"
                 }
                 value={user.username}
                 onChange={this.handleChange}
               />
-              <Label for="register-username">Username</Label>
+              <Label for="register-username">
+                {submitted && !user.username
+                  ? "Username is requered"
+                  : "Username"}
+              </Label>
             </FormGroup>
-            <FormGroup className="form-label-group">
+            <FormGroup
+              className={`form-label-group ${
+                submitted && !user.email ? "has-error" : ""
+              }`}
+            >
               <Input
                 type="email"
                 name="email"
                 id="register-email"
                 placeholder={
-                  submitted && !user.email ? 'Email is required' : 'Email'
+                  submitted && !user.email ? "Email is required" : "Email"
                 }
                 value={user.email}
                 onChange={this.handleChange}
               />
-              <Label for="register-email">Email</Label>
+              <Label for="register-email">
+                {submitted && !user.email ? "Email is requered" : "Email"}
+              </Label>
             </FormGroup>
-            <FormGroup className="form-label-group mb-4">
+            <FormGroup
+              className={`form-label-group mb-4 ${
+                submitted && !user.password ? "has-error" : ""
+              }`}
+            >
               <Input
                 type="password"
                 name="password"
                 id="register-password"
                 placeholder={
                   submitted && !user.password
-                    ? 'Password is required'
-                    : 'Password'
+                    ? "Password is required"
+                    : "Password"
                 }
                 value={user.password}
                 onChange={this.handleChange}
               />
-              <Label for="register-password">Password</Label>
+              <Label for="register-password">
+                {submitted && !user.password
+                  ? "Password is requered"
+                  : "Password"}
+              </Label>
             </FormGroup>
-            <FormGroup className="mb-4" check>
+            <FormGroup
+              className={`mb-4 ${
+                submitted && !user.checkbox ? "has-error" : ""
+              }`}
+              check
+            >
               <Label className="color-link" check>
-                <Input type="checkbox" />
-                {' '}
-I accept the
-                {' '}
+                <Input
+                  type="checkbox"
+                  name="checkbox"
+                  onChange={this.handleChange}
+                />{" "}
+                I accept the{" "}
                 <a href="#" className="color-link">
-
                   Terms and Conditions
-                </a>
-                {' '}
-
+                </a>{" "}
                 of the website
               </Label>
             </FormGroup>
             <Button className="tab-section-btn" onClick={this.handleSubmit}>
-
               Complete Registration
             </Button>
+            {registering && (
+              <div className="loading-panel">
+                <CircularProgress color="primary" />
+              </div>
+            )}
           </Form>
         </div>
       </div>
@@ -124,4 +165,12 @@ I accept the
   }
 }
 
-export default Register;
+const mapStateToProps = state => {
+  const { registering } = state.registration;
+
+  return {
+    registering
+  };
+};
+
+export default connect(mapStateToProps)(Register);
