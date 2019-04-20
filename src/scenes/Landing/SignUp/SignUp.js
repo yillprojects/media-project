@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 
 import { Nav, NavItem, NavLink } from "reactstrap";
-
-import { alertActions } from "redux/actions/index.js";
 
 import SignUpTabs from "./components/SignUpTabs.js";
 
@@ -64,4 +61,4 @@ class SignUp extends Component {
   }
 }
 
-export default connect()(SignUp);
+export default SignUp;

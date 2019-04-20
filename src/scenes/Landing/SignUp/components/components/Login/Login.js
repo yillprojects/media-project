@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router";
 
 import { authenticationActions } from "redux/actions/index.js";
 
 import PropTypes from "prop-types";
 
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
 import { FaFacebookF, FaTwitter } from "react-icons/fa";
 
 import "./login.scss";
@@ -52,6 +55,7 @@ class Login extends Component {
 
   render() {
     const { username, password, submitted } = this.state;
+    const { loggingIn, loggedIn } = this.props;
 
     return (
       <div className="tab-section">
@@ -122,8 +126,18 @@ class Login extends Component {
               className="tab-section-btn mb-4"
               onClick={this.handleSubmit}
             >
-              Login
+              {loggingIn ? (
+                <div className="loading-panel">
+                  <CircularProgress
+                    color="primary"
+                    style={{ height: 19, width: 20 }}
+                  />
+                </div>
+              ) : (
+                "Login"
+              )}{" "}
             </Button>
+            {loggedIn && <Redirect to="/newsfeed" />}
             <div className="or" />
             <Button className="tab-section-btn bg-facebook mb-2">
               <FaFacebookF className="icon" />
@@ -147,7 +161,16 @@ class Login extends Component {
   }
 }
 
-export default connect()(Login);
+const mapStateToProps = state => {
+  const { loggingIn, loggedIn } = state.login;
+
+  return {
+    loggingIn,
+    loggedIn
+  };
+};
+
+export default connect(mapStateToProps)(Login);
 
 Login.propTypes = {
   update: PropTypes.func
