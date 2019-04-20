@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 
 import { authenticationActions } from "redux/actions/index.js";
 
@@ -150,14 +149,15 @@ class Register extends Component {
                 of the website
               </Label>
             </FormGroup>
-            <Button className="tab-section-btn" onClick={this.handleSubmit}>
-              Complete Registration
+            <Button className="tab-section-btn" disabled={registering} onClick={this.handleSubmit}>
+              {registering ? (
+                <div className="loading-panel">
+                  <CircularProgress color="primary" style={{height: 19, width: 20}} />
+                </div>
+              ) : (
+                "Complete Registration"
+              )}
             </Button>
-            {registering && (
-              <div className="loading-panel">
-                <CircularProgress color="primary" />
-              </div>
-            )}
           </Form>
         </div>
       </div>

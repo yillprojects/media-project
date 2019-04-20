@@ -37,6 +37,40 @@ function register(user) {
   }
 }
 
+function login(username, password) {
+  return dispatch => {
+    dispatch(request(username));
+
+    axios
+      .post("http://localhost:8000/api/users/check/", {
+        username,
+        password,
+        appointment: "check"
+      })
+      .then(user => {
+        console.log(user.data);
+        if (user.data.success) {
+          dispatch(success(user.data.user));
+        } else {
+          dispatch(failure(user.data.message));
+          dispatch(alertActions.error(user.data.message));
+        }
+      })
+      .catch(err => console.log(err));
+  };
+
+  function request(user) {
+    return { type: authenticationConstants.LOGIN_REQUEST, user };
+  }
+  function success(user) {
+    return { type: authenticationConstants.LOGIN_SUCCESS, user };
+  }
+  function failure(error) {
+    return { type: authenticationConstants.LOGIN_FAILURE, error };
+  }
+}
+
 export const authenticationActions = {
-  register
+  register,
+  login
 };

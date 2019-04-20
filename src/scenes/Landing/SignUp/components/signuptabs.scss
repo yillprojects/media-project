@@ -87,13 +87,8 @@ $font-title: "Quicksand", sans-serif;
   }
 }
 
-.tab-section {
-  &.registration {
-    .loading-panel {
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%, 0);
-      margin-top: 20px;
-    }
+.loading-panel {
+  svg {
+    color: white;
   }
 }
