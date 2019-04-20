@@ -32,13 +32,11 @@ class Login extends Component {
     event.preventDefault();
     const { username, password } = this.state;
     axios
-      .post("http://localhost:8000/api/", {
+      .post("http://localhost:8000/api/users/check/", {
         username,
         password,
-        appointment: 'check'
       })
-      .then(res => alert(res.data.message))
-      .catch(err => console.log(err));
+      .then(res => console.log(res));
   }
 
   changeTab(event) {

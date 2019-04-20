@@ -36,12 +36,10 @@ class Register extends Component {
   handleSubmit(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:8000/api/", {
+      .post("http://localhost:8000/api/users/register/", {
         ...this.state.user,
-        appointment: 'register'
       })
-      .then(res => alert(res.data.message))
-      .catch(err => console.log(err));
+      .then(res => console.log(res));
   }
 
   render() {
