@@ -1,9 +1,16 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 
-import {
-  Button, Form, FormGroup, Label, Input
-} from 'reactstrap';
+import passwordValidator from "password-validator";
+
+import { authenticationActions, alertActions } from "redux/actions/index.js";
+
+import { Button, Form, FormGroup, Label, Input } from "reactstrap";
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import config from "./config/password.config.js";
+
+console.log(config[2].try.validate("leleleel"));
 
 class Register extends Component {
   constructor(props) {
@@ -11,20 +18,26 @@ class Register extends Component {
 
     this.state = {
       user: {
-        email: '',
-        username: '',
-        password: ''
+        email: "",
+        username: "",
+        password: "",
+        checkbox: false
       },
       submitted: false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.passwordValidation = this.passwordValidation.bind(this);
   }
 
   handleChange(event) {
-    const { name, value } = event.target;
+    const target = event.target;
+    const value = target.type === "checkbox" ? target.checked : target.value;
+    const name = target.name;
+
     const { user } = this.state;
+
     this.setState({
       user: {
         ...user,
@@ -35,85 +48,154 @@ class Register extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    axios
-      .post("http://localhost:8000/api/users/register/", {
-        ...this.state.user,
-      })
-      .then(res => console.log(res));
+
+    this.setState({
+      submitted: true
+    });
+
+    const { user } = this.state;
+    const { dispatch } = this.props;
+
+    const isPasswordValid = this.passwordValidation();
+
+    if (
+      user.email &&
+      user.username &&
+      user.password &&
+      user.checkbox &&
+      isPasswordValid
+    ) {
+      dispatch(authenticationActions.register(user));
+    }
+  }
+
+  passwordValidation() {
+    const { user } = this.state;
+    const { dispatch } = this.props;
+
+    let isPasswordValid = true;
+
+    for (let i = 0; i < config.length; i++) {
+      if (!config[i].try.validate(user.password)) {
+        dispatch(alertActions.error(config[i].error));
+        isPasswordValid = false;
+      }
+    }
+
+    return isPasswordValid;
   }
 
   render() {
     const { user, submitted } = this.state;
+    const { registering } = this.props;
+    console.log(this.props.alert);
 
     return (
       <div className="tab-section registration">
         <div className="container">
           <h2 className="tab-section-title">
-
             Register to our biggest social media!
           </h2>
 
           <Form onSubmit={this.handleSubmit}>
-            <FormGroup className="form-label-group">
+            <FormGroup
+              className={`form-label-group ${
+                submitted && !user.username ? "has-error" : ""
+              }`}
+            >
               <Input
                 name="username"
                 id="register-username"
                 placeholder={
                   submitted && !user.username
-                    ? 'Username is required'
-                    : 'Username'
+                    ? "Username is required"
+                    : "Username"
                 }
                 value={user.username}
                 onChange={this.handleChange}
               />
-              <Label for="register-username">Username</Label>
+              <Label for="register-username">
+                {submitted && !user.username
+                  ? "Username is requered"
+                  : "Username"}
+              </Label>
             </FormGroup>
-            <FormGroup className="form-label-group">
+            <FormGroup
+              className={`form-label-group ${
+                submitted && !user.email ? "has-error" : ""
+              }`}
+            >
               <Input
                 type="email"
                 name="email"
                 id="register-email"
                 placeholder={
-                  submitted && !user.email ? 'Email is required' : 'Email'
+                  submitted && !user.email ? "Email is required" : "Email"
                 }
                 value={user.email}
                 onChange={this.handleChange}
               />
-              <Label for="register-email">Email</Label>
+              <Label for="register-email">
+                {submitted && !user.email ? "Email is requered" : "Email"}
+              </Label>
             </FormGroup>
-            <FormGroup className="form-label-group mb-4">
+            <FormGroup
+              className={`form-label-group mb-4 ${
+                submitted && !user.password ? "has-error" : ""
+              }`}
+            >
               <Input
                 type="password"
                 name="password"
                 id="register-password"
                 placeholder={
                   submitted && !user.password
-                    ? 'Password is required'
-                    : 'Password'
+                    ? "Password is required"
+                    : "Password"
                 }
                 value={user.password}
                 onChange={this.handleChange}
               />
-              <Label for="register-password">Password</Label>
+              <Label for="register-password">
+                {submitted && !user.password
+                  ? "Password is requered"
+                  : "Password"}
+              </Label>
             </FormGroup>
-            <FormGroup className="mb-4" check>
+            <FormGroup
+              className={`mb-4 ${
+                submitted && !user.checkbox ? "has-error" : ""
+              }`}
+              check
+            >
               <Label className="color-link" check>
-                <Input type="checkbox" />
-                {' '}
-I accept the
-                {' '}
+                <Input
+                  type="checkbox"
+                  name="checkbox"
+                  onChange={this.handleChange}
+                />{" "}
+                I accept the{" "}
                 <a href="#" className="color-link">
-
                   Terms and Conditions
-                </a>
-                {' '}
-
+                </a>{" "}
                 of the website
               </Label>
             </FormGroup>
-            <Button className="tab-section-btn" onClick={this.handleSubmit}>
-
-              Complete Registration
+            <Button
+              className="tab-section-btn"
+              disabled={registering}
+              onClick={this.handleSubmit}
+            >
+              {registering ? (
+                <div className="loading-panel">
+                  <CircularProgress
+                    color="primary"
+                    style={{ height: 19, width: 20 }}
+                  />
+                </div>
+              ) : (
+                "Complete Registration"
+              )}
             </Button>
           </Form>
         </div>
@@ -122,4 +204,14 @@ I accept the
   }
 }
 
-export default Register;
+const mapStateToProps = state => {
+  const { registering } = state.registration;
+  const { alert } = state.alert;
+
+  return {
+    registering,
+    alert
+  };
+};
+
+export default connect(mapStateToProps)(Register);
