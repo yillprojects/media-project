@@ -1,11 +1,13 @@
 from rest_framework import viewsets
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
+from cities_light.models import Country, Region, City
+from cities_light.contrib.restframework3 import CitySerializer, RegionSerializer
 
-from .serializers import UserSerializer, ProfileSerializer
-from .models import Profile
+from .serializers import UserSerializer, ProfileSerializer, ResidenceSerializer, CountrySerializer
+from .models import Profile, Residence
 
 
 def user_data(req_message='', req_data=None, is_success=False):
@@ -61,5 +63,27 @@ class UserView(viewsets.ModelViewSet):
 class ProfileView(viewsets.ModelViewSet):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
+
+
+@api_view(['GET, POST'])
+def get_countries_list(request):
+    countries = Country.objects.all()
+    serialized = CountrySerializer(countries, many=True)
+    return Response(serialized.data, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+def get_regions_list(request):
+    regions = Region.objects.all()
+    serialized = RegionSerializer(regions, many=True)
+    return Response(serialized.data, status=status.HTTP_200_OK)
+
+    # @action(methods=['GET', 'POST'], detail=False, url_path='residence/country')
+    # def country(self, request):
+    #     if request.method == 'GET':
+    #         countries = Country.objects.all()
+    #         serialized = CountrySerializer(countries, many=True)
+    #         return Response(serialized.data, status=status.HTTP_200_OK)
+
 
 

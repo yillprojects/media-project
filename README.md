@@ -9,7 +9,7 @@ yarn install
 yarn start
 ```
 
-Run commands below in `backend` folder to work with api
+Run commands below in `src/backend` folder to work with api
 
 ```
 pip install -r requirments.txt

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
+    'cities_light',
     'api'
 ]
 
@@ -47,6 +48,7 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:3000/'
 )
 
+# CITIES_LIGHT_APP_NAME = 'api'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
