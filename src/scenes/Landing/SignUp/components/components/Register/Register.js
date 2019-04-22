@@ -10,8 +10,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import config from "./config/password.config.js";
 
-console.log(config[2].try.validate("leleleel"));
-
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -88,7 +86,6 @@ class Register extends Component {
   render() {
     const { user, submitted } = this.state;
     const { registering } = this.props;
-    console.log(this.props.alert);
 
     return (
       <div className="tab-section registration">

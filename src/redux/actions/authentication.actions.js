@@ -12,8 +12,13 @@ function register(user) {
         ...user
       })
       .then(user => {
-        dispatch(success());
-        dispatch(alertActions.success("Registration successful"));
+        if (user.data.success) {
+          dispatch(success(user.data.user));
+          dispatch(alertActions.success("Registration successful"));
+        } else {
+          dispatch(failure(user.data.message));
+          dispatch(alertActions.error(user.data.message));
+        }
         console.log(user);
       })
       .catch(err => {
@@ -56,7 +61,11 @@ function login(username, password) {
           dispatch(alertActions.error(user.data.message));
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        dispatch(failure(err));
+        dispatch(alertActions.error("There was an error"));
+        console.log(err);
+      });
   };
 
   function request(user) {

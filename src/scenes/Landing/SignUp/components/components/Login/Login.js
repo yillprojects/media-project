@@ -61,8 +61,7 @@ class Login extends Component {
       <div className="tab-section">
         <div className="container">
           <h2 className="tab-section-title">
-            Welcome{" "}
-            <span>back!</span>
+            Welcome <span>back!</span>
           </h2>
 
           <Form onSubmit={this.handleSubmit}>
@@ -125,6 +124,7 @@ class Login extends Component {
             <Button
               className="tab-section-btn mb-4"
               onClick={this.handleSubmit}
+              disabled={loggingIn}
             >
               {loggingIn ? (
                 <div className="loading-panel">
