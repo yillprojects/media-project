@@ -11,15 +11,27 @@ $font-title: "Quicksand", sans-serif;
 .tab {
   &-content {
     background-color: $bg-color;
-    border: none;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     position: relative;
     overflow: hidden;
+    transition: 0.3s;
 
     @media (min-width: 992px) {
-      min-height: 680px;
+      min-height: 630px;
+    }
+
+    &.border {
+      &-left-radius {
+        border-top-left-radius: 0;
+      }
+
+      &-right-radius {
+        border-top-right-radius: 0;
+      }
     }
 
     .alert {

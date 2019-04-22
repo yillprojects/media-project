@@ -61,7 +61,7 @@ class Login extends Component {
       <div className="tab-section">
         <div className="container">
           <h2 className="tab-section-title">
-            Welcome
+            Welcome{" "}
             <span>back!</span>
           </h2>
 

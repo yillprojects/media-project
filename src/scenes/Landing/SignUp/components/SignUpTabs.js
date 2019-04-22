@@ -71,7 +71,7 @@ class SignUpTabs extends Component {
     const flash = flashClass ? "alert-open" : "";
 
     return (
-      <TabContent activeTab={activeTab}>
+      <TabContent activeTab={activeTab} className={`${activeTab == 2 ? 'border-right-radius' : 'border-left-radius'}`}>
         {alert.message ? (
           <div className={flash + ` alert ${alert.type}`}>{alert.message}</div>
         ) : (
