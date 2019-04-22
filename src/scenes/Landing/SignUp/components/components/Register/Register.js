@@ -1,10 +1,16 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import { authenticationActions } from "redux/actions/index.js";
+import passwordValidator from "password-validator";
+
+import { authenticationActions, alertActions } from "redux/actions/index.js";
 
 import { Button, Form, FormGroup, Label, Input } from "reactstrap";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
+import config from "./config/password.config.js";
+
+console.log(config[2].try.validate("leleleel"));
 
 class Register extends Component {
   constructor(props) {
@@ -22,6 +28,7 @@ class Register extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.passwordValidation = this.passwordValidation.bind(this);
   }
 
   handleChange(event) {
@@ -49,9 +56,33 @@ class Register extends Component {
     const { user } = this.state;
     const { dispatch } = this.props;
 
-    if (user.email && user.username && user.password && user.checkbox) {
+    const isPasswordValid = this.passwordValidation();
+
+    if (
+      user.email &&
+      user.username &&
+      user.password &&
+      user.checkbox &&
+      isPasswordValid
+    ) {
       dispatch(authenticationActions.register(user));
     }
+  }
+
+  passwordValidation() {
+    const { user } = this.state;
+    const { dispatch } = this.props;
+
+    let isPasswordValid = true;
+
+    for (let i = 0; i < config.length; i++) {
+      if (!config[i].try.validate(user.password)) {
+        dispatch(alertActions.error(config[i].error));
+        isPasswordValid = false;
+      }
+    }
+
+    return isPasswordValid;
   }
 
   render() {
@@ -150,10 +181,17 @@ class Register extends Component {
                 of the website
               </Label>
             </FormGroup>
-            <Button className="tab-section-btn" disabled={registering} onClick={this.handleSubmit}>
+            <Button
+              className="tab-section-btn"
+              disabled={registering}
+              onClick={this.handleSubmit}
+            >
               {registering ? (
                 <div className="loading-panel">
-                  <CircularProgress color="primary" style={{height: 19, width: 20}} />
+                  <CircularProgress
+                    color="primary"
+                    style={{ height: 19, width: 20 }}
+                  />
                 </div>
               ) : (
                 "Complete Registration"
@@ -171,7 +209,8 @@ const mapStateToProps = state => {
   const { alert } = state.alert;
 
   return {
-    registering, alert
+    registering,
+    alert
   };
 };
 
