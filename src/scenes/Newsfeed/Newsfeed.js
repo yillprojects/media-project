@@ -1,4 +1,4 @@
-import React, { Component }  from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import { userActions } from "redux/actions/index.js";
@@ -16,7 +16,7 @@ class Newsfeed extends Component {
   render() {
     return (
       <div className="newsfeed">
-        <h6>hi</h6>
+
       </div>
     );
   }

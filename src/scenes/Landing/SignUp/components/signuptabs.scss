@@ -1,24 +1,56 @@
-@import url('https://fonts.googleapis.com/css?family=Quicksand');
+@import url("https://fonts.googleapis.com/css?family=Quicksand");
 
 // colors
 $bg-color: #fff;
 $secondary-color: rgb(255, 94, 58);
+$color-error: #e2726f;
 
 // fonts
-$font-title: 'Quicksand', sans-serif;
+$font-title: "Quicksand", sans-serif;
 
 .tab {
   &-content {
     background-color: $bg-color;
     border: 1px solid transparent;
-    border-bottom-left-radius: 0.25rem;
-    border-bottom-right-radius: 0.25rem;
+    border-radius: 0.25rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: 0.3s;
 
     @media (min-width: 992px) {
       min-height: 630px;
+    }
+
+    &.border {
+      &-left-radius {
+        border-top-left-radius: 0;
+      }
+
+      &-right-radius {
+        border-top-right-radius: 0;
+      }
+    }
+
+    .alert {
+      margin-bottom: 0;
+      position: absolute;
+      top: -50px;
+      left: 0;
+      width: 100%;
+      border-radius: 0;
+      height: 50px;
+      transition: top 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+      overflow: hidden;
+      box-sizing: border-box;
+
+      &.alert-open {
+        transition: top 300ms cubic-bezier(0.17, 0.04, 0.03, 0.94);
+
+        top: 0;
+      }
     }
   }
 
@@ -48,5 +80,27 @@ $font-title: 'Quicksand', sans-serif;
         color: $secondary-color;
       }
     }
+  }
+}
+
+.has-error {
+  color: $color-error;
+
+  .form-control {
+    border-color: $color-error !important;
+  }
+
+  label {
+    color: $color-error;
+  }
+
+  &::placeholder {
+    color: $color-error;
+  }
+}
+
+.loading-panel {
+  svg {
+    color: white;
   }
 }
