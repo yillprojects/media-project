@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
 
-import { authenticationActions } from "redux/actions/index.js";
+import { authenticationActions, alertActions } from "redux/actions/index.js";
 
 import PropTypes from "prop-types";
 
@@ -105,7 +105,7 @@ class Login extends Component {
               </Label>
             </FormGroup>
 
-            <div className="row mb-4">
+            <div className="row mb-2">
               <div className="col col-12 col-sm-6">
                 <FormGroup check>
                   <Label className="color-link" check>
@@ -122,7 +122,7 @@ class Login extends Component {
             </div>
 
             <Button
-              className="tab-section-btn mb-4"
+              className="tab-section-btn mb-3"
               onClick={this.handleSubmit}
               disabled={loggingIn}
             >

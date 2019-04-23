@@ -48,32 +48,6 @@ $featured-post-hover: #ffc923;
 		}
 	}
 
-	.more .dropdown {
-		.btn {
-			padding: 0;
-			&-secondary {
-				color: $icon-color;
-			}
-		}
-
-		.more-settings {
-			padding: 15px 20px;
-			width: 180px;
-
-			.profile-menu-link {
-				padding: 7px 0;
-				font-size: 12px;
-				display: block;
-				color: $title-color;
-				transition: 0.2s;
-
-				&:hover {
-					color: $color-secondary;
-				}
-			}
-		}
-	}
-
 	p {
 		margin: 20px 0;
 		font-size: 0.875rem;
@@ -172,6 +146,32 @@ $featured-post-hover: #ffc923;
 
 			&.featured-post:hover {
 				background-color: $featured-post-hover;
+			}
+		}
+	}
+}
+
+.more .dropdown {
+	.btn {
+		padding: 0;
+		&-secondary {
+			color: $icon-color;
+		}
+	}
+
+	.more-settings {
+		padding: 15px 20px;
+		width: 180px;
+
+		.profile-menu-link {
+			padding: 7px 0;
+			font-size: 12px;
+			display: block;
+			color: $title-color;
+			transition: 0.2s;
+
+			&:hover {
+				color: $color-secondary;
 			}
 		}
 	}

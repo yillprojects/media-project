@@ -85,7 +85,7 @@ class Register extends Component {
 
   render() {
     const { user, submitted } = this.state;
-    const { registering } = this.props;
+    const { registering, alert } = this.props;
 
     return (
       <div className="tab-section registration">

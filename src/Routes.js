@@ -13,21 +13,18 @@ class Routes extends Component {
   render() {
     const { loggedIn } = this.props;
 
-    const DefaultLayout = ({ component: Component }) =>
-      loggedIn ? (
-        <Route
-          render={props => (
-            <div>
-              <Menus />
-              <div className="main-layout">
-                <Component {...props} />
-              </div>
+    const DefaultLayout = ({ component: Component }) => (
+      <Route
+        render={props => (
+          <div>
+            <Menus />
+            <div className="main-layout">
+              <Component {...props} />
             </div>
-          )}
-        />
-      ) : (
-        <Redirect to="" />
-      );
+          </div>
+        )}
+      />
+    );
     return (
       <Router>
         <Switch>

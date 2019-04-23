@@ -1,0 +1,45 @@
+//colors
+$btn-bg: #3f4257;
+
+.w-action {
+	background-image: url("img/landing-bg.jpg");
+	padding: 50px 45px 40px;
+	color: #fff;
+	border-radius: 5px;
+	text-align: center;
+
+	svg {
+		margin-bottom: 15px;
+		font-size: 42px;
+	}
+
+	.content {
+		.title {
+			font-weight: 400;
+			color: inherit;
+			margin-bottom: 15px;
+			font-size: 22px;
+		}
+
+		span {
+			font-size: 10px;
+			margin-bottom: 25px;
+			display: block;
+			text-transform: uppercase;
+		}
+
+		.btn {
+			font-weight: 700;
+
+			&-secondary {
+				background-color: $btn-bg;
+			}
+
+			&-md {
+				padding: 1rem 1.5rem;
+				font-size: 0.75rem;
+				border-radius: 0.3rem;
+			}
+		}
+	}
+}
