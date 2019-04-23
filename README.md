@@ -13,5 +13,6 @@ Run commands below in `src/backend` folder to work with api
 
 ```
 pip install -r requirments.txt
+py manage.py migrate
 py manage.py runserver
 ```

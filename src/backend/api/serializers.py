@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from cities_light.models import Country, Region
+from cities_light.models import Country, City
 from .models import Profile, Residence
 
 
@@ -28,7 +28,7 @@ class CountrySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class RegionSerializer(serializers.ModelSerializer):
+class CitySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Region
+        model = City
         fields = '__all__'
