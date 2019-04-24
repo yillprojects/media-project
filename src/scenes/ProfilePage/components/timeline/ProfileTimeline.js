@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios'
 
 import _map from "lodash/map";
 
@@ -12,6 +13,9 @@ import "./profileTimeline.scss";
 const amount = [1, 2, 3, 4];
 
 const ProfileTimeline = () => {
+		axios.put(`http://localhost:8000/api/profiles/5/`, {
+			first_name: 'Andrew'
+		}).then(res => console.log(res));
 	return [
 		<div className=" col col-3 display-sm-none display-md-none" key='profile-info'>
 			<ProfileInfo />

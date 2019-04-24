@@ -55,10 +55,9 @@ class UserView(viewsets.ModelViewSet):
             if not is_email_unique:
                 return response['user']('Email is busy')
 
-            user = User.objects.create_user(
-                **serialized.data
-            )
+            user = User.objects.create_user(**serialized.data)
             user.save()
+            profile = Profile.objects.create(user=user)
             return response['user']('User registered', True, status.HTTP_201_CREATED)
 
         if 'email' in serialized.errors:
