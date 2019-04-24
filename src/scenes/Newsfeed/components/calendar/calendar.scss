@@ -1,0 +1,11 @@
+.calendar {
+	width: inherit;
+
+	&-wrapper {
+		width: 	inherit;
+
+		.Cal__Container__root {
+			width: 	inherit !important;
+		}
+	}
+}

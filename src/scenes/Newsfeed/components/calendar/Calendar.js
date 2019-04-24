@@ -1,47 +1,37 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import 'react-dates/initialize';
-import 'react-dates/lib/css/_datepicker.css';
+import InfiniteCalendar from "react-infinite-calendar";
+import "react-infinite-calendar/styles.css";
 
-import { DayPickerRangeController } from 'react-dates';
-
-import './calendar.scss' 
+import "./calendar.scss";
 
 export default class Calendar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      startDate: null,
-      endDate: null,
-      focusedInput: null
-    };
+    this.state = {};
   }
 
   render() {
-    const { startDate, endDate, focusedInput } = this.state;
+    var today = new Date();
+    var lastWeek = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() - 7
+    );
+
     return (
       <div className="calendar">
         <div className="calendar-wrapper">
-          <DayPickerRangeController
-            startDate={startDate}
-            endDate={endDate}
-            onDatesChange={({ startDate, endDate }) =>
-              this.setState({ startDate, endDate })
-            }
-            focusedInput={focusedInput}
-            onFocusChange={focusedInput => this.setState({ focusedInput })}
-            className="kek"
+          <InfiniteCalendar
+            height={400}
+            selected={today}
+            disabledDays={[0, 6]}
+            minDate={lastWeek}
           />
         </div>
       </div>
     );
-  }
+  } 
 }
-
-const defaultProps = {
-  numberOfMonths: 1,
-  monthFormat: 'MMMM YYYY'
-};
-
-Calendar.defaultProps = defaultProps;
+ 
