@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import { userActions } from "redux/actions/index.js";
 
 import Calendar from "./components/calendar/Calendar.js";
-import BirthdayWidget from "./components/birthdayWidget/birthdayWidget.js";
+import BirthdayWidget from "./components/birthdayWidget/BirthdayWidget.js";
 import ShareWidget from "./components/shareWidget/shareWidget.js";
+import NewsfeedForm from "./components/newsfeedForm/NewsfeedForm.js";
 
 class Newsfeed extends Component {
   constructor(props) {
@@ -26,6 +27,9 @@ class Newsfeed extends Component {
             <Calendar />
             <BirthdayWidget />
             <ShareWidget />
+          </div>
+          <div className="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+            <NewsfeedForm />
           </div>
         </div>
       </div>

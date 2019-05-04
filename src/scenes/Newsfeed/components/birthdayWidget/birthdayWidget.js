@@ -35,7 +35,7 @@ class BirthdayWidget extends Component {
 						<Dropdown
 							isOpen={dropdownOpen}
 							toggle={this.toggle}
-							direction="bottom"
+							direction="down"
 						>
 							<DropdownToggle className="transparent-btn">
 								<FaEllipsisH />

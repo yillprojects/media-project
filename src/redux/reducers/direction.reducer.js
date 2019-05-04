@@ -10,11 +10,7 @@ export const direction = (state = { page: "1", userTab: "1" }, action) => {
 		case pageConstants.CURRENT_PROFILE_TAB:
 			return { ...state, userTab: action.tab };
 
-		case REHYDRATE:
-			return {
-				page: action.payload.direction.page,
-				userTab: action.payload.direction.userTab
-			};
+
 
 		default:
 			return state;
