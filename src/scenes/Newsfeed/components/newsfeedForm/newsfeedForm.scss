@@ -1,10 +1,21 @@
 //colors
-$main-color: #FF5E3A;
+$main-color: #ff5e3a;
 
-.MuiTab-textColorSecondary-51.MuiTab-selected-52 {
-	color: $main-color !important;
-}
+.newsfeed-form {
+	.MuiTab-textColorSecondary-51.MuiTab-selected-52 {
+		color: $main-color !important;
+	}
 
-.MuiPrivateTabIndicator-colorSecondary-64 {
-	background-color: $main-color !important;
+	.MuiPrivateTabIndicator-colorSecondary-64 {
+		background-color: $main-color !important;
+	}
+
+	span {
+		font-size: 11px;
+		font-weight: 700;
+	}
+
+	svg {
+		font-size: 25px;
+	}
 }

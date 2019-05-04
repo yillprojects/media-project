@@ -73,6 +73,10 @@ $color-hover: #ff763a;
 		display: inline-flex;
 		margin-right: 20px;
 
+		@media (max-width: 425px) {
+			margin-right: 10px;
+		}
+
 		svg {
 			color: $secondary-color;
 			font-size: 20px;

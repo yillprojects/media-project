@@ -8,10 +8,11 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { Button } from "reactstrap";
 
 import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 
 import { FiCamera } from "react-icons/fi";
 import { FaDesktop, FaMapMarkerAlt } from "react-icons/fa";
+
+import {arrowGenerator, styles} from 'config/tooltipConfig.js';
 
 import "./blogpost.scss";
 
@@ -38,39 +39,6 @@ const theme = createMuiTheme({
   }
 });
 
-function arrowGenerator(color) {
-  return {
-    '&[x-placement*="top"] $arrow': {
-      bottom: 0,
-      left: 0,
-      marginBottom: "-0.95em",
-      width: "3em",
-      height: "1em",
-      "&::before": {
-        borderWidth: "1em 1em 0 1em",
-        borderColor: `${color} transparent transparent transparent`
-      }
-    }
-  };
-}
-
-const styles = theme => ({
-  arrowPopper: arrowGenerator(theme.palette.grey[700]),
-  arrow: {
-    position: "absolute",
-    fontSize: 6,
-    width: "3em",
-    height: "3em",
-    "&::before": {
-      content: '""',
-      margin: "auto",
-      display: "block",
-      width: 0,
-      height: 0,
-      borderStyle: "solid"
-    }
-  }
-});
 
 const btn = [
   {
