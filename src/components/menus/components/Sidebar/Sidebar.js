@@ -1,16 +1,16 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
-import { withStyles } from "@material-ui/core/styles";
-import _map from "lodash/map";
+import { withStyles } from '@material-ui/core/styles';
+import _map from 'lodash/map';
 
-import { userActions } from "redux/actions/index.js";
+import { userActions } from 'redux/actions/index.js';
 
-import Tooltip from "@material-ui/core/Tooltip";
+import Tooltip from '@material-ui/core/Tooltip';
 
-import { IoIosCube } from "react-icons/io";
+import { IoIosCube } from 'react-icons/io';
 import {
   FaHome,
   FaUser,
@@ -19,54 +19,54 @@ import {
   FaHeadphonesAlt,
   FaRegCalendarAlt,
   FaRegChartBar
-} from "react-icons/fa";
+} from 'react-icons/fa';
 
-import { arrowGenerator, styles } from "config/tooltipConfig.js";
+import { arrowGenerator, styles } from 'config/tooltipConfig.js';
 
-import SidebarMobile from "./SidebarMobile.js";
-import "./sidebar.scss";
+import SidebarMobile from './SidebarMobile.js';
+import './sidebar.scss';
 
 const btn = [
   {
     id: 1,
-    link: "/newsfeed",
-    tooltip: "NEWSFEED",
+    link: '/newsfeed',
+    tooltip: 'NEWSFEED',
     icon: <FaHome />
   },
   {
     id: 2,
-    link: "/user/timeline",
-    tooltip: "PROFILE PAGE",
+    link: '/user/timeline',
+    tooltip: 'PROFILE PAGE',
     icon: <FaUser />
   },
   {
     id: 3,
-    link: "/favourite",
-    tooltip: "FAV PAGES",
+    link: '/favourite',
+    tooltip: 'FAV PAGES',
     icon: <FaRegStar />
   },
   {
     id: 4,
-    link: "/groups",
-    tooltip: "FRIEND GROUPS",
+    link: '/groups',
+    tooltip: 'FRIEND GROUPS',
     icon: <FaRegGrinWink />
   },
   {
     id: 5,
-    link: "/playlist",
-    tooltip: "MUSIC & PLAYLISTS",
+    link: '/playlist',
+    tooltip: 'MUSIC & PLAYLISTS',
     icon: <FaHeadphonesAlt />
   },
   {
     id: 6,
-    link: "/calendar",
-    tooltip: "CALENDAR & EVENTS",
+    link: '/calendar',
+    tooltip: 'CALENDAR & EVENTS',
     icon: <FaRegCalendarAlt />
   },
   {
     id: 7,
-    link: "/statistic",
-    tooltip: "ACCOUNT STATS",
+    link: '/statistic',
+    tooltip: 'ACCOUNT STATS',
     icon: <FaRegChartBar />
   }
 ];
@@ -129,46 +129,44 @@ class SidebarItem extends Component {
             </h1>
           </header>
           <ul className="sidebar-nav">
-            {_map(btn, item => {
-              return (
-                <li className="sidebar-nav-item" key={item.id}>
-                  <Link
-                    to={item.link}
-                    className={`sidebar-nav-link ${
-                      activeTab == item.id ? "active " : ""
-                    }`}
-                    onClick={() => {
-                      this.toggle(item.id);
-                    }}
-                  >
-                    <Tooltip
-                      placement="right"
-                      title={
-                        <React.Fragment>
-                          {item.tooltip}
-                          <span
-                            className={classes.arrow}
-                          />
-                        </React.Fragment>
-                      }
-                      classes={{ popper: classes.arrowPopper }}
-                      PopperProps={{
-                        popperOptions: {
-                          modifiers: {
-                            arrow: {
-                              enabled: Boolean(this.state.arrowRef),
-                              element: this.state.arrowRef
-                            }
+            {_map(btn, item => (
+              <li className="sidebar-nav-item" key={item.id}>
+                <Link
+                  to={item.link}
+                  className={`sidebar-nav-link ${
+                    activeTab == item.id ? 'active ' : ''
+                  }`}
+                  onClick={() => {
+                    this.toggle(item.id);
+                  }}
+                >
+                  <Tooltip
+                    placement="right"
+                    title={(
+                      <React.Fragment>
+                        {item.tooltip}
+                        <span
+                          className={classes.arrow}
+                        />
+                      </React.Fragment>
+)}
+                    classes={{ popper: classes.arrowPopper }}
+                    PopperProps={{
+                      popperOptions: {
+                        modifiers: {
+                          arrow: {
+                            enabled: Boolean(this.state.arrowRef),
+                            element: this.state.arrowRef
                           }
                         }
-                      }}
-                    >
-                      {item.icon}
-                    </Tooltip>
-                  </Link>
-                </li>
-              );
-            })}
+                      }
+                    }}
+                  >
+                    {item.icon}
+                  </Tooltip>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
         <SidebarMobile />
@@ -177,7 +175,7 @@ class SidebarItem extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { page } = state.direction;
   return {
     page

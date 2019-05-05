@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import { userActions, authenticationActions } from "redux/actions/index.js";
+import { userActions, authenticationActions } from 'redux/actions/index.js';
 
 import {
   Dropdown,
@@ -11,13 +11,13 @@ import {
   DropdownMenu,
   DropdownItem,
   NavItem
-} from "reactstrap";
+} from 'reactstrap';
 
-import { FaRegStar, FaSlidersH, FaSignOutAlt } from "react-icons/fa";
+import { FaRegStar, FaSlidersH, FaSignOutAlt } from 'react-icons/fa';
 
-import User from "./User.js";
+import User from './User.js';
 
-import "./userdropdown.scss";
+import './userdropdown.scss';
 
 class UserDropdown extends Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class UserDropdown extends Component {
 
     this.state = {
       dropdownOpen: false,
-      status: ""
+      status: ''
     };
 
     this.toggle = this.toggle.bind(this);
@@ -124,9 +124,9 @@ class UserDropdown extends Component {
             <li>
               <button
                 type="button"
-                onClick={() => this.onRadioBtnClick("online")}
+                onClick={() => this.onRadioBtnClick('online')}
                 className={`chat-settings-btn ${
-                  status === "online" ? "disabled" : ""
+                  status === 'online' ? 'disabled' : ''
                 }`}
               >
                 <span className="icon-status online" />
@@ -136,9 +136,9 @@ class UserDropdown extends Component {
             <li>
               <button
                 type="button"
-                onClick={() => this.onRadioBtnClick("away")}
+                onClick={() => this.onRadioBtnClick('away')}
                 className={`chat-settings-btn ${
-                  status === "away" ? "disabled" : ""
+                  status === 'away' ? 'disabled' : ''
                 }`}
               >
                 <span className="icon-status away" />
@@ -148,9 +148,9 @@ class UserDropdown extends Component {
             <li>
               <button
                 type="button"
-                onClick={() => this.onRadioBtnClick("disconnected")}
+                onClick={() => this.onRadioBtnClick('disconnected')}
                 className={`chat-settings-btn ${
-                  status === "disconnected" ? "disabled" : ""
+                  status === 'disconnected' ? 'disabled' : ''
                 }`}
               >
                 <span className="icon-status disconnected" />
@@ -160,9 +160,9 @@ class UserDropdown extends Component {
             <li>
               <button
                 type="button"
-                onClick={() => this.onRadioBtnClick("invisibly")}
+                onClick={() => this.onRadioBtnClick('invisibly')}
                 className={`chat-settings-btn ${
-                  status === "invisibly" ? "disabled" : ""
+                  status === 'invisibly' ? 'disabled' : ''
                 }`}
               >
                 <span className="icon-status invisibly" />
@@ -201,7 +201,7 @@ class UserDropdown extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { status } = state.status;
   return {
     status

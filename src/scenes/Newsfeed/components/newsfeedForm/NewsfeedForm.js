@@ -1,27 +1,36 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import Paper from "@material-ui/core/Paper";
-import { withStyles } from "@material-ui/core/styles";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
 
-import BlogPost from "./components/BlogPost.js";
+import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
 
-import { FaRegNewspaper, FaRegImage } from "react-icons/fa";
-import "./newsfeedForm.scss";
+import { FaRegNewspaper, FaRegImage } from 'react-icons/fa';
+import BlogPost from './components/BlogPost.js';
+
+import './newsfeedForm.scss';
 
 function TabContainer(props) {
-  return <Typography component="div">{props.children}</Typography>;
+  const { children } = props;
+  return <Typography component="div">{children}</Typography>;
 }
 
 const styles = {
   root: {
     flexGrow: 1
   },
-  tabsRoot: {
-    borderBottom: "1px solid #FF5E3A"
-  }
+  tabRoot: {
+    color: '#888da8',
+    '&$tabSelected': {
+      color: '#FF5E3A'
+    }
+  },
+  tabsIndicator: {
+    backgroundColor: '#FF5E3A'
+  },
+  tabSelected: {}
 };
 
 class NewsfeedForm extends Component {
@@ -49,17 +58,19 @@ class NewsfeedForm extends Component {
           <Tabs
             value={this.state.value}
             onChange={this.handleChange}
-            indicatorColor="secondary"
-            textColor="secondary"
+            classes={{
+              root: classes.tabRoot,
+              indicator: classes.tabsIndicator
+            }}
           >
             <Tab
               icon={<FaRegNewspaper />}
-              classes={{ root: classes.tabRoot }}
+              classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
               label="Blog Post"
             />
             <Tab
               icon={<FaRegImage />}
-              classes={{ root: classes.tabRoot }}
+              classes={{ root: classes.tabRoot, selected: classes.tabSelected }}
               label="Multimedia"
             />
           </Tabs>

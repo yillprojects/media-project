@@ -1,13 +1,13 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
-import { userActions } from "redux/actions/index.js";
+import { userActions } from 'redux/actions/index.js';
 
-import Calendar from "./components/calendar/Calendar.js";
-import BirthdayWidget from "./components/birthdayWidget/BirthdayWidget.js";
-import ShareWidget from "./components/shareWidget/shareWidget.js";
-import NewsfeedForm from "./components/newsfeedForm/NewsfeedForm.js";
-import SuggestedPages from "./components/suggestedPages/SuggestedPages.js";
+import Calendar from './components/calendar/Calendar.js';
+import BirthdayWidget from './components/birthdayWidget/BirthdayWidget.js';
+import ShareWidget from './components/shareWidget/shareWidget.js';
+import NewsfeedForm from './components/newsfeedForm/NewsfeedForm.js';
+import SuggestedPages from './components/suggestedPages/SuggestedPages.js';
 
 class Newsfeed extends Component {
   constructor(props) {
@@ -15,11 +15,12 @@ class Newsfeed extends Component {
 
     this.state = {};
   }
+
   componentWillMount() {
     const { dispatch } = this.props;
-    dispatch(userActions.currentPage("1"));
+    dispatch(userActions.currentPage('1'));
   }
- 
+
   render() {
     return (
       <div className="container">

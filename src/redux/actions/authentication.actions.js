@@ -1,29 +1,29 @@
-import axios from "axios";
+import axios from 'axios';
 
-import { authenticationConstants } from "../constants/authentication.constants";
-import { alertActions } from "./alert.actions";
+import { authenticationConstants } from '../constants/authentication.constants';
+import { alertActions } from './alert.actions';
 
 function register(user) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(request(user));
 
     axios
-      .post("http://localhost:8000/api/users/register/", {
+      .post('http://localhost:8000/api/users/register/', {
         ...user
       })
-      .then(user => {
+      .then((user) => {
         if (user.data.success) {
           dispatch(success(user.data.user));
-          dispatch(alertActions.success("Registration successful"));
+          dispatch(alertActions.success('Registration successful'));
         } else {
           dispatch(failure(user.data.message));
           dispatch(alertActions.error(user.data.message));
         }
         console.log(user);
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch(failure(err));
-        dispatch(alertActions.error("There was an error"));
+        dispatch(alertActions.error('There was an error'));
         console.log(err);
       });
   };
@@ -43,16 +43,16 @@ function register(user) {
 }
 
 function login(username, password) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch(request(username));
 
     axios
-      .post("http://localhost:8000/api/users/check/", {
+      .post('http://localhost:8000/api/users/check/', {
         username,
         password,
-        appointment: "check"
+        appointment: 'check'
       })
-      .then(user => {
+      .then((user) => {
         console.log(user.data);
         if (user.data.success) {
           dispatch(success(user.data.user));
@@ -61,9 +61,9 @@ function login(username, password) {
           dispatch(alertActions.error(user.data.message));
         }
       })
-      .catch(err => {
+      .catch((err) => {
         dispatch(failure(err));
-        dispatch(alertActions.error("There was an error"));
+        dispatch(alertActions.error('There was an error'));
         console.log(err);
       });
   };

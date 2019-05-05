@@ -1,28 +1,32 @@
 import passwordValidator from 'password-validator';
 
-let configLength = new passwordValidator();
-let configDigits = new passwordValidator();
-let configSpaces = new passwordValidator();
+const ConfigLength = new passwordValidator();
+const ConfigDigits = new passwordValidator();
+const ConfigSpaces = new passwordValidator();
 
-configLength.is().min(6)   
-.is().max(20);
-configDigits.has().digits();
-configSpaces.has().not().spaces();
+ConfigLength.is()
+  .min(6)
+  .is()
+  .max(20);
+ConfigDigits.has().digits();
+ConfigSpaces.has()
+  .not()
+  .spaces();
 
 const config = [
   {
     id: 1,
-    try: configLength,
+    try: ConfigLength,
     error: 'Invalid password length (from 6 to 20 characters)'
   },
-    {
+  {
     id: 2,
-    try: configDigits,
+    try: ConfigDigits,
     error: 'Invalid password (at least 1 digit requered)'
   },
-    {
+  {
     id: 3,
-    try: configSpaces,
+    try: ConfigSpaces,
     error: 'Invalid password (no spaces requered)'
   }
 ];

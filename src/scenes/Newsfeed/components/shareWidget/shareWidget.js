@@ -1,22 +1,22 @@
-import React from "react";
+import React from 'react';
 
-import { IoIosCube } from "react-icons/io";
+import { IoIosCube } from 'react-icons/io';
 
-import "./shareWidget.scss";
+import './shareWidget.scss';
 
-const ShareWidget = () => {
-	return (
-		<div className="widget w-action">
-			<IoIosCube />
-			<div className="content">
-				<h4 className="title">
-					{"<"}name{">"}
-				</h4>
-				<span>The best social network theme is here!</span>
-				<a href="#" className="btn btn-secondary btn-md">Share with friends!</a>
-			</div>
-		</div>
-	);
-};
+const ShareWidget = () => (
+  <div className="widget w-action">
+    <IoIosCube />
+    <div className="content">
+      <h4 className="title">
+        {'<'}
+name
+        {'>'}
+      </h4>
+      <span>The best social network theme is here!</span>
+      <a href="#" className="btn btn-secondary btn-md">Share with friends!</a>
+    </div>
+  </div>
+);
 
 export default ShareWidget;

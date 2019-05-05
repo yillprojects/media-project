@@ -13,6 +13,7 @@ import "./signuptabs.scss";
 
 class SignUpTabs extends Component {
   _isMounted = false;
+  
   constructor(props) {
     super(props);
     this.updateState = this.updateState.bind(this);
