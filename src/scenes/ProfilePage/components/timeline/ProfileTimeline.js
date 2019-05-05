@@ -2,7 +2,7 @@ import React from 'react';
 
 import _map from 'lodash/map';
 
-import Post from './components/post/Post.js';
+import Post from 'components/postItem/Post.js';
 import ProfileInfo from './components/profileInfo/ProfileInfo.js';
 import FriendsList from './components/friendsList/FriendsList.js';
 import FavouritePages from './components/favouritePages/FavouritePages.js';
