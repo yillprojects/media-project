@@ -38,20 +38,6 @@ $color-hover: #ff763a;
 			width: calc(100% - 75px);
 		}
 	}
-
-	.send-btn {
-		background-color: $main-color;
-		border-color: $main-color;
-		color: #fff;
-		font-size: 10px;
-		font-weight: 700;
-		padding: 0.7rem 2.1rem;
-
-		&:hover {
-			background-color: $color-hover;
-			border-color: $color-hover;
-		}
-	}
 }
 
 .add-option-message {
@@ -87,6 +73,27 @@ $color-hover: #ff763a;
 			svg {
 				color: #000;
 			}
+		}
+	}
+}
+
+.form {
+	.send-btn {
+		background-color: $main-color;
+		border-color: $main-color;
+		color: #fff;
+		font-size: 10px;
+		font-weight: 700;
+		padding: 0.7rem 2.1rem;
+
+		&:hover {
+			background-color: $color-hover;
+			border-color: $color-hover;
+		}
+
+		&:disabled:hover {
+			background-color: #6c757d;
+			border-color: #6c757d;
 		}
 	}
 }

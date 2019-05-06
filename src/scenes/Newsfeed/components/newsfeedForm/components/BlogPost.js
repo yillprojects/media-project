@@ -77,7 +77,7 @@ class BlogPost extends Component {
     const { arrowRef } = this.state;
 
     return (
-      <form className="blogpost-form mt-1">
+      <form className="blogpost-form form mt-1">
         <div className="author-thumb">
           <img
             src="https://via.placeholder.com/35"
