@@ -36,13 +36,15 @@ class CommentFormConnected extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log("submitted");
 
     const { comment } = this.state;
     const { dispatch } = this.props;
     const id = uuidv4();
 
     dispatch(commentActions.addComment({ comment, id }));
+    this.setState({
+      comment: ""
+    });
   }
 
   handleChange(event) {

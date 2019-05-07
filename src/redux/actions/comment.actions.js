@@ -3,6 +3,7 @@ import { commentConstants } from "../constants/comment.constants";
 function addComment(comment) {
 	return dispatch => {
 		dispatch(request(comment));
+		console.log(comment);
 
 		// axios request
 		if (1) {
