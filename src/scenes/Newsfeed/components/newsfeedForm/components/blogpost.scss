@@ -1,0 +1,99 @@
+// colors
+$text-color: #3f4257;
+$main-color: #ff5e3a;
+$secondary-color: #c2c5d9;
+$color-hover: #ff763a;
+
+.blogpost-form {
+	position: relative;
+
+	.author-thumb {
+		position: absolute;
+		top: 15px;
+		left: 20px;
+		z-index: 1;
+
+		img {
+			border-radius: 100%;
+			overflow: hidden;
+		}
+	}
+
+	label {
+		font-size: 14px;
+		padding-top: 2px;
+		padding-left: 70px;
+	}
+
+	label[data-shrink="true"] {
+		transform: translate(17px, 1.5px) scale(0.8);
+		color: $text-color;
+	}
+
+	textarea {
+		padding-left: 70px;
+		padding-right: 5px;
+
+		&:last-child {
+			width: calc(100% - 75px);
+		}
+	}
+}
+
+.add-option-message {
+	padding: 15px 25px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	.options-message {
+		font-size: 22px;
+		color: $secondary-color;
+		fill: $secondary-color;
+	}
+}
+
+.options-message {
+	.btn {
+		padding: 2px;
+		display: inline-flex;
+		margin-right: 20px;
+
+		@media (max-width: 425px) {
+			margin-right: 10px;
+		}
+
+		svg {
+			color: $secondary-color;
+			font-size: 20px;
+			transition: 0.2s;
+		}
+
+		&:hover {
+			svg {
+				color: #000;
+			}
+		}
+	}
+}
+
+.form {
+	.send-btn {
+		background-color: $main-color;
+		border-color: $main-color;
+		color: #fff;
+		font-size: 10px;
+		font-weight: 700;
+		padding: 0.7rem 2.1rem;
+
+		&:hover {
+			background-color: $color-hover;
+			border-color: $color-hover;
+		}
+
+		&:disabled:hover {
+			background-color: #6c757d;
+			border-color: #6c757d;
+		}
+	}
+}

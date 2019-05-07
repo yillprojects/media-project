@@ -1,13 +1,16 @@
-import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import { withRouter } from "react-router";
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 
-import { userActions } from "redux/actions/index.js";
+import { withStyles } from '@material-ui/core/styles';
+import _map from 'lodash/map';
 
-import Tooltip from "@material-ui/core/Tooltip";
+import { userActions } from 'redux/actions/index.js';
 
-import { IoIosCube } from "react-icons/io";
+import Tooltip from '@material-ui/core/Tooltip';
+
+import { IoIosCube } from 'react-icons/io';
 import {
   FaHome,
   FaUser,
@@ -16,17 +19,65 @@ import {
   FaHeadphonesAlt,
   FaRegCalendarAlt,
   FaRegChartBar
-} from "react-icons/fa";
+} from 'react-icons/fa';
 
-import SidebarMobile from "./SidebarMobile.js";
-import "./sidebar.scss";
+import { arrowGenerator, styles } from 'config/tooltipConfig.js';
+
+import SidebarMobile from './SidebarMobile.js';
+import './sidebar.scss';
+
+const btn = [
+  {
+    id: 1,
+    link: '/newsfeed',
+    tooltip: 'NEWSFEED',
+    icon: <FaHome />
+  },
+  {
+    id: 2,
+    link: '/user/timeline',
+    tooltip: 'PROFILE PAGE',
+    icon: <FaUser />
+  },
+  {
+    id: 3,
+    link: '/favourite',
+    tooltip: 'FAV PAGES',
+    icon: <FaRegStar />
+  },
+  {
+    id: 4,
+    link: '/groups',
+    tooltip: 'FRIEND GROUPS',
+    icon: <FaRegGrinWink />
+  },
+  {
+    id: 5,
+    link: '/playlist',
+    tooltip: 'MUSIC & PLAYLISTS',
+    icon: <FaHeadphonesAlt />
+  },
+  {
+    id: 6,
+    link: '/calendar',
+    tooltip: 'CALENDAR & EVENTS',
+    icon: <FaRegCalendarAlt />
+  },
+  {
+    id: 7,
+    link: '/statistic',
+    tooltip: 'ACCOUNT STATS',
+    icon: <FaRegChartBar />
+  }
+];
 
 class SidebarItem extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      activeTab: "1"
+      activeTab: 1,
+      arrowRef: null
     };
 
     this.toggle = this.toggle.bind(this);
@@ -58,12 +109,13 @@ class SidebarItem extends Component {
     const { dispatch } = this.props;
     dispatch(userActions.currentPage(tab));
     if (tab == 2) {
-      dispatch(userActions.currentProfileTab("1"));
+      dispatch(userActions.currentProfileTab(1));
     }
   }
 
   render() {
     const { activeTab } = this.state;
+    const { classes } = this.props;
 
     return (
       <div className="fixed-sidebar">
@@ -77,118 +129,44 @@ class SidebarItem extends Component {
             </h1>
           </header>
           <ul className="sidebar-nav">
-            <li className="sidebar-nav-item">
-              <Link
-                to="/newsfeed"
-                className={`sidebar-nav-link ${
-                  activeTab === "1" ? "active " : ""
-                }`}
-                onClick={() => {
-                  this.toggle("1");
-                }}
-              >
-                <Tooltip title="NEWSFEED" placement="right">
-                  <FaHome />
-                </Tooltip>
-                <span className="sr-only">Newsfeed</span>
-              </Link>
-            </li>
-            <li className="sidebar-nav-item">
-              <Link
-                to="/user/timeline"
-                className={`sidebar-nav-link ${
-                  activeTab === "2" ? "active " : ""
-                }`}
-                onClick={() => {
-                  this.toggle("2");
-                }}
-              >
-                <Tooltip title="PROFILE PAGE" placement="right">
-                  <FaUser />
-                </Tooltip>
-                <span className="sr-only">User page</span>
-              </Link>
-            </li>
-            <li className="sidebar-nav-item">
-              <Link
-                to="/favourite"
-                className={`sidebar-nav-link ${
-                  activeTab === "3" ? "active " : ""
-                }`}
-                onClick={() => {
-                  this.toggle("3");
-                }}
-              >
-                <Tooltip title="FAV PAGES" placement="right">
-                  <FaRegStar />
-                </Tooltip>
-                <span className="sr-only">Fav pages</span>
-              </Link>
-            </li>
-            <li className="sidebar-nav-item">
-              <Link
-                to="/groups"
-                className={`sidebar-nav-link ${
-                  activeTab === "4" ? "active " : ""
-                }`}
-                onClick={() => {
-                  this.toggle("4");
-                }}
-              >
-                <Tooltip title="FRIEND GROUPS" placement="right">
-                  <FaRegGrinWink />
-                </Tooltip>
-                <span className="sr-only">Friend groups</span>
-              </Link>
-            </li>
-            <li className="sidebar-nav-item">
-              <Link
-                to="/playlist"
-                className={`sidebar-nav-link ${
-                  activeTab === "5" ? "active " : ""
-                }`}
-                onClick={() => {
-                  this.toggle("5");
-                }}
-              >
-                <Tooltip title="MUSIC & PLAYLISTS" placement="right">
-                  <FaHeadphonesAlt />
-                </Tooltip>
-                <span className="sr-only">Music and playlists</span>
-              </Link>
-            </li>
-            <li className="sidebar-nav-item">
-              <Link
-                to="/calendar"
-                className={`sidebar-nav-link ${
-                  activeTab === "6" ? "active " : ""
-                }`}
-                onClick={() => {
-                  this.toggle("6");
-                }}
-              >
-                <Tooltip title="CALENDAR & EVENTS" placement="right">
-                  <FaRegCalendarAlt />
-                </Tooltip>
-                <span className="sr-only">Calendar and events</span>
-              </Link>
-            </li>
-            <li className="sidebar-nav-item">
-              <Link
-                to="/statistic"
-                className={`sidebar-nav-link ${
-                  activeTab === "7" ? "active " : ""
-                }`}
-                onClick={() => {
-                  this.toggle("7");
-                }}
-              >
-                <Tooltip title="ACCOUNT STATS" placement="right">
-                  <FaRegChartBar />
-                </Tooltip>
-                <span className="sr-only">Statisic</span>
-              </Link>
-            </li>
+            {_map(btn, item => (
+              <li className="sidebar-nav-item" key={item.id}>
+                <Link
+                  to={item.link}
+                  className={`sidebar-nav-link ${
+                    activeTab == item.id ? 'active ' : ''
+                  }`}
+                  onClick={() => {
+                    this.toggle(item.id);
+                  }}
+                >
+                  <Tooltip
+                    placement="right"
+                    title={(
+                      <React.Fragment>
+                        {item.tooltip}
+                        <span
+                          className={classes.arrow}
+                        />
+                      </React.Fragment>
+)}
+                    classes={{ popper: classes.arrowPopper }}
+                    PopperProps={{
+                      popperOptions: {
+                        modifiers: {
+                          arrow: {
+                            enabled: Boolean(this.state.arrowRef),
+                            element: this.state.arrowRef
+                          }
+                        }
+                      }
+                    }}
+                  >
+                    {item.icon}
+                  </Tooltip>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
         <SidebarMobile />
@@ -197,13 +175,13 @@ class SidebarItem extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   const { page } = state.direction;
   return {
     page
   };
 };
 
-const Sidebar = withRouter(SidebarItem);
+const Sidebar = withStyles(styles)(withRouter(SidebarItem));
 
 export default connect(mapStateToProps)(Sidebar);

@@ -1,0 +1,50 @@
+.comment {
+	&-section {
+		border-top: 1px solid #e6ecf5;
+	}
+
+	&-list {
+		margin-bottom: 0;
+	}
+
+	&-item {
+		border-bottom: 1px solid #e6ecf5;
+		background-color: #fafbfd;
+		position: relative;
+
+		.post-additional-info {
+			border-top: none;
+			padding: 0;
+			justify-content: flex-start;
+		}
+
+		&:last-child {
+			border-bottom: none;
+		}
+
+		&.child-comment {
+		}
+	}
+}
+
+.children {
+	border-top: 1px solid #e6ecf5;
+	padding-left: 35px;
+
+	.comment-item {
+		border-left: 1px solid #e6ecf5;
+
+		&:before {
+			content: "";
+			position: absolute;
+			width: 9px;
+			height: 9px;
+			top: 40px;
+			left: -5px;
+			background-color: #fafbfd;
+			border-radius: 100%;
+			border: 2px solid #c2c5d9;
+			z-index: 13;
+		}
+	}
+}

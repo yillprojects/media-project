@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-import { Nav, NavItem, NavLink } from "reactstrap";
+import { Nav, NavItem, NavLink } from 'reactstrap';
 
-import SignUpTabs from "./components/SignUpTabs.js";
+import SignUpTabs from './components/SignUpTabs.js';
 
-import "./signup.scss";
+import './signup.scss';
 
 class SignUp extends Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class SignUp extends Component {
 
     this.toggle = this.toggle.bind(this);
     this.state = {
-      activeTab: "2"
+      activeTab: '2'
     };
   }
 
@@ -35,21 +35,23 @@ class SignUp extends Component {
           <Nav tabs>
             <NavItem>
               <NavLink
-                className={activeTab === "1" ? "active" : ""}
+                className={activeTab === '1' ? 'active' : ''}
                 onClick={() => {
-                  this.toggle("1");
+                  this.toggle('1');
                 }}
               >
+
                 Register
               </NavLink>
             </NavItem>
             <NavItem>
               <NavLink
-                className={activeTab === "2" ? "active" : ""}
+                className={activeTab === '2' ? 'active' : ''}
                 onClick={() => {
-                  this.toggle("2");
+                  this.toggle('2');
                 }}
               >
+
                 Login
               </NavLink>
             </NavItem>

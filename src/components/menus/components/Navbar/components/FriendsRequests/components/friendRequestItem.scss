@@ -1,0 +1,83 @@
+// colors
+$color-main: #515365;
+$color-secondary: rgb(255, 94, 58);
+$accept-request: #38a9ff;
+$color-text: #9a9fbf;
+
+.notification-item {
+	display: flex !important;
+	align-items: center;
+	padding: 15px 25px !important;
+	white-space: normal !important;
+
+	&:not(:last-child) {
+		border-bottom: 1px solid #e9ecef !important;
+	}
+
+	&-img {
+		border-radius: 100%;
+	}
+
+	.notification {
+		&-event {
+			padding-left: 15px;
+			width: 55%;
+			margin-bottom: 4px;
+
+			.chat-message-item {
+				font-size: 12px;
+				line-height: 12px;
+				margin-top: -1px;
+				color: $color-text;
+			}
+		}
+
+		&-friend {
+			padding: 0;
+			font-size: 14px;
+			color: $color-main;
+			font-weight: 700;
+		}
+
+		&-icon {
+			width: 35%;
+			display: flex;
+			flex-direction: row;
+			justify-content: flex-end;
+
+			.accept-request {
+				background-color: $accept-request;
+				border-color: $accept-request;
+			}
+
+			.request-del {
+				background-color: $color-text;
+				border-color: $color-text;
+			}
+
+			.btn {
+				margin-left: 3px;
+				padding: 7px;
+
+				svg {
+					font-size: 15px;
+					fill: #fff;
+				}
+			}
+
+			.send-request {
+				svg {
+					fill: $color-main;
+					transition: 0.2s;
+					font-size: 18px;
+				}
+
+				&:hover {
+					svg {
+						fill: $color-secondary;
+					}
+				}
+			}
+		}
+	}
+}

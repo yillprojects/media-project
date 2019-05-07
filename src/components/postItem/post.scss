@@ -10,7 +10,6 @@ $featured-post-hover: #ffc923;
 .post {
 	position: relative;
 	padding: 25px;
-	border-bottom: 1px solid #e6ecf5;
 
 	&-author {
 		margin-bottom: 20px;
@@ -48,32 +47,6 @@ $featured-post-hover: #ffc923;
 		}
 	}
 
-	.more .dropdown {
-		.btn {
-			padding: 0;
-			&-secondary {
-				color: $icon-color;
-			}
-		}
-
-		.more-settings {
-			padding: 15px 20px;
-			width: 180px;
-
-			.profile-menu-link {
-				padding: 7px 0;
-				font-size: 12px;
-				display: block;
-				color: $title-color;
-				transition: 0.2s;
-
-				&:hover {
-					color: $color-secondary;
-				}
-			}
-		}
-	}
-
 	p {
 		margin: 20px 0;
 		font-size: 0.875rem;
@@ -103,7 +76,8 @@ $featured-post-hover: #ffc923;
 				margin-right: 15px;
 			}
 
-			&:hover {
+			&:hover,
+			&.collapse-open {
 				color: $color-secondary;
 
 				svg {
@@ -172,6 +146,36 @@ $featured-post-hover: #ffc923;
 
 			&.featured-post:hover {
 				background-color: $featured-post-hover;
+			}
+		}
+	}
+
+	.btn-secondary:not(:disabled):not(.disabled):active {
+		color: $color-secondary;
+	}
+}
+
+.more .dropdown {
+	.btn {
+		padding: 0;
+		&-secondary {
+			color: $icon-color;
+		}
+	}
+
+	.more-settings {
+		padding: 15px 20px;
+		width: 180px;
+
+		.profile-menu-link {
+			padding: 7px 0;
+			font-size: 12px;
+			display: block;
+			color: $title-color;
+			transition: 0.2s;
+
+			&:hover {
+				color: $color-secondary;
 			}
 		}
 	}

@@ -1,0 +1,38 @@
+yarn add v1.9.4
+[1/4] Resolving packages...
+[2/4] Fetching packages...
+info fsevents@1.2.7: The platform "win32" is incompatible with this module.
+info "fsevents@1.2.7" is an optional dependency and failed compatibility check. Excluding it from installation.
+[3/4] Linking dependencies...
+[4/4] Building fresh packages...
+success Saved lockfile.
+success Saved 22 new dependencies.
+info Direct dependencies
+├─ moment@2.24.0
+├─ react-dates@20.1.0
+├─ react-dom@16.8.6
+└─ react@16.8.6
+info All dependencies
+├─ airbnb-prop-types@2.13.2
+├─ array.prototype.find@2.0.4
+├─ array.prototype.flat@1.2.1
+├─ deepmerge@1.5.2
+├─ direction@1.0.2
+├─ document.contains@1.0.1
+├─ function.prototype.name@1.1.0
+├─ global-cache@1.2.1
+├─ is-touch-device@1.0.1
+├─ moment@2.24.0
+├─ object-is@1.0.1
+├─ prop-types-exact@1.2.0
+├─ react-addons-shallow-compare@15.6.2
+├─ react-dates@20.1.0
+├─ react-dom@16.8.6
+├─ react-moment-proptypes@1.6.0
+├─ react-outside-click-handler@1.2.3
+├─ react-portal@4.2.0
+├─ react-with-styles-interface-css@4.0.3
+├─ react-with-styles@3.2.1
+├─ react@16.8.6
+└─ reflect.ownkeys@0.2.0
+Done in 28.27s.

@@ -19,7 +19,7 @@ export default class User extends Component {
             style={{ width: 35, height: 35 }}
             className="user-img"
           />
-          <span className={`icon-status  ${status ? status : 'online'}`} />
+          <span className={`icon-status  ${status || 'online'}`} />
         </div>
         <div className="user-name">
           <div className="user-title">

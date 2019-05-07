@@ -13,14 +13,12 @@ import "./signuptabs.scss";
 
 class SignUpTabs extends Component {
   _isMounted = false;
+  
   constructor(props) {
     super(props);
     this.updateState = this.updateState.bind(this);
-    this.clearMessage = this.clearMessage.bind(this);
 
-    this.state = {
-      flashClass: false
-    };
+    this.state = {};
   }
 
   componentWillMount() {
@@ -37,27 +35,13 @@ class SignUpTabs extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { activeTab, alert } = this.props;
+    console.log(nextProps);
+    const { activeTab, alert, dispatch } = this.props;
+    console.log(alert.type);
 
-    if (alert.message != nextProps.alert.message) {
-      setTimeout(() => {
-        if (nextProps.alert.type == "alert-success") {
-          this.updateState("2");
-        }
-        this.setState({ flashClass: true });
-      }, 300);
-      setTimeout(() => {
-        this.setState({ flashClass: false });
-      }, 5000);
-      this.clearMessage();
-    }
-  }
-
-  clearMessage() {
-    setTimeout(() => {
-      const { dispatch } = this.props;
+    if (activeTab != nextProps.activeTab) {
       dispatch(alertActions.clear());
-    }, 5300);
+    }
   }
 
   updateState(state = {}) {
@@ -66,21 +50,23 @@ class SignUpTabs extends Component {
   }
 
   render() {
-    const { flashClass } = this.state;
     const { activeTab, alert, registering } = this.props;
-    const flash = flashClass ? "alert-open" : "";
 
     return (
-      <TabContent activeTab={activeTab} className={`${activeTab == 2 ? 'border-right-radius' : 'border-left-radius'}`}>
+      <TabContent
+        activeTab={activeTab}
+        className={`${
+          activeTab == 2 ? "border-right-radius" : "border-left-radius"
+        }`}
+      >
         {alert.message ? (
-          <div className={flash + ` alert ${alert.type}`}>{alert.message}</div>
+          <div className={`alert ${alert.type}`}>{alert.message}</div>
         ) : (
           ""
         )}
 
-        {alert.message ? console.log("should be a message") : ""}
         <TabPane tabId="1">
-          <Register />
+          <Register update={this.updateState} />
         </TabPane>
         <TabPane tabId="2">
           <Login update={this.updateState} />

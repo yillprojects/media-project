@@ -1,0 +1,26 @@
+.comment {
+	&-form {
+		padding: 25px;
+		border-top: 1px solid #e6ecf5;
+		overflow: hidden;
+
+		.post-author {
+			display: flex;
+			align-items: center;
+
+			img {
+				margin-right: 10px;
+				border-radius: 100%;
+				overflow: hidden;
+			}
+		}
+
+		.send-btn {
+			float: right;
+		}
+	}
+
+	&-textarea {
+		flex: 1;
+	}
+}

@@ -1,4 +1,4 @@
-import { authenticationConstants } from "../constants/authentication.constants";
+import { authenticationConstants } from '../constants/authentication.constants';
 
 export const authentication = (state = {}, action) => {
   console.log(action);
@@ -18,6 +18,6 @@ export const authentication = (state = {}, action) => {
     case authenticationConstants.LOGOUT:
       return {};
     default:
-      return state
+      return state;
   }
-}
+};

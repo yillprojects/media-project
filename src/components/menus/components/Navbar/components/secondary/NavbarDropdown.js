@@ -14,6 +14,7 @@ export default class NavbarDropdown extends Component {
     this.toggle = this.toggle.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
+    this.renderNoData = this.renderNoData.bind(this);
 
     this.state = {
       dropdownOpen: false
@@ -34,12 +35,17 @@ export default class NavbarDropdown extends Component {
     this.setState({ dropdownOpen: false });
   }
 
+  renderNoData() {
+    return (
+      <p className="no-data-message">No notifications found</p>
+    )
+  }
+
   render() {
     const Icon = this.props.icon;
     const { data, children } = this.props;
 
     const { dropdownOpen } = this.state;
-
     return (
       <Dropdown
         onMouseOver={this.onMouseEnter}
@@ -65,7 +71,7 @@ export default class NavbarDropdown extends Component {
               </Link>
             </div>
           </header>
-          <div className="dropdown-menu-list">{children}</div>
+          <div className="dropdown-menu-list">{children ? children : this.renderNoData()}</div>
           <Button
             className="dropdown-menu-btn"
             style={{

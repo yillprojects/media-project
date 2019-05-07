@@ -106,13 +106,15 @@ $color-title: #515365;
 				justify-content: center;
 				padding: 20px;
 				font-size: 25px;
+				transition: 0.2s;
 
 				svg {
-					transition: 0.3s;
+					transition: 0.2s;
 					color: $color-icons;
+				}
 
-					&:hover {
-						transition: 0.3s;
+				&:hover {
+					svg {
 						color: $color-hover;
 					}
 				}
