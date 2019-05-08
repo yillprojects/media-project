@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from cities_light.models import Country, City
-from .models import Profile, Residence
+from .models import Profile, Location
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -10,25 +9,21 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('username', 'email', 'password', 'id')
 
 
+class LocationSerializer(serializers.ModelSerializer):
+    country = serializers.StringRelatedField()
+    city = serializers.SlugRelatedField(slug_field='name', read_only='True')
+
+    class Meta:
+        model = Location
+        fields = ('country', 'city')
+
+
 class ProfileSerializer(serializers.ModelSerializer):
+    location = LocationSerializer(read_only='True')
+    user = serializers.StringRelatedField()
+    friends = serializers.StringRelatedField(many=True)
+    followers = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Profile
-        fields = '__all__'
-
-
-class ResidenceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Residence
-        fields = '__all__'
-
-
-class CountrySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Country
-        fields = '__all__'
-
-
-class CitySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = City
         fields = '__all__'
