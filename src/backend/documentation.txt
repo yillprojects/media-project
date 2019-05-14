@@ -1,0 +1,41 @@
+endpoints: url = 'api/', all responses except marked 'no_success' contain 'success' flag
+
+- authorization: url = 'users/'
+
+-- '/register/': register new user, method: POST, fields: 'username',
+                                                          'email',
+                                                          'password'
+-- '/check/': check if user exists and password matches, method: POST, fields: 'username',
+                                                                               'password'
+
+- profiles: url = '/profiles'
+
+-- '/': method: GET, returns: array of all profiles, no_success
+-- '/<profile_id>/': method: GET, returns: profiles with requested id, no_success
+-- '/headers/': method: POST, fields: 'username' (username of profile owner), returns: data for header of profile of requested user
+-- '/set_location/': set location for requested user, method: POST, fields: 'username' (username of user),
+                                                                            'city' (city from array, received from any '/api/cities/')
+
+- posts: url = '/posts'
+
+-- '/': method: GET, returns: array of all posts, no_success
+-- '/<post_id>/': method: GET, returns: post with requested id, no_success
+-- '/add/': add post, method: POST, fields: 'author' (username of author), 
+                                            'text' (text of post)
+-- '/delete/': delete post, method: POST, fields: 'id' (id of post)
+-- '/like/': like post, method: POST, fields: 'id' (id of post)
+-- '/dislike/': dislike post, method: POST, fields: 'id' (id of post)
+-- '/add_comment/': add comment to post, method: POST, fields: 'post_id' (id of postto add comment to), 
+                                                               'text' (text of comment), 
+                                                               'author' (username of author)
+-- '/delete_comment/': delete comment, method: POST, fields: 'id' (id of comment)
+
+- locations: 
+
+-- '/countries/': method: GET, returns: array of all countries
+-- '/cities/': method: GET, returns: array of all cities
+-- '/cities/': method: POST, fields: 'country' (must be from array), returns: array of cities from requested country
+
+
+
+

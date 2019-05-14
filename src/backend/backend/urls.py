@@ -10,6 +10,8 @@ from api import views
 router = routers.DefaultRouter()
 router.register(r'users', views.UserView, 'users')
 router.register(r'profiles', views.ProfileView, 'profiles')
+router.register(r'posts', views.PostView, 'posts')
+router.register(r'comments', views.CommentView, 'comments')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
