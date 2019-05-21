@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'cities_light',
+    'picklefield',
     'api'
 ]
 

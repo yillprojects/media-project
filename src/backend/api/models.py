@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from cities_light.models import Country, City
+from picklefield import PickledObjectField
 
 
 class Location(models.Model):
@@ -23,20 +24,26 @@ class Profile(models.Model):
     avatar = models.ImageField(upload_to='avatars', default='avatars/default.jpg')
     header = models.ImageField(upload_to='headers', default='headers/default.jpg')
     status = models.CharField(max_length=20, default="")
+    intro = PickledObjectField(null=True)
+    # TODO Q: intro data structure
 
-    def set_location(self, city_name):
+    def set_location(self, city_name, country_name):
         try:
-            city = City.objects.get(name=city_name)
+            city = City.objects.get(name=city_name, country__name=country_name)
         except ObjectDoesNotExist:
             return False
-        country = Country.objects.get(name=city.country.name)
+
+        country = Country.objects.get(name=country_name)
         location, is_created = Location.objects.get_or_create(country=country, city=city)
         self.location = location
         self.save()
         return True
 
-    def __str__(self):
+    def full_name(self):
         return '{} {}'.format(self.first_name, self.last_name)
+
+    def __str__(self):
+        return self.user.username
 
 
 class Post(models.Model):
@@ -50,7 +57,7 @@ class Post(models.Model):
         return '{:%d-%m-%Y-%H-%M-%S}'.format(self.created_time)
 
     def __str__(self):
-        return self.text[:17] + ('...' if len(self.text) > 17 else '')
+        return self.text[:17] + ('...' if len(str(self.text)) > 17 else '')
 
 
 class Comment(models.Model):

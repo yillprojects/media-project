@@ -3,13 +3,25 @@ from django.contrib.auth.models import User
 from .models import Profile, Location, Post, Comment
 
 
-class UserSerializer(serializers.ModelSerializer):
+class DynamicFieldsModelSerializer(serializers.ModelSerializer):
+    def __init__(self, *args, **kwargs):
+        fields = kwargs.pop('fields', None)
+        super(DynamicFieldsModelSerializer, self).__init__(*args, **kwargs)
+
+        if fields is not None:
+            allowed = set(fields)
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
+
+
+class UserSerializer(DynamicFieldsModelSerializer):
     class Meta:
         model = User
         fields = ('username', 'email', 'password', 'id')
 
 
-class LocationSerializer(serializers.ModelSerializer):
+class LocationSerializer(DynamicFieldsModelSerializer):
     country = serializers.StringRelatedField()
     city = serializers.SlugRelatedField(slug_field='name', read_only='True')
 
@@ -20,20 +32,21 @@ class LocationSerializer(serializers.ModelSerializer):
 
 # TODO Q: data splitting
 
-class ProfileSerializer(serializers.ModelSerializer):
+class ProfileSerializer(DynamicFieldsModelSerializer):
     location = LocationSerializer(read_only='True')
     user = serializers.StringRelatedField()
     friends = serializers.StringRelatedField(many=True)
     followers = serializers.StringRelatedField(many=True)
     avatar = serializers.ImageField(use_url=False)
     header = serializers.ImageField(use_url=False)
+    intro = serializers.ListField()
 
     class Meta:
         model = Profile
         fields = '__all__'
 
 
-class ProfileHeaderSerializer(serializers.ModelSerializer):
+class ProfileHeaderSerializer(DynamicFieldsModelSerializer):
     location = LocationSerializer(read_only='True')
     avatar = serializers.ImageField(use_url=False)
     header = serializers.ImageField(use_url=False)
@@ -43,8 +56,8 @@ class ProfileHeaderSerializer(serializers.ModelSerializer):
         fields = ('location', 'first_name', 'last_name', 'avatar', 'header')
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    author = serializers.StringRelatedField()
+class CommentSerializer(DynamicFieldsModelSerializer):
+    author = serializers.CharField(source='author.full_name')
     username = serializers.CharField(source='author.user')
     avatar = serializers.ImageField(source='author.avatar', use_url=False)
     created_time = serializers.CharField(source='pretty_time')
@@ -54,8 +67,8 @@ class CommentSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class PostSerializer(serializers.ModelSerializer):
-    author = serializers.StringRelatedField()
+class PostSerializer(DynamicFieldsModelSerializer):
+    author = serializers.CharField(source='author.full_name')
     username = serializers.CharField(source='author.user')
     avatar = serializers.ImageField(source='author.avatar', use_url=False)
     created_time = serializers.CharField(source='pretty_time')

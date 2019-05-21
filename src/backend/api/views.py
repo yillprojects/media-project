@@ -32,7 +32,7 @@ def invalid_data_message(message):
 
 ok = Response(
     {'success': True},
-    status=status.HTTP_204_NO_CONTENT
+    status=status.HTTP_200_OK
 )
 
 
@@ -104,7 +104,7 @@ class UserView(viewsets.ModelViewSet):
         try:
             user = User.objects.get(username=request.data['username'])
         except ObjectDoesNotExist:
-            return response['ok_message']('Unknown username')
+            return response['ok_message']('Wrong username')
 
         is_password_match = user.check_password(request.data['password'])
         if not is_password_match:
@@ -119,13 +119,17 @@ class ProfileView(viewsets.ModelViewSet):
 
     @action(methods=['POST'], detail=False)
     def set_location(self, request):
-        for key in ['city', 'username']:
+        for key in ['city', 'country', 'username']:
             if key not in request.data:
                 return response['invalid_data']
 
-        user = Profile.objects.get(user__username=request.data['username'])
-        if not user.set_location(request.data['city']):
-            return response['ok_message']('Unknown city')
+        try:
+            user = Profile.objects.get(user__username=request.data['username'])
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong username')
+
+        if not user.set_location(request.data['city'], request.data['country']):
+            return response['ok_message']('Wrong location')
 
         return response['ok']
 
@@ -168,11 +172,25 @@ class ProfileView(viewsets.ModelViewSet):
                 return response['invalid_data']
 
         try:
-            profile_header = Profile.objects.get(user__username=request.data['username'])
+            profile = Profile.objects.get(user__username=request.data['username'])
         except ObjectDoesNotExist:
-            return response['ok_message']('Unknown username')
+            return response['ok_message']('Wrong username')
 
-        serialized = ProfileHeaderSerializer(profile_header)
+        serialized = ProfileHeaderSerializer(profile)
+        return response['ok_data'](serialized.data)
+
+    @action(methods=['POST'], detail=False)
+    def friends_short_list(self, request):
+        for key in ['username']:
+            if key not in request.data:
+                return response['invalid_data']
+
+        try:
+            profile = Profile.objects.get(user__username=request.data['username'])
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong username')
+
+        serialized = ProfileSerializer(profile.friends, many=True, fields=('avatar', 'user'))
         return response['ok_data'](serialized.data)
 
 
