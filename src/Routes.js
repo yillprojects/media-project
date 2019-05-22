@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import Menus from './components/menus/Menus.js';
 import LandingPage from './scenes/Landing/LandingPage.js';
@@ -10,8 +11,13 @@ import Newsfeed from './scenes/Newsfeed/Newsfeed.js';
 
 class Routes extends Component {
   render() {
-    const { loggedIn } = this.props;
-
+      // axios
+      //     .post('http://localhost:8000/api/posts/add_comment/', {
+      //         post_id: 24,
+      //         author: localStorage.getItem('currentUser'),
+      //         text: 'Kek comment.'
+      //     });
+    // const { loggedIn, user } = this.props;
     const DefaultLayout = ({ component: Component }) => (
       <Route
         render={props => (
@@ -28,8 +34,8 @@ class Routes extends Component {
       <Router>
         <Switch>
           <Route exact path="/" component={LandingPage} />
-          <DefaultLayout path="/user/" component={ProfilePage} />
-          <DefaultLayout path="/newsfeed" component={Newsfeed} />
+          <DefaultLayout path="/:username/newsfeed" component={Newsfeed} />
+          <DefaultLayout path="/:username/" component={ProfilePage} />
         </Switch>
       </Router>
     );
@@ -37,9 +43,10 @@ class Routes extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { loggedIn } = state.authentication;
+  const { loggedIn, user } = state.authentication;
   return {
-    loggedIn
+    loggedIn,
+      user
   };
 };
 

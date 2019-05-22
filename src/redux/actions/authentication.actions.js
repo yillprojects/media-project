@@ -31,14 +31,14 @@ function register(user) {
   function request(user) {
     return {
       type: authenticationConstants.REGISTER_REQUEST,
-      user
+      payload: user
     };
   }
   function success(user) {
-    return { type: authenticationConstants.REGISTER_SUCCESS, user };
+    return { type: authenticationConstants.REGISTER_SUCCESS, payload: user };
   }
   function failure(error) {
-    return { type: authenticationConstants.REGISTER_FAILURE, error };
+    return { type: authenticationConstants.REGISTER_FAILURE, payload: error };
   }
 }
 
@@ -50,12 +50,10 @@ function login(username, password) {
       .post('http://localhost:8000/api/users/check/', {
         username,
         password,
-        appointment: 'check'
       })
       .then((user) => {
-        console.log(user.data);
         if (user.data.success) {
-          dispatch(success(user.data.user));
+          dispatch(success(username));
         } else {
           dispatch(failure(user.data.message));
           dispatch(alertActions.error(user.data.message));
@@ -69,19 +67,19 @@ function login(username, password) {
   };
 
   function request(user) {
-    return { type: authenticationConstants.LOGIN_REQUEST, user };
+    return { type: authenticationConstants.LOGIN_REQUEST, payload: user };
   }
   function success(user) {
-    return { type: authenticationConstants.LOGIN_SUCCESS, user };
+    return { type: authenticationConstants.LOGIN_SUCCESS, payload: user };
   }
   function failure(error) {
-    return { type: authenticationConstants.LOGIN_FAILURE, error };
+    return { type: authenticationConstants.LOGIN_FAILURE, payload: error };
   }
 }
 
 function logout() {
   return {
-    type: authenticationConstants.LOGOUT
+    type: authenticationConstants.LOGOUT,
   };
 }
 

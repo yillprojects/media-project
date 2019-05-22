@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import ReactTimeAgo from "react-time-ago";
+import axios from 'axios';
 
 import {
   Dropdown,
@@ -27,11 +29,39 @@ export default class Post extends Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.toggleCollapse = this.toggleCollapse.bind(this);
 
+    const { data, currentUser } = this.props;
     this.state = {
       dropdownOpen: false,
-      collapse: false
+      collapse: false,
+      isLiked: data.liked_by.includes(currentUser),
+      ...data,
+      currentUser
     };
   }
+
+  like = id => {
+    const { isLiked, likes, currentUser } = this.state;
+
+    if (!isLiked) {
+      axios.post('http://localhost:8000/api/posts/like/', {
+          username: currentUser,
+          id
+      });
+      this.setState({
+        isLiked: !isLiked,
+        likes: likes + 1
+      })
+    } else {
+      axios.post('http://localhost:8000/api/posts/dislike/', {
+          username: currentUser,
+          id
+      });
+      this.setState({
+        isLiked: !isLiked,
+        likes: likes - 1
+      })
+    }
+  };
 
   toggleDropdown() {
     this.setState(prevState => ({
@@ -45,23 +75,27 @@ export default class Post extends Component {
 
   render() {
     const { dropdownOpen, users, collapse } = this.state;
-
+    const {
+        id, author, username, avatar, created_time, comments, text, likes, reposts, liked_by
+    } = this.state;
     return (
       <div className="ui-block">
         <article className="post">
           <div className="post-author">
             <div className="user-title">
               <img
-                src="https://via.placeholder.com/150"
+                src={`http://localhost:8000/media/${avatar}`}
                 alt="user-img"
                 style={{ height: 40, width: 40 }}
               />
               <div className="author-date">
-                <Link to="/user" className="author-name">
-                  <h6>{users ? users[0].username : "Andrew"}</h6>
+                <Link to={`/${username}/newsfeed/`} className="author-name">
+                  <h6>{author}</h6>
                 </Link>
                 <div className="post-date">
-                  <span>18 hours ago</span>
+                  <span>
+                    <ReactTimeAgo date={Date.parse(created_time)} />
+                  </span>
                 </div>
               </div>
             </div>
@@ -96,17 +130,11 @@ export default class Post extends Component {
               </Dropdown>
             </div>
           </div>
-          <p>
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum. Sed ut perspiciatis unde omnis iste natus error
-            sit voluptatem accusantium doloremque.
-          </p>
+          <p>{text}</p>
           <div className="post-additional-info">
-            <Button className="transparent-btn">
+            <Button className="transparent-btn" onClick={() => this.like(id)}>
               <FaRegHeart />
-              <span>8</span>
+              <span>{likes}</span>
             </Button>
             <div className="comments-shared">
               <Button
@@ -115,11 +143,11 @@ export default class Post extends Component {
                 onClick={this.toggleCollapse}
               >
                 <FaRegComments />
-                <span>8</span>
+                <span>{comments.length}</span>
               </Button>
               <Button type="button" className="transparent-btn">
                 <FaShareSquare />
-                <span>8</span>
+                <span>{reposts}</span>
               </Button>
             </div>
           </div>
@@ -143,7 +171,7 @@ export default class Post extends Component {
           </div>
         </article>
         <Collapse isOpen={collapse}>
-          <CommentSection />
+          <CommentSection commentsData={comments} post={id} />
         </Collapse>
       </div>
     );

@@ -7,18 +7,19 @@ import CommentForm from './components/CommentForm.js';
 import "./commentSection.scss";
 
 
-const data = [1, 2];
+// const data = [1, 2];
 
 class CommentSection extends Component {
   render() {
+    const { commentsData, post } = this.props;
     return (
       <div className="comment-section">
         <ul className="comment-list">
-          {_map(data, item => {
-            return <Comment key={item} />;
+          {_map(commentsData, item => {
+            return <Comment key={item.id} commentData={item} post={post} />;
           })}
         </ul>
-        <CommentForm />
+        <CommentForm post={post} />
       </div>
     );
   }

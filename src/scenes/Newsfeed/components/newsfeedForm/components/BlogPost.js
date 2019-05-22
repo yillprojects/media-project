@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import axios from 'axios';
 
 import _map from 'lodash/map';
 
@@ -60,11 +62,36 @@ class BlogPost extends Component {
     super(props);
 
     this.state = {
-      arrowRef: null
+      arrowRef: null,
+      text: '',
     };
 
     this.handleArrowRef = this.handleArrowRef.bind(this);
   }
+
+  handleChange = e => {
+    this.setState({
+      text: e.target.value
+    });
+  };
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const { text } = this.state;
+    // const { currentUser } = this.props;
+    const currentUser = localStorage.getItem('currentUser');
+    
+    if (text !== '') {
+      axios
+        .post('http://localhost:8000/api/posts/add/', {
+          author: currentUser? currentUser : 'use',
+          text
+        });
+      this.setState({
+        text: ''
+      })
+    }
+  };
 
   handleArrowRef(node) {
     this.setState({
@@ -74,10 +101,10 @@ class BlogPost extends Component {
 
   render() {
     const { classes } = this.props;
-    const { arrowRef } = this.state;
+    const { arrowRef, text } = this.state;
 
     return (
-      <form className="blogpost-form form mt-1">
+      <form className="blogpost-form form mt-1" onSubmit={this.handleSubmit}>
         <div className="author-thumb">
           <img
             src="https://via.placeholder.com/35"
@@ -93,6 +120,8 @@ class BlogPost extends Component {
             rows={8}
             rowsMax={8}
             fullWidth
+            onChange={this.handleChange}
+            value={text}
           />
         </MuiThemeProvider>
         <div className="add-option-message">
@@ -128,11 +157,18 @@ class BlogPost extends Component {
               </Tooltip>
             ))}
           </div>
-          <Button className="send-btn">Post Status</Button>
+          <Button className="send-btn">Post</Button>
         </div>
       </form>
     );
   }
 }
 
-export default withStyles(styles)(BlogPost);
+const mapStateToProps = (state) => {
+  const { user } = state.authentication;
+  return {
+    currentUser: user
+  };
+};
+
+export default connect(mapStateToProps)(withStyles(styles)(BlogPost));

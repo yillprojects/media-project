@@ -30,20 +30,20 @@ class CommentFormConnected extends Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      comment: ""
+      text: ""
     };
   }
 
   handleSubmit(event) {
     event.preventDefault();
 
-    const { comment } = this.state;
-    const { dispatch } = this.props;
-    const id = uuidv4();
+    const { text } = this.state;
+    const { dispatch, post } = this.props;
+    const id = uuidv4(); // id створюється автоматично Django, і я тобі його буду присилать в респонсі
 
-    dispatch(commentActions.addComment({ comment, id }));
+    dispatch(commentActions.addComment({ text, post }));
     this.setState({
-      comment: ""
+      text: ""
     });
   }
 
@@ -51,13 +51,13 @@ class CommentFormConnected extends Component {
     const { value } = event.target;
 
     this.setState({
-      comment: value
+      text: value
     });
   }
 
   render() {
     const { classes, loading } = this.props;
-    const { comment } = this.state;
+    const { text } = this.state;
 
     return (
       <form className="comment-form form" onSubmit={this.handleSubmit}>
@@ -81,11 +81,11 @@ class CommentFormConnected extends Component {
                 notchedOutline: classes.notchedOutline
               }
             }}
-            value={comment}
+            value={text}
             onChange={this.handleChange}
           />
         </div>
-        <Button className="send-btn mt-2" disabled={!comment || loading}>
+        <Button className="send-btn mt-2" disabled={!text || loading}>
           Post Comment
         </Button>
       </form>

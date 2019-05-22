@@ -6,8 +6,9 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from cities_light.models import Country, City
 
-from .serializers import UserSerializer, ProfileSerializer, PostSerializer, ProfileHeaderSerializer, CommentSerializer
-from .models import Profile, Post, Comment
+from .serializers import UserSerializer, ProfileSerializer, PostSerializer, ProfileHeaderSerializer, \
+    CommentSerializer, CommunitySerializer
+from .models import Profile, Post, Comment, Community
 
 
 def user_data(resp_message='', is_success=False, resp_status=status.HTTP_200_OK):
@@ -79,8 +80,8 @@ class UserView(viewsets.ModelViewSet):
         serialized = UserSerializer(data=request.data)
         if serialized.is_valid():
 
-            is_email_unique = User.objects.filter(email=request.data['email']).exists()
-            if not is_email_unique:
+            is_email_busy = User.objects.filter(email=request.data['email']).exists()
+            if is_email_busy:
                 return response['ok_message']('Email is busy')
 
             user = User.objects.create_user(**serialized.data)
@@ -193,10 +194,58 @@ class ProfileView(viewsets.ModelViewSet):
         serialized = ProfileSerializer(profile.friends, many=True, fields=('avatar', 'user'))
         return response['ok_data'](serialized.data)
 
+    @action(methods=['POST'], detail=False)
+    def communities(self, request):
+        for key in ['username']:
+            if key not in request.data:
+                return response['invalid_data']
+
+        try:
+            profile = Profile.objects.get(user__username=request.data['username'])
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong username')
+
+        serialized = CommunitySerializer(profile.communities, many=True,
+                                         fields=('name', 'address', 'occupation', 'avatar'))
+        return response['ok_data'](serialized.data)
+
+    @action(methods=['POST'], detail=False)
+    def add_community(self, request):
+        for key in ['username', 'community']:
+            if key not in request.data:
+                return response['invalid_data']
+
+        try:
+            profile = Profile.objects.get(user__username=request.data['username'])
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong username')
+
+        try:
+            community = Community.objects.get(address=request.data['community'])
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong community address')
+
+        profile.communities.add(community)
+        return response['ok']
+
 
 class PostView(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
+
+    @action(methods=['POST'], detail=False)
+    def get(self, request):
+        for key in ['username']:
+            if key not in request.data:
+                return response['invalid_data']
+
+        try:
+            profile = Profile.objects.get(user__username=request.data['username'])
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong username')
+
+        serialized = PostSerializer(profile.posts, many=True)
+        return response['ok_data'](serialized.data)
 
     @action(methods=['POST'], detail=False)
     def add(self, request):
@@ -224,8 +273,7 @@ class PostView(viewsets.ModelViewSet):
 
     @action(methods=['POST'], detail=False)
     def like(self, request):
-        print(request.data)
-        for key in ['id']:
+        for key in ['id', 'username']:
             if key not in request.data:
                 return response['invalid_data']
 
@@ -234,13 +282,19 @@ class PostView(viewsets.ModelViewSet):
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong post id')
 
+        try:
+            profile = Profile.objects.get(user__username=request.data['username'])
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong username')
+
+        post.liked_by.add(profile)
         post.likes += 1
         post.save()
         return response['ok']
 
     @action(methods=['POST'], detail=False)
     def dislike(self, request):
-        for key in ['id']:
+        for key in ['id', 'username']:
             if key not in request.data:
                 return response['invalid_data']
 
@@ -249,6 +303,12 @@ class PostView(viewsets.ModelViewSet):
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong post id')
 
+        try:
+            profile = Profile.objects.get(user__username=request.data['username'])
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong username')
+
+        post.liked_by.remove(profile)
         post.likes -= 1
         post.save()
         return response['ok']
@@ -290,6 +350,11 @@ class PostView(viewsets.ModelViewSet):
 class CommentView(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+
+
+class CommunityView(viewsets.ModelViewSet):
+    serializer_class = CommunitySerializer
+    queryset = Community.objects.all()
 
 
 @api_view(['GET'])

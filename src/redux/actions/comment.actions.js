@@ -1,11 +1,18 @@
 import { commentConstants } from "../constants/comment.constants";
+import axios from 'axios';
 
 function addComment(comment) {
 	return dispatch => {
 		dispatch(request(comment));
 		console.log(comment);
 
-		// axios request
+		const { post, text } = comment;
+		axios
+			.post('http://localhost:8000/api/posts/add_comment/', {
+				post_id: post,
+				author: localStorage.getItem('currentUser'),
+				text
+			});
 		if (1) {
 			dispatch(success(comment));
 		} else {

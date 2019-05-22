@@ -6,12 +6,12 @@ export const authentication = (state = {}, action) => {
     case authenticationConstants.LOGIN_REQUEST:
       return {
         loggingIn: true,
-        user: action.user
+        user: action.payload
       };
     case authenticationConstants.LOGIN_SUCCESS:
       return {
         loggedIn: true,
-        user: action.user
+        user: action.payload
       };
     case authenticationConstants.LOGIN_FAILURE:
       return {};

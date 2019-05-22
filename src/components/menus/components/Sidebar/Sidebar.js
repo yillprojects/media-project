@@ -35,7 +35,7 @@ const btn = [
   },
   {
     id: 2,
-    link: '/user/timeline',
+    link: '/timeline',
     tooltip: 'PROFILE PAGE',
     icon: <FaUser />
   },
@@ -117,12 +117,14 @@ class SidebarItem extends Component {
     const { activeTab } = this.state;
     const { classes } = this.props;
 
+    const username = localStorage.getItem('currentUser');
+
     return (
       <div className="fixed-sidebar">
         <div className="sidebar-laptop">
           <header className="fixed-sidebar-header">
             <h1>
-              <Link to="/newsfeed" className="sidebar-logo sidebar-logo-icon">
+              <Link to={`/${username}/newsfeed`} className="sidebar-logo sidebar-logo-icon">
                 <IoIosCube />
                 <span className="sr-only">Website logo</span>
               </Link>
@@ -132,7 +134,7 @@ class SidebarItem extends Component {
             {_map(btn, item => (
               <li className="sidebar-nav-item" key={item.id}>
                 <Link
-                  to={item.link}
+                  to={'/' + username + item.link}
                   className={`sidebar-nav-link ${
                     activeTab == item.id ? 'active ' : ''
                   }`}
@@ -177,8 +179,10 @@ class SidebarItem extends Component {
 
 const mapStateToProps = (state) => {
   const { page } = state.direction;
+  const { user } = state.authentication;
   return {
-    page
+    page,
+    username: user
   };
 };
 

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Profile, Location, Post, Comment
+from .models import Profile, Location, Post, Comment, Community
 
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
@@ -30,7 +30,14 @@ class LocationSerializer(DynamicFieldsModelSerializer):
         fields = ('country', 'city')
 
 
-# TODO Q: data splitting
+class CommunitySerializer(DynamicFieldsModelSerializer):
+    avatar = serializers.ImageField(use_url=False)
+    members = serializers.StringRelatedField(many=True)
+
+    class Meta:
+        model = Community
+        fields = '__all__'
+
 
 class ProfileSerializer(DynamicFieldsModelSerializer):
     location = LocationSerializer(read_only='True')
@@ -40,6 +47,8 @@ class ProfileSerializer(DynamicFieldsModelSerializer):
     avatar = serializers.ImageField(use_url=False)
     header = serializers.ImageField(use_url=False)
     intro = serializers.ListField()
+    communities = serializers.StringRelatedField(many=True)
+    liked_posts = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Profile
@@ -73,6 +82,7 @@ class PostSerializer(DynamicFieldsModelSerializer):
     avatar = serializers.ImageField(source='author.avatar', use_url=False)
     created_time = serializers.CharField(source='pretty_time')
     comments = CommentSerializer(many=True)
+    liked_by = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Post

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import ReactTimeAgo from 'react-time-ago';
 
 import { Collapse } from "reactstrap";
 import { FaRegHeart } from "react-icons/fa";
@@ -24,31 +25,30 @@ class Comment extends Component {
 
   render() {
     const { collapse } = this.state;
-
+    const { author, avatar, created_time, id, likes, post, text, username } = this.props.commentData;
     return (
       <li className="comment-item">
         <div className="post">
           <div className="post-author">
             <div className="user-title">
               <img
-                src="https://via.placeholder.com/150"
+                src={`http://localhost:8000/media/${avatar}`}
                 alt="user-img"
                 style={{ height: 40, width: 40 }}
               />
               <div className="author-date">
                 <Link to="/user" className="author-name">
-                  <h6>Andrew</h6>
+                  <h6>{author}</h6>
                 </Link>
                 <div className="post-date">
-                  <span>18 hours ago</span>
+                  <span>
+                      <ReactTimeAgo date={Date.parse(created_time)} />
+                  </span>
                 </div>
               </div>
             </div>
           </div>
-          <p>
-            Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-            accusantium der doloremque laudantium.
-          </p>
+          <p>{text}</p>
           <div className="post-additional-info">
             <button type="button" className="btn btn-control">
               <FaRegHeart />
@@ -64,8 +64,6 @@ class Comment extends Component {
           </div>
         </div>
         <ul className="children">
-          <ChildComment />
-          <ChildComment />
         </ul>
         <Collapse isOpen={collapse}>
           <CommentForm />

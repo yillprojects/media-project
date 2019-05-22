@@ -46,6 +46,7 @@ class Login extends Component {
     const { dispatch } = this.props;
 
     if (username && password) {
+      localStorage.setItem('currentUser', username);
       dispatch(authenticationActions.login(username, password));
     }
   }
@@ -148,7 +149,7 @@ Remember
               )}
               {' '}
             </Button>
-            {loggedIn && <Redirect to="/newsfeed" />}
+            {loggedIn && <Redirect to={`/${username}/newsfeed`} />}
             <div className="or" />
             <Button className="tab-section-btn bg-facebook mb-2">
               <FaFacebookF className="icon" />

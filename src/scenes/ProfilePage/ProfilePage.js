@@ -9,8 +9,8 @@ const ProfilePage = () => (
   <div className="container">
     <div className="mt-4 row">
       <ProfileHeader />
-      <Route path="/user/timeline" component={ProfileTimeline} />
-      <Route path="/user/about" component={AboutUser} />
+      <Route path="/:username/timeline" component={ProfileTimeline} />
+      <Route path="/:username/about" component={AboutUser} />
     </div>
   </div>
 );

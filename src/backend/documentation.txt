@@ -15,8 +15,11 @@ endpoints: url = 'api/', all responses except marked 'no_success' contain 'succe
 -- '/headers/': method: POST, fields: 'username' (username of profile owner), returns: data for header of profile of requested user
 -- '/friends_short_list/': method: POST, fields: 'username' (username of profile owner), returns: data for friends short list
 -- '/set_location/': set location for requested user, method: POST, fields: 'username' (username of user),
-                                                                            'city' (city from array, received from any '/api/cities/')
-                                                                            'country' (country from array, received from '/api/countries/')
+                                                                            'city' (city from array, received from any '/api/cities/'),
+                                                                            'country' (country from array, received from '/api/countries/'
+-- '/communities/': method: POST, fields: 'username' (username of profile owner), returns: data for list of favourite pages
+-- '/add_community/': method: POST, fields: 'username' (username of profile owner),
+                                            'community' (address of community to add to favourite)
 
 - posts: url = '/posts'
 
@@ -26,8 +29,10 @@ endpoints: url = 'api/', all responses except marked 'no_success' contain 'succe
                                             'text' (text of post)
 -- '/delete/': delete post, method: POST, fields: 'id' (id of post)
 -- '/like/': like post, method: POST, fields: 'id' (id of post)
+                                              'username' (username of profile which liked post)
 -- '/dislike/': dislike post, method: POST, fields: 'id' (id of post)
--- '/add_comment/': add comment to post, method: POST, fields: 'post_id' (id of postto add comment to),
+                                                    'username' (username of profile which disliked post)
+-- '/add_comment/': add comment to post, method: POST, fields: 'post_id' (id of post to add comment to),
                                                                'text' (text of comment),
                                                                'author' (username of author)
 -- '/delete_comment/': delete comment, method: POST, fields: 'id' (id of comment)
