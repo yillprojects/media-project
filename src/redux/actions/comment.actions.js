@@ -8,7 +8,7 @@ function addComment(comment) {
 
 		const { post, text } = comment;
 		axios
-			.post('http://localhost:8000/api/posts/add_comment/', {
+			.post('https://localhost:8000/api/posts/add_comment/', {
 				post_id: post,
 				author: localStorage.getItem('currentUser'),
 				text

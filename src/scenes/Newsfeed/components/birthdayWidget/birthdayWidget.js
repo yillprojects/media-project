@@ -28,7 +28,7 @@ class BirthdayWidget extends Component {
     const { dropdownOpen } = this.state;
 
     return (
-      <div className="widget w-birthday-alert">
+      <div className="widget w-birthday-alert mb-3">
         <div className="icon-block">
           <FaBirthdayCake />
           <div className="more">

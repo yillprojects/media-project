@@ -5,7 +5,7 @@ import { IoIosCube } from 'react-icons/io';
 import './shareWidget.scss';
 
 const ShareWidget = () => (
-  <div className="widget w-action">
+  <div className="widget w-action mb-3">
     <IoIosCube />
     <div className="content">
       <h4 className="title">

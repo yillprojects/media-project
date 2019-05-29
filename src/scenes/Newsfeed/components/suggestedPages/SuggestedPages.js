@@ -28,7 +28,7 @@ const data = [
 export default class SuggestedPages extends Component {
   render() {
     return (
-      <div className="ui-block">
+      <div className="ui-block mb-3">
         <div className="ui-block-title">
           <h5 className="title">Pages You May Like</h5>
         </div>

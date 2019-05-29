@@ -62,7 +62,7 @@ function login(username, password) {
       .catch((err) => {
         dispatch(failure(err));
         dispatch(alertActions.error('There was an error'));
-        console.log(err);
+        console.log(JSON.stringify(err));
       });
   };
 
