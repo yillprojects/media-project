@@ -62,14 +62,13 @@ class ProfileHeaderSerializer(DynamicFieldsModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('location', 'first_name', 'last_name', 'avatar', 'header')
+        fields = ('location', 'first_name', 'last_name', 'avatar', 'header', 'status')
 
 
 class CommentSerializer(DynamicFieldsModelSerializer):
     author = serializers.CharField(source='author.full_name')
     username = serializers.CharField(source='author.user')
     avatar = serializers.ImageField(source='author.avatar', use_url=False)
-    created_time = serializers.CharField(source='pretty_time')
 
     class Meta:
         model = Comment
@@ -80,7 +79,6 @@ class PostSerializer(DynamicFieldsModelSerializer):
     author = serializers.CharField(source='author.full_name')
     username = serializers.CharField(source='author.user')
     avatar = serializers.ImageField(source='author.avatar', use_url=False)
-    created_time = serializers.CharField(source='pretty_time')
     comments = CommentSerializer(many=True)
     liked_by = serializers.StringRelatedField(many=True)
 

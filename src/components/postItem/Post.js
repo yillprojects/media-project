@@ -35,6 +35,7 @@ export default class Post extends Component {
       collapse: false,
       isLiked: data.liked_by.includes(currentUser),
       ...data,
+      commentsNum: data.comments.length,
       currentUser
     };
   }
@@ -73,11 +74,19 @@ export default class Post extends Component {
     this.setState(state => ({ collapse: !state.collapse }));
   }
 
+  handleCommentAdding = () => {
+    const { commentsNum } = this.state;
+    this.setState({
+        commentsNum: commentsNum + 1
+    })
+  };
+
   render() {
     const { dropdownOpen, users, collapse } = this.state;
     const {
-        id, author, username, avatar, created_time, comments, text, likes, reposts, liked_by
+        id, author, username, avatar, created_time, comments, commentsNum, text, likes, reposts, liked_by
     } = this.state;
+
     return (
       <div className="ui-block">
         <article className="post">
@@ -143,7 +152,7 @@ export default class Post extends Component {
                 onClick={this.toggleCollapse}
               >
                 <FaRegComments />
-                <span>{comments.length}</span>
+                <span>{commentsNum}</span>
               </Button>
               <Button type="button" className="transparent-btn">
                 <FaShareSquare />
@@ -171,7 +180,7 @@ export default class Post extends Component {
           </div>
         </article>
         <Collapse isOpen={collapse}>
-          <CommentSection commentsData={comments} post={id} />
+          <CommentSection commentsData={comments} post={id} addComment={this.handleCommentAdding} />
         </Collapse>
       </div>
     );

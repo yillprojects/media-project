@@ -4,6 +4,9 @@ import { authenticationConstants } from '../constants/authentication.constants';
 import { alertActions } from './alert.actions';
 
 function register(user) {
+  sessionStorage.removeItem('token');
+  localStorage.removeItem('token');
+
   return (dispatch) => {
     dispatch(request(user));
 
@@ -42,27 +45,41 @@ function register(user) {
   }
 }
 
-function login(username, password) {
+function login(username, password, remember) {
+  sessionStorage.removeItem('token');
+  localStorage.removeItem('token');
+
   return (dispatch) => {
     dispatch(request(username));
 
     axios
-      .post('http://localhost:8000/api/users/check/', {
+      .post('http://localhost:8000/auth/', {
         username,
         password,
       })
       .then((user) => {
-        if (user.data.success) {
+        console.log(user.data);
+        if (user.data.token) {
+          if (remember) {
+            localStorage.setItem('token', user.data.token);
+          } else {
+            sessionStorage.setItem('token', user.data.token);
+          }
           dispatch(success(username));
-        } else {
-          dispatch(failure(user.data.message));
-          dispatch(alertActions.error(user.data.message));
         }
+        // } else {
+        //   dispatch(failure(user.data.message));
+        //   dispatch(alertActions.error(user.data.message));
+        // }
       })
       .catch((err) => {
-        dispatch(failure(err));
-        dispatch(alertActions.error('There was an error'));
         console.log(err);
+        if (err.response.data.non_field_errors) {
+            dispatch(alertActions.error('Wrong username or password'));
+        } else {
+            dispatch(alertActions.error('There was an error'));
+        }
+        dispatch(failure(err));
       });
   };
 
@@ -78,6 +95,9 @@ function login(username, password) {
 }
 
 function logout() {
+  sessionStorage.removeItem('token');
+  localStorage.removeItem('token');
+
   return {
     type: authenticationConstants.LOGOUT,
   };

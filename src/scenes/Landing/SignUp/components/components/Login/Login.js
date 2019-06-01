@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
+import axios from '../../../../../../axiosClient';
 
 import { authenticationActions } from 'redux/actions/index.js';
 
@@ -22,6 +23,7 @@ class Login extends Component {
     this.state = {
       username: '',
       password: '',
+      checked: false,
       submitted: false
     };
 
@@ -35,6 +37,13 @@ class Login extends Component {
     this.setState({ [name]: value });
   }
 
+  handleCheckboxChange = event => {
+    const { checked } = this.state;
+    this.setState({
+        checked: !checked
+    })
+  };
+
   handleSubmit(event) {
     event.preventDefault();
 
@@ -42,12 +51,11 @@ class Login extends Component {
       submitted: true
     });
 
-    const { username, password } = this.state;
+    const { username, password, checked } = this.state;
     const { dispatch } = this.props;
 
     if (username && password) {
-      localStorage.setItem('currentUser', username);
-      dispatch(authenticationActions.login(username, password));
+      dispatch(authenticationActions.login(username, password, checked));
     }
   }
 
@@ -62,6 +70,7 @@ class Login extends Component {
 
     return (
       <div className="tab-section">
+        {loggedIn && <Redirect to={`/${username}/newsfeed`} />}
         <div className="container">
           <h2 className="tab-section-title">
 
@@ -115,11 +124,9 @@ class Login extends Component {
               <div className="col col-12 col-sm-6">
                 <FormGroup check>
                   <Label className="color-link" check>
-                    <Input type="checkbox" value="1" check="checked" />
+                    <Input type="checkbox" onChange={this.handleCheckboxChange} />
                     {' '}
-
-Remember
-                    me
+                    Remember me
                   </Label>
                 </FormGroup>
               </div>
@@ -149,7 +156,6 @@ Remember
               )}
               {' '}
             </Button>
-            {loggedIn && <Redirect to={`/${username}/newsfeed`} />}
             <div className="or" />
             <Button className="tab-section-btn bg-facebook mb-2">
               <FaFacebookF className="icon" />

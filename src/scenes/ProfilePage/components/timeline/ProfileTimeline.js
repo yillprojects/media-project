@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import axios from '../../../../axiosClient';
 
 import _map from 'lodash/map';
 
@@ -11,20 +11,16 @@ import FavouritePages from './components/favouritePages/FavouritePages.js';
 
 import './profileTimeline.scss';
 
-const amount = [1, 2, 3, 4];
-
 class ProfileTimeline extends Component {
   state = {
     posts: []
   };
 
   componentDidMount() {
-    // const { currentUser } = this.props;
     const currentUser = localStorage.getItem('currentUser');
 
-    axios
-      .post('http://localhost:8000/api/posts/get/', {
-        username: currentUser? currentUser : 'use'
+    axios.post('http://localhost:8000/api/posts/get/', {
+        username: currentUser
       })
         .then(res => this.setState({
           posts: res.data.data
@@ -33,8 +29,8 @@ class ProfileTimeline extends Component {
 
   render() {
     const { posts } = this.state;
-    // const { currentUser } = this.props;
-      const currentUser = localStorage.getItem('currentUser');
+    const currentUser = localStorage.getItem('currentUser');
+
     return [
       <div
           className=" col col-3 display-sm-none display-md-none"

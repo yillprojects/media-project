@@ -16,19 +16,19 @@ class ProfileHeader extends Component {
   };
 
   componentDidMount() {
-    // const { currentUser } = this.props;
     const currentUser = localStorage.getItem('currentUser');
     axios
       .post('http://localhost:8000/api/profiles/headers/', {
-        username: currentUser? currentUser : 'use'
+        username: currentUser
       })
       .then(res => this.setState({
         ...res.data.data
-      }))
+      }));
   }
 
   render() {
     const { location, first_name, last_name, avatar, header } = this.state;
+    const currentUser = localStorage.getItem('currentUser');
 
     return (
       <div className="col col-12">
@@ -39,7 +39,7 @@ class ProfileHeader extends Component {
             </div>
             <ProfileMenu />
             <div className="top-header-author">
-              <Link to="/user" className="author-thumb">
+              <Link to={`/${currentUser}/timeline`} className="author-thumb">
                 <img
                   src={`http://localhost:8000/media/${avatar}`}
                   alt="user-img"
@@ -47,7 +47,7 @@ class ProfileHeader extends Component {
                 />
               </Link>
               <div className="author-content">
-                <Link to="/user" className="author-name">
+                <Link to={`/${currentUser}/timeline`} className="author-name">
                   <h4>{first_name + ' ' + last_name}</h4>
                 </Link>
                 <span className="country">

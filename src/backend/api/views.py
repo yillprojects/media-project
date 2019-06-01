@@ -228,6 +228,38 @@ class ProfileView(viewsets.ModelViewSet):
         profile.communities.add(community)
         return response['ok']
 
+    @action(methods=['POST'], detail=False)
+    def intro(self, request):
+        for key in ['username']:
+            if key not in request.data:
+                return response['invalid_data']
+
+        try:
+            profile = Profile.objects.get(user__username=request.data['username'])
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong username')
+
+        serialized = ProfileSerializer(profile, fields=('intro',))
+        return response['ok_data'](serialized.data)
+
+    @action(methods=['POST'], detail=False)
+    def add_intro(self, request):
+        for key in ['username', 'title', 'text']:
+            if key not in request.data:
+                return response['invalid_data']
+
+        try:
+            profile = Profile.objects.get(user__username=request.data['username'])
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong username')
+
+        if profile.intro:
+            profile.intro[0][request.data['title']] = request.data['text']
+        else:
+            profile.intro = [{request.data['title']: request.data['text']}]
+        profile.save()
+        return response['ok']
+
 
 class PostView(viewsets.ModelViewSet):
     serializer_class = PostSerializer
@@ -329,8 +361,9 @@ class PostView(viewsets.ModelViewSet):
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong author username')
 
-        Comment.objects.create(post=post, author=author, text=request.data['text'])
-        return response['ok']
+        comment = Comment.objects.create(post=post, author=author, text=request.data['text'])
+        serialized = CommentSerializer(comment)
+        return response['ok_data'](serialized.data)
 
     @action(methods=['POST'], detail=False)
     def delete_comment(self, request):
@@ -359,6 +392,7 @@ class CommunityView(viewsets.ModelViewSet):
 
 @api_view(['GET'])
 def get_countries_list(request):
+    print(request.user)
     response_data = [country.name for country in Country.objects.all()]
     return response['ok_data'](response_data)
 

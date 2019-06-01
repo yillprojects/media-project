@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -11,25 +11,24 @@ import Newsfeed from './scenes/Newsfeed/Newsfeed.js';
 
 class Routes extends Component {
   render() {
-      // axios
-      //     .post('http://localhost:8000/api/posts/add_comment/', {
-      //         post_id: 24,
-      //         author: localStorage.getItem('currentUser'),
-      //         text: 'Kek comment.'
-      //     });
-    // const { loggedIn, user } = this.props;
-    const DefaultLayout = ({ component: Component }) => (
-      <Route
-        render={props => (
-          <div>
-            <Menus />
-            <div className="main-layout">
-              <Component {...props} />
-            </div>
-          </div>
-        )}
-      />
-    );
+    const token = localStorage.getItem('token');
+    const DefaultLayout = ({ component: Component }) => {
+        if (token)
+            return (
+                <Route
+                    render={props => (
+                        <div>
+                            <Menus />
+                            <div className="main-layout">
+                                <Component {...props} />
+                            </div>
+                        </div>
+                    )}
+                />
+            );
+        return (<Redirect to='/' />);
+    };
+
     return (
       <Router>
         <Switch>

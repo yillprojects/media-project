@@ -80,11 +80,11 @@ class BlogPost extends Component {
     const { text } = this.state;
     // const { currentUser } = this.props;
     const currentUser = localStorage.getItem('currentUser');
-    
+
     if (text !== '') {
       axios
         .post('http://localhost:8000/api/posts/add/', {
-          author: currentUser? currentUser : 'use',
+          author: currentUser,
           text
         });
       this.setState({

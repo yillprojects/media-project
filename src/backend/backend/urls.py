@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.urls import path, include
 from rest_framework import routers
-from rest_auth import urls
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify_jwt_token
 
 from api import views
 
@@ -16,8 +16,10 @@ router.register(r'comments', views.CommentView, 'comments')
 router.register(r'communities', views.CommunityView, 'communities')
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('auth/', include(urls)),
+    path('', admin.site.urls),
+    path('auth/', obtain_jwt_token),
+    path('refresh/', refresh_jwt_token),
+    path('verify/', verify_jwt_token),
     path('api/', include(router.urls)),
     path('api/countries/', views.get_countries_list),
     path('api/cities/', views.get_cities_list)

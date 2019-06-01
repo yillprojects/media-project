@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
@@ -25,7 +25,8 @@ class UserDropdown extends Component {
 
     this.state = {
       dropdownOpen: false,
-      status: ''
+      status: '',
+      loggedIn: true
     };
 
     this.toggle = this.toggle.bind(this);
@@ -69,10 +70,18 @@ class UserDropdown extends Component {
   handleLogOut() {
     const { dispatch } = this.props;
     dispatch(authenticationActions.logout());
+    localStorage.removeItem('currentUser');
+    const { loggedIn } = this.state;
+    this.setState({
+      loggedIn: !loggedIn
+    })
   }
 
   render() {
-    const { dropdownOpen, status } = this.state;
+    const { dropdownOpen, status, loggedIn } = this.state;
+
+    if (!loggedIn)
+      return (<Redirect to='/' />);
 
     return (
       <Dropdown
