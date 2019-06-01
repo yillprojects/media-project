@@ -5,7 +5,7 @@ import { Button } from "reactstrap";
 import { FaRegSmileWink } from "react-icons/fa";
 
 const Suggestions = props => {
-	const options = props.results.map(person => (
+	const options = props.results.map((person, index) => index <= 7 ? (
 		<li key={person.id} className="user-search-item notification-item">
 			<img
 				src="https://via.placeholder.com/30"
@@ -15,7 +15,7 @@ const Suggestions = props => {
 			/>
 			<div className="notification-event">
 				<Link to="#" className="notification-friend">
-					{person.name}
+					{person.username}
 				</Link>
 				<p className="chat-message-item">New York, NY</p>
 			</div>
@@ -25,7 +25,7 @@ const Suggestions = props => {
 				</Button>
 			</div>
 		</li>
-	));
+	) : '');
 	return <ul className="user-search">{options}</ul>;
 };
 

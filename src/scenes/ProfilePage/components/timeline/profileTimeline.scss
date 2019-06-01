@@ -35,3 +35,12 @@ $title-color: #515365;
 		display: none;
 	}
 }
+
+.none-posts {
+	text-transform: uppercase;
+	font-size: 11px;
+	position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+}

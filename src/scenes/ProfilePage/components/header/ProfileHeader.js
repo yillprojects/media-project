@@ -1,30 +1,43 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
-import axios from 'axios';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import axios from "axios";
 
-import ProfileMenu from './components/ProfileMenu.js';
+import ProfileMenu from "./components/ProfileMenu.js";
 
-import TopHeader from '../../img/top-header1.jpg';
-import User from '../../img/author-main1.jpg';
+import TopHeader from "../../img/top-header1.jpg";
+import User from "../../img/author-main1.jpg";
 
-import './profileheader.scss';
+import "./profileheader.scss";
 
 class ProfileHeader extends Component {
-  state = {
+  _isMounted = false;
 
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
 
   componentDidMount() {
+    this._isMounted = true;
     // const { currentUser } = this.props;
-    const currentUser = localStorage.getItem('currentUser');
+    const currentUser = localStorage.getItem("currentUser");
     axios
-      .post('http://localhost:8000/api/profiles/headers/', {
-        username: currentUser? currentUser : 'use'
+      .post("http://localhost:8000/api/profiles/headers/", {
+        username: currentUser ? currentUser : "use"
       })
-      .then(res => this.setState({
-        ...res.data.data
-      }))
+      .then(res => {
+        if (this._isMounted) {
+          this.setState({
+            ...res.data.data
+          });
+        }
+      });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {
@@ -35,34 +48,37 @@ class ProfileHeader extends Component {
         <div className="ui-block">
           <div className="top-header">
             <div className="top-header-thumb">
-              <img src={`http://localhost:8000/media/${header}`} alt="user-header" />
+              <img
+                src={TopHeader}
+                alt="user-header"
+              />
             </div>
             <ProfileMenu />
             <div className="top-header-author">
               <Link to="/user" className="author-thumb">
                 <img
-                  src={`http://localhost:8000/media/${avatar}`}
+                  src={User}
                   alt="user-img"
                   style={{ height: 124, width: 124 }}
                 />
               </Link>
               <div className="author-content">
                 <Link to="/user" className="author-name">
-                  <h4>{first_name + ' ' + last_name}</h4>
+                  <h4>{first_name + " " + last_name}</h4>
                 </Link>
                 <span className="country">
-                  {location? location.city + ', ' + location.country : ''}
+                  {location ? location.city + ", " + location.country : ""}
                 </span>
               </div>
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { user } = state.authentication;
   return {
     currentUser: user

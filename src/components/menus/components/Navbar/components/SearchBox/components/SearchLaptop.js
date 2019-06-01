@@ -57,8 +57,6 @@ class SearchLaptop extends Component {
           className="search-bar-input with-button"
         />
         <Label for="search-box" className="sr-only">
-
-
           Search
         </Label>
         <Button className="search-bar-btn">
