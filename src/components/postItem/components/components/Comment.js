@@ -8,6 +8,8 @@ import { FaRegHeart } from "react-icons/fa";
 import CommentForm from "./CommentForm.js";
 import ChildComment from "./ChildComment.js";
 
+import defaultAvatar from "../../../../backend/static/profiles/defaultProfileAvatar.jpg";
+
 class Comment extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +34,7 @@ class Comment extends Component {
           <div className="post-author">
             <div className="user-title">
               <img
-                src={`http://localhost:8000/media/${avatar}`}
+                src={avatar? `http://localhost:8000/media/${avatar}` : defaultAvatar}
                 alt="user-img"
                 style={{ height: 40, width: 40 }}
               />

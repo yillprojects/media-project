@@ -44,7 +44,7 @@ class CommentFormConnected extends Component {
     const token = localStorage.getItem('token');
     const axios = client(token);
 
-    axios.post(`http://localhost:8000/api/posts/${post}/add_comment/`, {
+    axios.post(`api/posts/${post}/add_comment`, {
         post_id: post,
         author: localStorage.getItem('currentUser'),
         text

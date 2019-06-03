@@ -1,30 +1,41 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import client from '../../../../../../axiosClient';
 
 import { FaChevronDown } from 'react-icons/fa';
 
 import UserImg from '../FriendsRequests/50.png';
 
 export default class User extends Component {
+  _isMounted = false;
+
   state = {
       name: '',
       status: ''
   };
 
   componentDidMount() {
-    const currentUser = localStorage.getItem('currentUser');
+    this._isMounted = true;
+    const token = localStorage.getItem('token');
+    const axios = client(token);
+
     axios
-        .post('http://localhost:8000/api/profiles/headers/', {
-            username: currentUser
+        .post('api/profiles/get_fields', {
+            fields: ['status', 'first_name', 'last_name']
         })
         .then(res => {
-            const { first_name, last_name,status } = res.data.data;
-            this.setState({
-                name: first_name + ' ' + last_name,
-                status
-            })
+            if (this._isMounted) {
+                const {first_name, last_name, status} = res.data.data;
+                this.setState({
+                    name: first_name + ' ' + last_name,
+                    status
+                })
+            }
         })
+  }
+  
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   render() {

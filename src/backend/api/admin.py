@@ -1,3 +1,8 @@
 from django.contrib import admin
-from django.contrib.auth.models import User
+from .models import Profile, Post, Community, Comment
 
+
+admin.site.register(Profile)
+admin.site.register(Post)
+admin.site.register(Comment)
+admin.site.register(Community)

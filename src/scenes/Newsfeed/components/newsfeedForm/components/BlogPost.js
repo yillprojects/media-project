@@ -16,6 +16,8 @@ import { styles } from 'config/tooltipConfig.js';
 
 import './blogpost.scss';
 
+import defaultAvatar from "../../../../../backend/static/profiles/defaultProfileAvatar.jpg";
+
 const theme = createMuiTheme({
   overrides: {
     MuiInput: {
@@ -84,7 +86,7 @@ class BlogPost extends Component {
 
     if (text !== '') {
       axios
-        .post('http://localhost:8000/api/posts/add/', {
+        .post('api/posts/add', {
           text
         });
       this.setState({

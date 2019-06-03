@@ -121,17 +121,30 @@ class ProfileView(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
 
     @action(methods=['POST'], detail=False)
+    def get_fields(self, request):
+
+        try:
+            profile = Profile.objects.get(user=request.user)
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong username')
+
+        requested_fields = request.data['fields']
+        serialized = ProfileSerializer(profile, fields=requested_fields)
+
+        return response['ok_data'](serialized.data)
+
+    @action(methods=['POST'], detail=False)
     def set_location(self, request):
         for key in ['city', 'country']:
             if key not in request.data:
                 return response['invalid_data']
 
         try:
-            user = Profile.objects.get(user=request.user)
+            profile = Profile.objects.get(user=request.user)
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong username')
 
-        if not user.set_location(request.data['city'], request.data['country']):
+        if not profile.set_location(request.data['city'], request.data['country']):
             return response['ok_message']('Wrong location')
 
         return response['ok']
@@ -171,7 +184,6 @@ class ProfileView(viewsets.ModelViewSet):
     @action(methods=['GET'], detail=False)
     def headers(self, request):
 
-        print(request.user)
         try:
             profile = Profile.objects.get(user=request.user)
         except ObjectDoesNotExist:
@@ -260,6 +272,19 @@ class PostView(viewsets.ModelViewSet):
             return Post.objects.filter(author__user=self.request.user)
         return Post.objects.all()
 
+    @action(methods=['POST'], detail=True)
+    def get_fields(self, request, pk=None):
+
+        try:
+            post = Post.objects.get(pk=pk)
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong username')
+
+        requested_fields = request.data['fields']
+        serialized = PostSerializer(post, fields=requested_fields)
+
+        return response['ok_data'](serialized.data)
+
     @action(methods=['POST'], detail=False)
     def add(self, request):
         for key in ['text']:
@@ -270,7 +295,7 @@ class PostView(viewsets.ModelViewSet):
         Post.objects.create(text=request.data['text'], author=author)
         return response['created']
 
-    @action(methods=['PUT'], detail=True)
+    @action(methods=['PATCH'], detail=True)
     def like(self, request, pk=None):
 
         try:

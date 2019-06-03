@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import ReactTimeAgo from "react-time-ago";
 import client from '../../axiosClient';
 
+import defaultAvatar from "../../backend/static/profiles/defaultProfileAvatar.jpg";
+
 import {
   Dropdown,
   DropdownToggle,
@@ -44,7 +46,7 @@ export default class Post extends Component {
     const axios = client(token);
 
     axios
-        .put(`http://localhost:8000/api/posts/${id}/like/`)
+        .patch(`api/posts/${id}/like`)
         .then(res => this.setState({
           likes: res.data.data
         }));
@@ -69,8 +71,11 @@ export default class Post extends Component {
 
   deletePost = id => {
     const { deletePost } = this.props;
+    const token = localStorage.getItem('token');
+    const axios = client(token);
+
     axios
-        .delete(`http://localhost:8000/api/posts/${id}/`);
+        .delete(`api/posts/${id}`);
     deletePost(id)
   };
 
@@ -79,14 +84,13 @@ export default class Post extends Component {
     const {
         id, author, avatar, created_time, comments, commentsNum, text, likes, reposts
     } = this.state;
-    console.log(author);
     return (
       <div className="ui-block">
         <article className="post">
           <div className="post-author">
             <div className="user-title">
               <img
-                src={`http://localhost:8000/media/${avatar}`}
+                src={avatar? `http://localhost:8000/media/${avatar}` : defaultAvatar}
                 alt="user-img"
                 style={{ height: 40, width: 40 }}
               />

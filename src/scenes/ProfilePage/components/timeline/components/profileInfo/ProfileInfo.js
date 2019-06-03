@@ -18,23 +18,34 @@ const sns = [
 ];
 
 class ProfileInfo extends Component {
+    _isMounted = false;
+
     state = {
         introData: {}
     };
 
     componentDidMount() {
+        this._isMounted = true;
         const token = localStorage.getItem('token');
         const axios = client(token);
 
         axios
-            .get('http://localhost:8000/api/profiles/intro/')
+            .post('api/profiles/get_fields', {
+                fields: ['intro']
+            })
             .then(res => {
-                const { intro } = res.data.data;
-                const introData = intro? intro[0] : {};
-                this.setState({
-                    introData
-                })
-            });
+                if (this._isMounted) {
+                    const {intro} = res.data.data;
+                    const introData = intro ? intro[0] : {};
+                    this.setState({
+                        introData
+                    })
+                }
+            })
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false
     }
 
     render() {

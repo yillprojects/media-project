@@ -18,21 +18,17 @@ class ProfileTimeline extends Component {
   };
 
   componentDidMount() {
-    // const { currentUser } = this.props;
-    const currentUser = localStorage.getItem("currentUser");
     this._isMounted = true;
 
     const token = localStorage.getItem('token');
     const axios = client(token);
-    
+
     axios
-      .post("http://localhost:8000/api/posts/get/", {
-        username: currentUser ? currentUser : "use"
-      })
+      .get("api/posts")
       .then(res => {
         if (this._isMounted) {
           this.setState({
-            posts: res.data.data
+            posts: res.data
           });
         }
       });
@@ -81,7 +77,7 @@ class ProfileTimeline extends Component {
             <Post
               key={item.id}
               data={item}
-              currentUser={currentUser ? currentUser : "use"}
+              currentUser={currentUser}
             />
           ))
         )}

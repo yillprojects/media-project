@@ -5,8 +5,8 @@ import client from '../../../../axiosClient';
 
 import ProfileMenu from "./components/ProfileMenu.js";
 
-import TopHeader from "../../img/top-header1.jpg";
-import User from "../../img/author-main1.jpg";
+import defaultAvatar from "../../../../backend/static/profiles/defaultProfileAvatar.jpg";
+import defaultHeader from "../../../../backend/static/profiles/defaultProfileHeader.jpg";
 
 import "./profileheader.scss";
 
@@ -23,11 +23,10 @@ class ProfileHeader extends Component {
     this._isMounted = true;
     const token = localStorage.getItem('token');
     const axios = client(token);
-    // const { currentUser } = this.props;
-    const currentUser = localStorage.getItem("currentUser");
+
     axios
-      .post("http://localhost:8000/api/profiles/headers/", {
-        username: currentUser ? currentUser : "use"
+      .post("api/profiles/get_fields", {
+        fields: ['avatar', 'header', 'last_name', 'first_name', 'location']
       })
       .then(res => {
         if (this._isMounted) {
@@ -52,7 +51,7 @@ class ProfileHeader extends Component {
           <div className="top-header">
             <div className="top-header-thumb">
               <img
-                src={TopHeader}
+                src={header? `http://localhost:8000/media/profiles/${header}` : defaultHeader}
                 alt="user-header"
               />
             </div>
@@ -60,7 +59,7 @@ class ProfileHeader extends Component {
             <div className="top-header-author">
               <Link to={`/${currentUser}/timeline`} className="author-thumb">
                 <img
-                  src={User}
+                  src={avatar? `http://localhost:8000/media/profiles/${avatar}` : defaultAvatar}
                   alt="user-img"
                   style={{ height: 124, width: 124 }}
                 />

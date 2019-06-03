@@ -1,7 +1,7 @@
 import { authenticationConstants } from '../constants/authentication.constants';
 
 export const authentication = (state = {}, action) => {
-  console.log(action);
+  // console.log(action);
   switch (action.type) {
     case authenticationConstants.LOGIN_REQUEST:
       return {
