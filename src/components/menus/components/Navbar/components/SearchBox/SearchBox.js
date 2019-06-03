@@ -8,6 +8,8 @@ import Suggestions from './components/Suggestions.js';
 import './searchbox.scss';
 
 class SearchBox extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
 
@@ -21,21 +23,23 @@ class SearchBox extends Component {
   }
 
   componentDidMount() {
-    axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
-      const info = res.data;
-      this.setState({ info });
+    this._isMounted = true;
+
+    axios.get('http://localhost:8000/api/users/').then((res) => {
+      if (this._isMounted) {
+        this.setState({
+          info: res.data
+        });
+      }
     });
   }
 
   componentWillUnmount() {
-    this.setState = (state, callback) => {
-
-    };
+    this._isMounted = false;
   }
 
   handleInputChange(event) {
     const { value } = event.target;
-
     this.setState(
       {
         query: value
@@ -45,7 +49,7 @@ class SearchBox extends Component {
 
         if (query && query.length > 1) {
           const filteredData = info.filter((item) => {
-            const options = [item.name, item.username];
+            const options = [item.username];
             let isItemFound = 'notfound';
 
             options.map((data) => {

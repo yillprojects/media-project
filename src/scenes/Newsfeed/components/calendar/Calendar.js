@@ -21,7 +21,7 @@ export default class Calendar extends Component {
     );
 
     return (
-      <div className="calendar">
+      <div className="calendar mb-3">
         <div className="calendar-wrapper">
           <InfiniteCalendar
             height={400}

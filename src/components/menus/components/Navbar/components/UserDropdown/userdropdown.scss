@@ -7,6 +7,7 @@ $bg-online: #32e4cd;
 $bg-away: #ffd52f;
 $bg-disconnected: #ff4f60;
 $bg-invisibly: #cbdfee;
+$color-btn: #7c5ac2;
 
 .user {
 	display: flex;
@@ -68,6 +69,15 @@ $bg-invisibly: #cbdfee;
 
 .user-dropdown {
 	height: 100%;
+
+  .ui-block-title {
+    padding: 10px 25px;
+
+    .title {
+          font-size: 9px;
+          color: $color-secondary;
+    }
+  }
 
 	&.show {
 		.user-title {
@@ -135,4 +145,19 @@ $bg-invisibly: #cbdfee;
 	&.invisibly {
 		background-color: $bg-invisibly;
 	}
+}
+
+.status-input {
+  padding: 15px 25px;
+
+  .btn {
+    &-secondary {
+      background-color: $color-btn;
+      border-color: $color-btn;
+    }
+
+      svg {
+    vertical-align: text-top;
+  }
+  }
 }

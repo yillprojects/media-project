@@ -2,29 +2,44 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import client from '../../../../axiosClient';
 
-import _map from 'lodash/map';
+import _map from "lodash/map";
 
-import Post from 'components/postItem/Post.js';
-import ProfileInfo from './components/profileInfo/ProfileInfo.js';
-import FriendsList from './components/friendsList/FriendsList.js';
-import FavouritePages from './components/favouritePages/FavouritePages.js';
+import Post from "components/postItem/Post.js";
+import ProfileInfo from "./components/profileInfo/ProfileInfo.js";
+import FriendsList from "./components/friendsList/FriendsList.js";
+import FavouritePages from "./components/favouritePages/FavouritePages.js";
 
-import './profileTimeline.scss';
+import "./profileTimeline.scss";
 
 class ProfileTimeline extends Component {
+  _isMounted = false;
   state = {
     posts: []
   };
 
   componentDidMount() {
+    // const { currentUser } = this.props;
+    const currentUser = localStorage.getItem("currentUser");
+    this._isMounted = true;
+
     const token = localStorage.getItem('token');
     const axios = client(token);
-
+    
     axios
-        .get('http://localhost:8000/api/posts/')
-        .then(res => this.setState({
-          posts: res.data
-        }));
+      .post("http://localhost:8000/api/posts/get/", {
+        username: currentUser ? currentUser : "use"
+      })
+      .then(res => {
+        if (this._isMounted) {
+          this.setState({
+            posts: res.data.data
+          });
+        }
+      });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   deletePost = id => {
@@ -44,31 +59,36 @@ class ProfileTimeline extends Component {
 
     return [
       <div
-          className=" col col-3 display-sm-none display-md-none"
-          key="profile-info"
+        className=" col col-3 display-sm-none display-md-none"
+        key="profile-info"
       >
         <ProfileInfo />
         <a
-            className="twitter-timeline ui-block"
-            data-theme="light"
-            data-tweet-limit="3"
-            data-link-color="#E95F28"
-            href="https://twitter.com/dan_abramov?ref_src=twsrc%5Etfw"
+          className="twitter-timeline ui-block"
+          data-theme="light"
+          data-tweet-limit="3"
+          data-link-color="#E95F28"
+          href="https://twitter.com/dan_abramov?ref_src=twsrc%5Etfw"
         >
-
           Tweets by dan_abramov
         </a>
       </div>,
       <div className="col col-12 col-md-6 order-lg-2" key="posts">
-        {_map(posts.reverse(), item => (
+        {posts.length === 0 ? (
+          <span className="none-posts">Nothing to see</span>
+        ) : (
+          _map(posts.reverse(), item => (
             <Post
-                key={item.id} data={item} currentUser={currentUser} deletePost={this.deletePost}
+              key={item.id}
+              data={item}
+              currentUser={currentUser ? currentUser : "use"}
             />
-        ))}
+          ))
+        )}
       </div>,
       <div
-          className="col col-md-6 col-lg-3 order-md-2 order-lg-3 display-sm-none"
-          key="friends-list"
+        className="col col-md-6 col-lg-3 order-md-2 order-lg-3 display-sm-none"
+        key="friends-list"
       >
         <FriendsList />
         <FavouritePages />
@@ -77,7 +97,7 @@ class ProfileTimeline extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { user } = state.authentication;
   return {
     currentUser: user
