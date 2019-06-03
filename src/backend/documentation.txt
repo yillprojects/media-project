@@ -2,7 +2,7 @@ root: url = '/', returns: 'Hellow World!'
 
 endpoints: url = 'api/', all responses except marked 'no_success' contain 'success' flag
 
-- authorization: url = 
+- authorization: url =
 
 -- 'users/register/': register new user, method: POST, fields: 'username',
                                                           'email',
@@ -13,9 +13,9 @@ endpoints: url = 'api/', all responses except marked 'no_success' contain 'succe
 - profiles: url = '/profiles'
 
 -- '/': method: GET, returns: array of all profiles, no_success
+-- '/get_fields/': method: POST, returns: data of fields of authorized user, fields: 'fields' (array of strings)
 -- '/<profile_id>/': method: GET, returns: profiles with requested id, no_success
--- '/headers/': method: GET, returns: data for header of profile of authorized user
--- '/friends_short_list/': method: GET, returns: data for friends short list 
+-- '/friends_short_list/': method: GET, returns: data for friends short list
 -- '/set_location/': set location for requested user, method: POST, fields: 'city' (city from array, received from any '/api/cities/'),
                                                                             'country' (country from array, received from '/api/countries/'
 -- '/communities/': method: GET, returns: data for list of favourite pages
@@ -24,10 +24,11 @@ endpoints: url = 'api/', all responses except marked 'no_success' contain 'succe
 - posts: url = '/posts'
 
 -- '/': method: GET, returns: array of posts of authorized user, else array of all posts, no_success
+-- '/<post_id>/get_fields/': method: POST, returns: data of fields, fields: 'fields' (array of strings)
 -- '/<post_id>/': method: GET, returns: post with requested id, no_success
 -- '/add/': add post, method: POST, fields: 'text' (text of post)
 -- '/<post_id>/': delete post, method: DELETE
--- '/<post_id>/like/': like post, method: PUT
+-- '/<post_id>/like/': like post, method: PATCH
 -- '/<post_id>/add_comment/': add comment to post, method: POST, fields: 'text' (text of comment),
 
 - locations:

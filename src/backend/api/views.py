@@ -182,17 +182,6 @@ class ProfileView(viewsets.ModelViewSet):
         return response['ok']
 
     @action(methods=['GET'], detail=False)
-    def headers(self, request):
-
-        try:
-            profile = Profile.objects.get(user=request.user)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong username')
-
-        serialized = ProfileHeaderSerializer(profile)
-        return response['ok_data'](serialized.data)
-
-    @action(methods=['GET'], detail=False)
     def friends_short_list(self, request):
 
         try:
@@ -233,17 +222,6 @@ class ProfileView(viewsets.ModelViewSet):
 
         profile.communities.add(community)
         return response['ok']
-
-    @action(methods=['GET'], detail=False)
-    def intro(self, request):
-
-        try:
-            profile = Profile.objects.get(user=request.user)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong username')
-
-        serialized = ProfileSerializer(profile, fields=('intro',))
-        return response['ok_data'](serialized.data)
 
     @action(methods=['POST'], detail=False)
     def add_intro(self, request):
