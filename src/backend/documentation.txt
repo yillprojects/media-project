@@ -1,41 +1,34 @@
+root: url = '/', returns: 'Hellow World!'
+
 endpoints: url = 'api/', all responses except marked 'no_success' contain 'success' flag
 
-- authorization: url = 'users/'
+- authorization: url = 
 
--- '/register/': register new user, method: POST, fields: 'username',
+-- 'users/register/': register new user, method: POST, fields: 'username',
                                                           'email',
                                                           'password'
--- '/check/': check if user exists and password matches, method: POST, fields: 'username',
+-- 'auth/': check if user exists and password matches, method: POST, fields: 'username',
                                                                                'password'
 
 - profiles: url = '/profiles'
 
 -- '/': method: GET, returns: array of all profiles, no_success
 -- '/<profile_id>/': method: GET, returns: profiles with requested id, no_success
--- '/headers/': method: POST, fields: 'username' (username of profile owner), returns: data for header of profile of requested user
--- '/friends_short_list/': method: POST, fields: 'username' (username of profile owner), returns: data for friends short list
--- '/set_location/': set location for requested user, method: POST, fields: 'username' (username of user),
-                                                                            'city' (city from array, received from any '/api/cities/'),
+-- '/headers/': method: GET, returns: data for header of profile of authorized user
+-- '/friends_short_list/': method: GET, returns: data for friends short list 
+-- '/set_location/': set location for requested user, method: POST, fields: 'city' (city from array, received from any '/api/cities/'),
                                                                             'country' (country from array, received from '/api/countries/'
--- '/communities/': method: POST, fields: 'username' (username of profile owner), returns: data for list of favourite pages
--- '/add_community/': method: POST, fields: 'username' (username of profile owner),
-                                            'community' (address of community to add to favourite)
+-- '/communities/': method: GET, returns: data for list of favourite pages
+-- '/add_community/': method: POST, fields: 'community' (address of community to add to favourite)
 
 - posts: url = '/posts'
 
--- '/': method: GET, returns: array of all posts, no_success
+-- '/': method: GET, returns: array of posts of authorized user, else array of all posts, no_success
 -- '/<post_id>/': method: GET, returns: post with requested id, no_success
--- '/add/': add post, method: POST, fields: 'author' (username of author),
-                                            'text' (text of post)
--- '/delete/': delete post, method: POST, fields: 'id' (id of post)
--- '/like/': like post, method: POST, fields: 'id' (id of post)
-                                              'username' (username of profile which liked post)
--- '/dislike/': dislike post, method: POST, fields: 'id' (id of post)
-                                                    'username' (username of profile which disliked post)
--- '/add_comment/': add comment to post, method: POST, fields: 'post_id' (id of post to add comment to),
-                                                               'text' (text of comment),
-                                                               'author' (username of author)
--- '/delete_comment/': delete comment, method: POST, fields: 'id' (id of comment)
+-- '/add/': add post, method: POST, fields: 'text' (text of post)
+-- '/<post_id>/': delete post, method: DELETE
+-- '/<post_id>/like/': like post, method: PUT
+-- '/<post_id>/add_comment/': add comment to post, method: POST, fields: 'text' (text of comment),
 
 - locations:
 
