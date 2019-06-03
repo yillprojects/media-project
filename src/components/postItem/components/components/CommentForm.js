@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from 'axios';
+import client from '../../../../axiosClient';
 
 import { commentActions } from "redux/actions/index.js";
 
@@ -40,10 +40,11 @@ class CommentFormConnected extends Component {
 
     const { text } = this.state;
     const { addComment, post } = this.props;
-    // const id = uuidv4(); // id створюється автоматично Django, і я тобі його буду присилать в респонсі
 
-    // dispatch(commentActions.addComment({ text, post }));
-    axios.post('http://localhost:8000/api/posts/add_comment/', {
+    const token = localStorage.getItem('token');
+    const axios = client(token);
+
+    axios.post(`http://localhost:8000/api/posts/${post}/add_comment/`, {
         post_id: post,
         author: localStorage.getItem('currentUser'),
         text

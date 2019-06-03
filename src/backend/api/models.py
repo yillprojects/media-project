@@ -51,8 +51,11 @@ class Profile(models.Model):
         self.save()
         return True
 
-    def full_name(self):
-        return '{} {}'.format(self.first_name, self.last_name)
+    def get_data(self):
+        return {
+            'name': '{} {}'.format(self.first_name, self.last_name),
+            'id': self.user.id,
+        }
 
     def __str__(self):
         return self.user.username

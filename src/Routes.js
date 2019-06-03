@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import axios from './axiosClient';
 
 import Menus from './components/menus/Menus.js';
 import LandingPage from './scenes/Landing/LandingPage.js';
@@ -10,8 +10,19 @@ import ProfilePage from './scenes/ProfilePage/ProfilePage.js';
 import Newsfeed from './scenes/Newsfeed/Newsfeed.js';
 
 class Routes extends Component {
+  state = {
+    loggedIn: false
+  };
+
+  componentDidMount() {
+    this.setState({
+        loggedIn: true
+    })
+  }
+
   render() {
     const token = localStorage.getItem('token');
+
     const DefaultLayout = ({ component: Component }) => {
         if (token)
             return (

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import client from '../../../../axiosClient';
 
 import ProfileMenu from './components/ProfileMenu.js';
 
@@ -16,11 +16,11 @@ class ProfileHeader extends Component {
   };
 
   componentDidMount() {
-    const currentUser = localStorage.getItem('currentUser');
+    const token = localStorage.getItem('token');
+    const axios = client(token);
+
     axios
-      .post('http://localhost:8000/api/profiles/headers/', {
-        username: currentUser
-      })
+      .get('http://localhost:8000/api/profiles/headers/')
       .then(res => this.setState({
         ...res.data.data
       }));

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import client  from '../../../../../axiosClient';
 
 import _map from 'lodash/map';
 
@@ -78,13 +78,13 @@ class BlogPost extends Component {
   handleSubmit = e => {
     e.preventDefault();
     const { text } = this.state;
-    // const { currentUser } = this.props;
-    const currentUser = localStorage.getItem('currentUser');
+    const token = localStorage.getItem('token');
+    const axios = client(token);
+
 
     if (text !== '') {
       axios
         .post('http://localhost:8000/api/posts/add/', {
-          author: currentUser,
           text
         });
       this.setState({

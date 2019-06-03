@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import axios from '../../../../axiosClient';
+import client from '../../../../axiosClient';
 
 import _map from 'lodash/map';
 
@@ -17,15 +17,26 @@ class ProfileTimeline extends Component {
   };
 
   componentDidMount() {
-    const currentUser = localStorage.getItem('currentUser');
+    const token = localStorage.getItem('token');
+    const axios = client(token);
 
-    axios.post('http://localhost:8000/api/posts/get/', {
-        username: currentUser
-      })
+    axios
+        .get('http://localhost:8000/api/posts/')
         .then(res => this.setState({
-          posts: res.data.data
+          posts: res.data
         }));
   }
+
+  deletePost = id => {
+    let posts = this.state.posts;
+    const toDelete = posts.find(item => id === item.id);
+    const ind = posts.indexOf(toDelete);
+    posts.splice(ind, 1);
+    posts.reverse();
+    this.setState({
+      posts
+    })
+  };
 
   render() {
     const { posts } = this.state;
@@ -50,7 +61,9 @@ class ProfileTimeline extends Component {
       </div>,
       <div className="col col-12 col-md-6 order-lg-2" key="posts">
         {_map(posts.reverse(), item => (
-            <Post key={item.id} data={item} currentUser={currentUser? currentUser : 'use'} />
+            <Post
+                key={item.id} data={item} currentUser={currentUser} deletePost={this.deletePost}
+            />
         ))}
       </div>,
       <div

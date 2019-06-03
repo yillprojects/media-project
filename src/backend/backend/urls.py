@@ -16,7 +16,8 @@ router.register(r'comments', views.CommentView, 'comments')
 router.register(r'communities', views.CommunityView, 'communities')
 
 urlpatterns = [
-    path('', admin.site.urls),
+    path('', views.root),
+    path('admin/', admin.site.urls),
     path('auth/', obtain_jwt_token),
     path('refresh/', refresh_jwt_token),
     path('verify/', verify_jwt_token),

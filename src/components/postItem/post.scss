@@ -168,7 +168,9 @@ $featured-post-hover: #ffc923;
 		width: 180px;
 
 		.profile-menu-link {
-			padding: 7px 0;
+			background: transparent;
+			border: none;
+			padding: 7px;
 			font-size: 12px;
 			display: block;
 			color: $title-color;

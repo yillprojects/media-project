@@ -4,8 +4,8 @@ import { authenticationConstants } from '../constants/authentication.constants';
 import { alertActions } from './alert.actions';
 
 function register(user) {
-  sessionStorage.removeItem('token');
   localStorage.removeItem('token');
+  localStorage.removeItem('currentUser');
 
   return (dispatch) => {
     dispatch(request(user));
@@ -46,8 +46,8 @@ function register(user) {
 }
 
 function login(username, password, remember) {
-  sessionStorage.removeItem('token');
   localStorage.removeItem('token');
+  localStorage.removeItem('currentUser');
 
   return (dispatch) => {
     dispatch(request(username));
@@ -58,19 +58,9 @@ function login(username, password, remember) {
         password,
       })
       .then((user) => {
-        console.log(user.data);
-        if (user.data.token) {
-          if (remember) {
-            localStorage.setItem('token', user.data.token);
-          } else {
-            sessionStorage.setItem('token', user.data.token);
-          }
+          localStorage.setItem('currentUser', `user${user.data.id}`);
+          localStorage.setItem('token', user.data.token);
           dispatch(success(username));
-        }
-        // } else {
-        //   dispatch(failure(user.data.message));
-        //   dispatch(alertActions.error(user.data.message));
-        // }
       })
       .catch((err) => {
         console.log(err);
@@ -95,8 +85,8 @@ function login(username, password, remember) {
 }
 
 function logout() {
-  sessionStorage.removeItem('token');
   localStorage.removeItem('token');
+  localStorage.removeItem('currentUser');
 
   return {
     type: authenticationConstants.LOGOUT,

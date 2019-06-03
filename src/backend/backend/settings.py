@@ -123,8 +123,9 @@ REST_FRAMEWORK = {
 }
 
 JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'api.views.jwt_response_payload_handler',
     'JWT_ALLOW_REFRESH': True,
-    'JWT_EXPIRATION_DELTA': timedelta(hours=12)
+    'JWT_EXPIRATION_DELTA': timedelta(days=31)
 }
 
 # Static files (CSS, JavaScript, Images)

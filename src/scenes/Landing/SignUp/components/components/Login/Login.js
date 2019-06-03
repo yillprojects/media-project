@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import axios from '../../../../../../axiosClient';
 
 import { authenticationActions } from 'redux/actions/index.js';
 
@@ -24,7 +23,8 @@ class Login extends Component {
       username: '',
       password: '',
       checked: false,
-      submitted: false
+      submitted: false,
+      loggedIn: false
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -47,16 +47,17 @@ class Login extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    this.setState({
-      submitted: true
-    });
-
     const { username, password, checked } = this.state;
     const { dispatch } = this.props;
 
     if (username && password) {
+
       dispatch(authenticationActions.login(username, password, checked));
     }
+
+    this.setState({
+      submitted: true
+    });
   }
 
   changeTab(event) {
@@ -68,9 +69,10 @@ class Login extends Component {
     const { username, password, submitted } = this.state;
     const { loggingIn, loggedIn } = this.props;
 
+    const currentUser = localStorage.getItem('currentUser');
     return (
       <div className="tab-section">
-        {loggedIn && <Redirect to={`/${username}/newsfeed`} />}
+        {loggedIn && <Redirect to={`/${currentUser}/newsfeed`} />}
         <div className="container">
           <h2 className="tab-section-title">
 

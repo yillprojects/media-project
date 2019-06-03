@@ -25,7 +25,7 @@ class Comment extends Component {
 
   render() {
     const { collapse } = this.state;
-    const { author, avatar, created_time, id, likes, post, text, username } = this.props.commentData;
+    const { author, avatar, created_time, id, likes, post, text } = this.props.commentData;
     return (
       <li className="comment-item">
         <div className="post">
@@ -37,8 +37,8 @@ class Comment extends Component {
                 style={{ height: 40, width: 40 }}
               />
               <div className="author-date">
-                <Link to="/user" className="author-name">
-                  <h6>{author}</h6>
+                <Link to={`/user${author.id}/newsfeed`} className="author-name">
+                  <h6>{author.name}</h6>
                 </Link>
                 <div className="post-date">
                   <span>

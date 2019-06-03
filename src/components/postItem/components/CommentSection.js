@@ -1,14 +1,12 @@
 import React, { Component } from "react";
 import _map from "lodash/map";
-import axios from 'axios';
+import axios from '../../../axiosClient';
 
 import Comment from './components/Comment.js';
 import CommentForm from './components/CommentForm.js';
 
 import "./commentSection.scss";
 
-
-// const data = [1, 2];
 
 class CommentSection extends Component {
   state = {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import client from '../../../../../../axiosClient';
 
 import { FaFacebookF, FaTwitter, FaDribbble } from 'react-icons/fa';
 
@@ -23,11 +23,11 @@ class ProfileInfo extends Component {
     };
 
     componentDidMount() {
-        const currentUser = localStorage.getItem('currentUser');
+        const token = localStorage.getItem('token');
+        const axios = client(token);
+
         axios
-            .post('http://localhost:8000/api/profiles/intro/', {
-                username: currentUser
-            })
+            .get('http://localhost:8000/api/profiles/intro/')
             .then(res => {
                 const { intro } = res.data.data;
                 const introData = intro? intro[0] : {};
@@ -54,7 +54,6 @@ class ProfileInfo extends Component {
                 <ul className="w-personal-info mb-4">
                     {
                         titles.map(item => {
-                            console.log(introData);
                             if (introData.hasOwnProperty(item))
                                 return (
                                     <li key={item}>

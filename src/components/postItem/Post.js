@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ReactTimeAgo from "react-time-ago";
-import axios from 'axios';
+import client from '../../axiosClient';
 
 import {
   Dropdown,
@@ -33,35 +33,21 @@ export default class Post extends Component {
     this.state = {
       dropdownOpen: false,
       collapse: false,
-      isLiked: data.liked_by.includes(currentUser),
       ...data,
       commentsNum: data.comments.length,
       currentUser
     };
   }
 
-  like = id => {
-    const { isLiked, likes, currentUser } = this.state;
+  likePost = id => {
+    const token = localStorage.getItem('token');
+    const axios = client(token);
 
-    if (!isLiked) {
-      axios.post('http://localhost:8000/api/posts/like/', {
-          username: currentUser,
-          id
-      });
-      this.setState({
-        isLiked: !isLiked,
-        likes: likes + 1
-      })
-    } else {
-      axios.post('http://localhost:8000/api/posts/dislike/', {
-          username: currentUser,
-          id
-      });
-      this.setState({
-        isLiked: !isLiked,
-        likes: likes - 1
-      })
-    }
+    axios
+        .put(`http://localhost:8000/api/posts/${id}/like/`)
+        .then(res => this.setState({
+          likes: res.data.data
+        }));
   };
 
   toggleDropdown() {
@@ -74,19 +60,26 @@ export default class Post extends Component {
     this.setState(state => ({ collapse: !state.collapse }));
   }
 
-  handleCommentAdding = () => {
+  addComment = () => {
     const { commentsNum } = this.state;
     this.setState({
         commentsNum: commentsNum + 1
     })
   };
 
+  deletePost = id => {
+    const { deletePost } = this.props;
+    axios
+        .delete(`http://localhost:8000/api/posts/${id}/`);
+    deletePost(id)
+  };
+
   render() {
     const { dropdownOpen, users, collapse } = this.state;
     const {
-        id, author, username, avatar, created_time, comments, commentsNum, text, likes, reposts, liked_by
+        id, author, avatar, created_time, comments, commentsNum, text, likes, reposts
     } = this.state;
-
+    console.log(author);
     return (
       <div className="ui-block">
         <article className="post">
@@ -98,8 +91,8 @@ export default class Post extends Component {
                 style={{ height: 40, width: 40 }}
               />
               <div className="author-date">
-                <Link to={`/${username}/newsfeed/`} className="author-name">
-                  <h6>{author}</h6>
+                <Link to={`/user${author.id}/newsfeed/`} className="author-name">
+                  <h6>{author.name}</h6>
                 </Link>
                 <div className="post-date">
                   <span>
@@ -120,19 +113,19 @@ export default class Post extends Component {
                 <DropdownMenu>
                   <ul className="more-settings">
                     <li>
-                      <a href="#" className="profile-menu-link">
+                      <button className="profile-menu-link">
                         Edit Post
-                      </a>
+                      </button>
                     </li>
                     <li>
-                      <a href="#" className="profile-menu-link">
+                      <button className="profile-menu-link" onClick={() => this.deletePost(id)}>
                         Delete Post
-                      </a>
+                      </button>
                     </li>
                     <li>
-                      <a href="#" className="profile-menu-link">
+                      <button className="profile-menu-link">
                         Turn Off Notifications
-                      </a>
+                      </button>
                     </li>
                   </ul>
                 </DropdownMenu>
@@ -141,7 +134,7 @@ export default class Post extends Component {
           </div>
           <p>{text}</p>
           <div className="post-additional-info">
-            <Button className="transparent-btn" onClick={() => this.like(id)}>
+            <Button className="transparent-btn" onClick={() => this.likePost(id)}>
               <FaRegHeart />
               <span>{likes}</span>
             </Button>
@@ -180,7 +173,7 @@ export default class Post extends Component {
           </div>
         </article>
         <Collapse isOpen={collapse}>
-          <CommentSection commentsData={comments} post={id} addComment={this.handleCommentAdding} />
+          <CommentSection commentsData={comments} post={id} addComment={this.addComment} />
         </Collapse>
       </div>
     );

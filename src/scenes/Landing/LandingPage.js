@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from "react-router-dom";
 
 import SignUp from './SignUp/SignUp.js';
 
@@ -12,6 +13,15 @@ export default class LandingPage extends Component {
   }
 
   render() {
+    const token = localStorage.getItem('token');
+    const currentUser = localStorage.getItem('currentUser');
+
+    if (token) {
+      return (
+          <Redirect to={`/${currentUser}/newsfeed`} />
+      );
+    }
+
     return (
       <div className="landing-page">
         <div className="bg-wrap">
