@@ -28,7 +28,7 @@ endpoints: url = 'api/', all responses except marked 'no_success' contain 'succe
 -- '/<post_id>/': method: GET, returns: post with requested id, no_success
 -- '/add/': add post, method: POST, fields: 'text' (text of post)
 -- '/<post_id>/': delete post, method: DELETE
--- '/<post_id>/like/': like post, method: PATCH
+-- '/<post_id>/like/': like post, method: PATCH, fields: 'id' (id of user who liked)
 -- '/<post_id>/add_comment/': add comment to post, method: POST, fields: 'text' (text of comment),
 
 - locations:

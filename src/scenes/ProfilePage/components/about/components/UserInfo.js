@@ -7,7 +7,7 @@ import { FaFacebookF, FaTwitter, FaDribbble } from 'react-icons/fa';
 const titles = [
   {
     key: 'aboutUser',
-    title: 'About me'
+    title: 'About Me'
   },
   {
     key: 'birthday',
@@ -19,7 +19,7 @@ const titles = [
   },
   {
     key: 'livesIn',
-    title: 'Lives in'
+    title: 'Lives In'
   },
   {
     key: 'occupation',

@@ -27,10 +27,11 @@ class ProfileInfo extends Component {
     componentDidMount() {
         this._isMounted = true;
         const token = localStorage.getItem('token');
+        const id = localStorage.getItem('currentUserId');
         const axios = client(token);
 
         axios
-            .post('api/profiles/get_fields', {
+            .post(`api/profiles/${id}/get_fields`, {
                 fields: ['intro']
             })
             .then(res => {

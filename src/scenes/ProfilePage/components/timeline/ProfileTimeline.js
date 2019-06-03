@@ -21,14 +21,15 @@ class ProfileTimeline extends Component {
     this._isMounted = true;
 
     const token = localStorage.getItem('token');
+    const id = localStorage.getItem('currentUserId');
     const axios = client(token);
 
     axios
-      .get("api/posts")
+      .get(`api/profiles/${id}/posts`)
       .then(res => {
         if (this._isMounted) {
           this.setState({
-            posts: res.data
+            posts: res.data.data.reverse()
           });
         }
       });
@@ -43,7 +44,6 @@ class ProfileTimeline extends Component {
     const toDelete = posts.find(item => id === item.id);
     const ind = posts.indexOf(toDelete);
     posts.splice(ind, 1);
-    posts.reverse();
     this.setState({
       posts
     })
@@ -51,7 +51,6 @@ class ProfileTimeline extends Component {
 
   render() {
     const { posts } = this.state;
-    const currentUser = localStorage.getItem('currentUser');
 
     return [
       <div
@@ -73,11 +72,11 @@ class ProfileTimeline extends Component {
         {posts.length === 0 ? (
           <span className="none-posts">Nothing to see</span>
         ) : (
-          _map(posts.reverse(), item => (
+          _map(posts, item => (
             <Post
               key={item.id}
               data={item}
-              currentUser={currentUser}
+              deletePost={this.deletePost}
             />
           ))
         )}

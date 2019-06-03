@@ -30,6 +30,7 @@ class UserDropdown extends Component {
     this.state = {
       dropdownOpen: false,
       status: '',
+      text: '',
       loggedIn: true
     };
 
@@ -79,17 +80,24 @@ class UserDropdown extends Component {
     const { loggedIn } = this.state;
     this.setState({
       loggedIn: !loggedIn
-    })
+    });
   }
+
+  handleStatusChange = event => {
+    const { value } = event.target;
+
+    this.setState({
+      text: value
+    })
+  };
 
   handleSubmit(event) {
     event.preventDefault();
 
-    //axios reqiuest
   }
 
   render() {
-    const { dropdownOpen, status, loggedIn } = this.state;
+    const { dropdownOpen, status, loggedIn, text } = this.state;
 
     if (!loggedIn)
       return (<Redirect to='/' />);
@@ -200,7 +208,7 @@ class UserDropdown extends Component {
                   <FaCheck />
                 </Button>
               </InputGroupAddon>
-              <Input />
+              <Input value={text} onChange={this.handleStatusChange} />
             </InputGroup>
           </form>
           <div className="ui-block-title">

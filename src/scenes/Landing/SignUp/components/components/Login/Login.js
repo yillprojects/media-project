@@ -69,10 +69,8 @@ class Login extends Component {
     const { username, password, submitted } = this.state;
     const { loggingIn, loggedIn } = this.props;
 
-    const currentUser = localStorage.getItem('currentUser');
     return (
       <div className="tab-section">
-        {loggedIn && <Redirect to={`/${currentUser}/newsfeed`} />}
         <div className="container">
           <h2 className="tab-section-title">
 

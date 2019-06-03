@@ -43,10 +43,13 @@ export default class Post extends Component {
 
   likePost = id => {
     const token = localStorage.getItem('token');
+    const author = localStorage.getItem('currentUserId');
     const axios = client(token);
 
     axios
-        .patch(`api/posts/${id}/like`)
+        .patch(`api/posts/${id}/like`, {
+          author
+        })
         .then(res => this.setState({
           likes: res.data.data
         }));

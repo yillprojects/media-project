@@ -17,10 +17,11 @@ export default class User extends Component {
   componentDidMount() {
     this._isMounted = true;
     const token = localStorage.getItem('token');
+    const id = localStorage.getItem('currentUserId');
     const axios = client(token);
 
     axios
-        .post('api/profiles/get_fields', {
+        .post(`api/profiles/${id}/get_fields`, {
             fields: ['status', 'first_name', 'last_name']
         })
         .then(res => {
@@ -33,7 +34,7 @@ export default class User extends Component {
             }
         })
   }
-  
+
   componentWillUnmount() {
     this._isMounted = false;
   }

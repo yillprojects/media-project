@@ -5,7 +5,7 @@ import { alertActions } from './alert.actions';
 
 function register(user) {
   localStorage.removeItem('token');
-  localStorage.removeItem('currentUser');
+  localStorage.removeItem('currentUserId');
 
   return (dispatch) => {
     dispatch(request(user));
@@ -22,12 +22,12 @@ function register(user) {
           dispatch(failure(user.data.message));
           dispatch(alertActions.error(user.data.message));
         }
-        console.log(user);
+        // console.log(user);
       })
       .catch((err) => {
         dispatch(failure(err));
         dispatch(alertActions.error('There was an error'));
-        console.log(err);
+        // console.log(err);
       });
   };
 
@@ -47,7 +47,7 @@ function register(user) {
 
 function login(username, password, remember) {
   localStorage.removeItem('token');
-  localStorage.removeItem('currentUser');
+  localStorage.removeItem('currentUserId');
 
   return (dispatch) => {
     dispatch(request(username));
@@ -58,12 +58,12 @@ function login(username, password, remember) {
         password,
       })
       .then((user) => {
-          localStorage.setItem('currentUser', `user${user.data.id}`);
+          localStorage.setItem('currentUserId', user.data.id);
           localStorage.setItem('token', user.data.token);
           dispatch(success(username));
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         if (err.response.data.non_field_errors) {
             dispatch(alertActions.error('Wrong username or password'));
         } else {
@@ -86,7 +86,7 @@ function login(username, password, remember) {
 
 function logout() {
   localStorage.removeItem('token');
-  localStorage.removeItem('currentUser');
+  localStorage.removeItem('currentUserId');
 
   return {
     type: authenticationConstants.LOGOUT,

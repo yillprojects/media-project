@@ -9,22 +9,10 @@ import NotFound from './scenes/404/NotFound.js';
 import ProfilePage from './scenes/ProfilePage/ProfilePage.js';
 import Newsfeed from './scenes/Newsfeed/Newsfeed.js';
 
-
-import defaultAvatar from "./backend/static/profiles/defaultProfileAvatar.jpg";
-import defaultHeader from "./backend/static/profiles/defaultProfileHeader.jpg";
-
 class Routes extends Component {
   componentDidMount() {
       const token = localStorage.getItem('token');
       const axios = client(token);
-  //
-  //     for(let i = 1; i <= 15; i++) {
-  //         axios
-  //               .patch(`api/profiles/${i}`, {
-  //                   avatar: defaultAvatar,
-  //                   header: defaultHeader
-  //               });
-  //     }
   }
 
   render() {
