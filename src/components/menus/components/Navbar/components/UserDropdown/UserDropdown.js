@@ -66,8 +66,16 @@ class UserDropdown extends Component {
   }
 
   toggle() {
+    const { statusText, dropdownOpen } = this.state;
+
+    if (!dropdownOpen) {
+      this.setState({
+        inputText: statusText
+      })
+    }
+
     this.setState({
-      dropdownOpen: !this.state.dropdownOpen
+      dropdownOpen: !dropdownOpen
     });
   }
 
@@ -127,7 +135,6 @@ class UserDropdown extends Component {
         })
         .then(res => this.setState({
           statusText: inputText,
-          inputText: ''
         }));
   }
 
