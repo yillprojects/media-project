@@ -77,7 +77,7 @@ class Newsfeed extends Component {
           <div className="col col-xl-6 order-xl-2 col-lg-12 col-md-12 col-sm-12 col-12">
             <NewsfeedForm addPost={this.handleSubmit} />
 
-            {posts.map(post => (
+            {posts.slice(0, visible).map(post => (
               <Post data={post} key={post.id} />
             ))}
             {visible < posts.length && (
