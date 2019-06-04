@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 import { FaRegGrinBeam, FaRegEnvelope, FaSlidersH } from 'react-icons/fa';
@@ -34,6 +35,7 @@ export default class ProfileControlButtons extends Component {
 
   render() {
     const { dropdownOpen } = this.state;
+    const id = localStorage.getItem('currentUserId');
 
     return (
       <div className="control-block-button">
@@ -58,22 +60,22 @@ export default class ProfileControlButtons extends Component {
           <DropdownMenu right>
             <ul className="more-settings">
               <li>
-                <a href="#" className="settings-link">
+                <Link to="#" className="settings-link">
 
                   Update Profile Photo
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="settings-link">
+                <Link to="#" className="settings-link">
 
                   Update Header Photo
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="settings-link">
+                <Link to={`/user${id}/settings`} className="settings-link">
 
                   Account Settings
-                </a>
+                </Link>
               </li>
             </ul>
           </DropdownMenu>

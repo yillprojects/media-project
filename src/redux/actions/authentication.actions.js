@@ -64,7 +64,6 @@ function login(username, password, remember) {
         password
       })
       .then(user => {
-        console.log(user.data);
         localStorage.setItem("currentUserId", user.data.id);
         localStorage.setItem("token", user.data.token);
         dispatch(success(username));

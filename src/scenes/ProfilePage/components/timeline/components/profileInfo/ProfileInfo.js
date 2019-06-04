@@ -11,6 +11,12 @@ const titles = [
     'Favourite Music Bands/Artists:',
 ];
 
+const names = [
+    'about',
+    'shows',
+    'bands'
+];
+
 const sns = [
     'facebook',
     'twitter',
@@ -21,7 +27,12 @@ class ProfileInfo extends Component {
     _isMounted = false;
 
     state = {
-        introData: {}
+        shows: '',
+        bands: '',
+        about: '',
+        facebook: '',
+        twitter: '',
+        dribbble: ''
     };
 
     componentDidMount() {
@@ -32,14 +43,18 @@ class ProfileInfo extends Component {
 
         axios
             .post(`api/profiles/${id}/get_fields`, {
-                fields: ['intro']
+                fields: ['about', 'shows', 'bands', 'facebook', 'twitter', 'dribbble']
             })
             .then(res => {
                 if (this._isMounted) {
-                    const {intro} = res.data.data;
-                    const introData = intro ? intro[0] : {};
+                    const { about, shows, bands, facebook, twitter, dribbble } = res.data.data;
                     this.setState({
-                        introData
+                        about,
+                        shows,
+                        bands,
+                        facebook,
+                        twitter,
+                        dribbble
                     })
                 }
             })
@@ -50,12 +65,8 @@ class ProfileInfo extends Component {
     }
 
     render() {
-      const { introData } = this.state;
-      let otherSns = false;
-      sns.map(item => {
-          if (introData.hasOwnProperty(item))
-              otherSns = true;
-      });
+      const { facebook, twitter, dribbble } = this.state;
+      const otherSns = !!(facebook.length || twitter.length || dribbble.length);
 
       return (
         <div className="personal-info ui-block">
@@ -65,12 +76,12 @@ class ProfileInfo extends Component {
             <div className="ui-block-content">
                 <ul className="w-personal-info mb-4">
                     {
-                        titles.map(item => {
-                            if (introData.hasOwnProperty(item))
+                        names.map((item, index) => {
+                            if (this.state[item].length)
                                 return (
                                     <li key={item}>
-                                        <h6 className="title">{item}</h6>
-                                        <p className="text">{introData[item]}</p>
+                                        <h6 className="title">{titles[index]}</h6>
+                                        <p className="text">{this.state[item]}</p>
                                     </li>
                                 )
                         })
@@ -82,8 +93,8 @@ class ProfileInfo extends Component {
 
                     }
                     {
-                        introData.hasOwnProperty('facebook') ?
-                            <a href={introData['facebook']} className="social-item bg-facebook">
+                        facebook.length ?
+                            <a href={facebook} className="social-item bg-facebook">
                                 <FaFacebookF className="mr-1"/>
                                 {' '}
                                 Facebook
@@ -92,8 +103,8 @@ class ProfileInfo extends Component {
 
                     }
                     {
-                        introData.hasOwnProperty('twitter') ?
-                            <a href={introData['twitter']} className="social-item bg-twitter">
+                        twitter.length ?
+                            <a href={twitter} className="social-item bg-twitter">
                                 <FaTwitter className="mr-1"/>
                                 {' '}
                                 Twitter
@@ -102,8 +113,8 @@ class ProfileInfo extends Component {
 
                     }
                     {
-                        introData.hasOwnProperty('dribbble') ?
-                            <a href={introData['dribbble']} className="social-item bg-dribbble">
+                        dribbble.length ?
+                            <a href={dribbble} className="social-item bg-dribbble">
                                 <FaDribbble className="mr-1"/>
                                 {' '}
                                 Dribbble
