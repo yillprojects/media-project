@@ -43,6 +43,7 @@ class UserDropdown extends Component {
     this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
     this.handleStatusSubmit = this.handleStatusSubmit.bind(this);
+    this.handleTabChange = this.handleTabChange.bind(this);
   }
 
   componentDidMount() {
@@ -126,6 +127,11 @@ class UserDropdown extends Component {
     });
   }
 
+  handleTabChange() {
+    const { dispatch } = this.props;
+    dispatch(userActions.currentPage(-1));
+  }
+
   handleStatusChange = event => {
     const { value } = event.target;
 
@@ -179,7 +185,7 @@ class UserDropdown extends Component {
           </div>
           <ul className="left-menu account-section">
             <li>
-              <Link to={`/user${id}/settings`} className="left-menu-title">
+              <Link to={`/user${id}/settings`} className="left-menu-title" onClick={this.handleTabChange}>
                 <FaSlidersH />
                 <span>Profile Settings</span>
               </Link>
