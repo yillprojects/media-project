@@ -88,7 +88,7 @@ class BlogPost extends Component {
       axios
         .post('api/posts/add', {
           text
-        });
+        }).then(res => console.log(res.data.data));
       this.setState({
         text: ''
       })
