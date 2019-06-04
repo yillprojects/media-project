@@ -80,7 +80,6 @@ class UserView(viewsets.ModelViewSet):
                 return response['invalid_data']
 
         serialized = UserSerializer(data=request.data)
-        print()
         if serialized.is_valid():
 
             is_email_busy = User.objects.filter(email=request.data['email']).exists()
@@ -215,21 +214,6 @@ class ProfileView(viewsets.ModelViewSet):
         profile.communities.add(community)
         return response['ok']
 
-    @action(methods=['POST'], detail=True)
-    def add_intro(self, request, pk=None):
-        for key in ['title', 'text']:
-            if key not in request.data:
-                return response['invalid_data']
-
-        profile = self.get_object()
-
-        if profile.intro:
-            profile.intro[0][request.data['title']] = request.data['text']
-        else:
-            profile.intro = [{request.data['title']: request.data['text']}]
-        profile.save()
-        return response['ok']
-
 
 class PostView(viewsets.ModelViewSet):
     serializer_class = PostSerializer
@@ -255,8 +239,9 @@ class PostView(viewsets.ModelViewSet):
                 return response['invalid_data']
 
         author = Profile.objects.get(user=request.user)
-        Post.objects.create(text=request.data['text'], author=author)
-        return response['created']
+        post = Post.objects.create(text=request.data['text'], author=author)
+        serialized = PostSerializer(post)
+        return response['ok_data'](serialized.data)
 
     @action(methods=['PATCH'], detail=True)
     def like(self, request, pk=None):

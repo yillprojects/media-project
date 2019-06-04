@@ -35,8 +35,14 @@ class Profile(models.Model):
     header = models.ImageField(upload_to='profiles/headers', null=True)
     status = models.CharField(max_length=20, default="", blank=True)
     communities = models.ManyToManyField(Community, related_name='members')
-    intro = PickledObjectField(null=True)
-    # TODO Q: intro data structure, e.g. [ {'title1': 'text1'}, ... , {'sns': [ {'facebook': 'url1'}, ... ]} ]
+    email = models.EmailField(blank=True)
+    website = models.TextField(blank=True)
+    about = models.TextField(blank=True)
+    shows = models.TextField(blank=True)
+    bands = models.TextField(blank=True)
+    facebook = models.URLField(blank=True)
+    twitter = models.URLField(blank=True)
+    dribbble = models.URLField(blank=True)
 
     def set_location(self, city_name, country_name):
         try:
@@ -55,6 +61,10 @@ class Profile(models.Model):
             'name': '{} {}'.format(self.first_name, self.last_name),
             'id': self.user.id,
         }
+
+    def save(self, *args, **kwargs):
+        self.email = self.user.email
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.user.username

@@ -89,11 +89,12 @@ class BlogPost extends Component {
     const token = localStorage.getItem("token");
     const axios = client(token);
 
-    if (text !== "") {
-      axios.post("api/posts/add", {
-        text
-      });
-      addPost();
+
+    if (text !== '') {
+      axios
+        .post('api/posts/add', {
+          text
+        }).then(res => console.log(res.data.data));
       this.setState({
         text: ""
       });
