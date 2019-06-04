@@ -10,9 +10,15 @@ function register(user) {
   return dispatch => {
     dispatch(request(user));
 
+    const { username, password, firstName, lastName, email } = user;
+
     axios
       .post("http://localhost:8000/api/users/register/", {
-        ...user
+        first_name: firstName,
+        last_name: lastName,
+        username,
+        password,
+        email
       })
       .then(user => {
         if (user.data.success) {

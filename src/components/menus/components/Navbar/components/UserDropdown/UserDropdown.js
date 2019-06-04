@@ -24,6 +24,8 @@ import User from "./User.js";
 import "./userdropdown.scss";
 
 class UserDropdown extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
 
@@ -44,6 +46,7 @@ class UserDropdown extends Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     const token = localStorage.getItem('token');
     const axios = client(token);
     const id = localStorage.getItem('currentUserId');
@@ -52,10 +55,16 @@ class UserDropdown extends Component {
         .post(`api/profiles/${id}/get_fields`, {
           fields: ['status']
         })
-        .then(res => this.setState({
-          inputText: res.data.data.status,
-          statusText: res.data.data.status
-        }));
+        .then(res => {
+          if (this._isMounted) {
+            const { status } = res.data.data;
+
+            this.setState({
+              inputText: status,
+              statusText: status
+            })
+          }
+        });
 
   }
 
@@ -63,6 +72,10 @@ class UserDropdown extends Component {
     this.setState({
       status: this.props.status
     });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   toggle() {

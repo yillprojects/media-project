@@ -75,11 +75,12 @@ class UserView(viewsets.ModelViewSet):
 
     @action(methods=['POST'], detail=False)
     def register(self, request):
-        for key in ['email']:
+        for key in ['email', 'first_name', 'last_name']:
             if key not in request.data:
                 return response['invalid_data']
 
         serialized = UserSerializer(data=request.data)
+        print()
         if serialized.is_valid():
 
             is_email_busy = User.objects.filter(email=request.data['email']).exists()
@@ -87,7 +88,9 @@ class UserView(viewsets.ModelViewSet):
                 return response['ok_message']('Email is busy')
 
             user = User.objects.create_user(**serialized.data)
-            Profile.objects.create(user=user)
+            Profile.objects.create(
+                user=user, first_name=request.data['first_name'], last_name=request.data['last_name']
+            )
             return response['created']
 
         if 'email' in serialized.errors:

@@ -58,6 +58,7 @@ class PersonalSettings extends Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
+		console.log(this.state);
 	}
 
 	handleChangeCountry(selectedCountry) {
@@ -81,6 +82,14 @@ class PersonalSettings extends Component {
 		console.log(selectedCity);
 		this.setState({ selectedCity });
 	}
+
+	handleInputChange = event => {
+		const { name, value } = event.target;
+
+		this.setState({
+			[name]: value
+		})
+	};
 
 	render() {
 		const { selectedCountry, selectedCity, countries, cities } = this.state;
@@ -107,6 +116,7 @@ class PersonalSettings extends Component {
 													name="firstName"
 													id="settings-first-name"
 													placeholder="First Name"
+													onChange={this.handleInputChange}
 												/>
 												<Label for="settings-first-name">First Name</Label>
 											</FormGroup>
@@ -115,6 +125,7 @@ class PersonalSettings extends Component {
 													name="email"
 													id="settings-email"
 													placeholder="Your Email"
+													onChange={this.handleInputChange}
 												/>
 												<Label for="settings-email">Your Email</Label>
 											</FormGroup>
@@ -131,6 +142,7 @@ class PersonalSettings extends Component {
 													name="lastName"
 													id="settings-last-name"
 													placeholder="Last Name"
+													onChange={this.handleInputChange}
 												/>
 												<Label for="settings-last-name">Last Name</Label>
 											</FormGroup>
@@ -172,6 +184,7 @@ class PersonalSettings extends Component {
 													name="personShows"
 													id="tv-shows"
 													rows={3}
+													onChange={this.handleInputChange}
 												/>
 											</FormGroup>
 											<FormGroup>
@@ -183,6 +196,7 @@ class PersonalSettings extends Component {
 													name="personMusic"
 													id="music-bands"
 													rows={3}
+													onChange={this.handleInputChange}
 												/>
 											</FormGroup>
 										</div>
@@ -194,7 +208,11 @@ class PersonalSettings extends Component {
 												>
 													<FaFacebookF />
 												</InputGroupAddon>
-												<Input placeholder="Your Facebook Account" />
+												<Input
+													placeholder="Your Facebook Account"
+													name="facebook"
+													onChange={this.handleInputChange}
+												/>
 											</InputGroup>
 											<InputGroup className="mb-3">
 												<InputGroupAddon
@@ -203,7 +221,11 @@ class PersonalSettings extends Component {
 												>
 													<FaTwitter />
 												</InputGroupAddon>
-												<Input placeholder="Your Twitter Account" />
+												<Input
+													placeholder="Your Twitter Account"
+													name="twitter"
+													onChange={this.handleInputChange}
+												/>
 											</InputGroup>
 											<InputGroup className="mb-3">
 												<InputGroupAddon
@@ -212,7 +234,11 @@ class PersonalSettings extends Component {
 												>
 													<FaDribbble />
 												</InputGroupAddon>
-												<Input placeholder="Your Dribbble Account" />
+												<Input
+													placeholder="Your Dribbble Account"
+													name="dribbble"
+													onChange={this.handleInputChange}
+												/>
 											</InputGroup>
 										</div>
 									</div>
