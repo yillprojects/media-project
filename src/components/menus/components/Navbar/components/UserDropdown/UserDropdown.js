@@ -59,9 +59,6 @@ class UserDropdown extends Component {
 
   }
 
-  componentDidMount() {
-  }
-
   componentWillMount() {
     this.setState({
       status: this.props.status
@@ -142,7 +139,7 @@ class UserDropdown extends Component {
   }
 
   render() {
-    const { dropdownOpen, status, loggedIn, text } = this.state;
+    const { dropdownOpen, status, loggedIn, statusText, inputText } = this.state;
     const id = localStorage.getItem("currentUserId");
 
     if (!loggedIn)

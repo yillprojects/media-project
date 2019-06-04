@@ -106,10 +106,7 @@ class ProfileView(viewsets.ModelViewSet):
     @action(methods=['POST'], detail=True)
     def get_fields(self, request, pk=None):
 
-        try:
-            profile = Profile.objects.get(user_id=pk)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong username')
+        profile = self.get_object()
 
         requested_fields = request.data['fields']
         serialized = ProfileSerializer(profile, fields=requested_fields)
@@ -122,10 +119,7 @@ class ProfileView(viewsets.ModelViewSet):
             if key not in request.data:
                 return response['invalid_data']
 
-        try:
-            profile = Profile.objects.get(user_id=pk)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong username')
+        profile = self.get_object()
 
         if not profile.set_location(request.data['city'], request.data['country']):
             return response['ok_message']('Wrong location')
@@ -167,10 +161,7 @@ class ProfileView(viewsets.ModelViewSet):
     @action(methods=['GET'], detail=True)
     def posts(self, request, pk=None):
 
-        try:
-            profile = Profile.objects.get(user_id=pk)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong username')
+        profile = self.get_object()
 
         serialized = PostSerializer(profile.posts, many=True)
         return response['ok_data'](serialized.data)
@@ -178,13 +169,10 @@ class ProfileView(viewsets.ModelViewSet):
     @action(methods=['GET'], detail=True)
     def newsfeed(self, request, pk=None):
 
-        try:
-            profile = Profile.objects.get(user_id=pk)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong username')
+        profile = self.get_object()
 
         authors_list = profile.friends.all()
-        author = Profile.objects.filter(user_id=pk)
+        author = Profile.objects.filter(id=pk)
         authors_list |= author
 
         posts = Post.objects.filter(author__in=authors_list)
@@ -194,10 +182,7 @@ class ProfileView(viewsets.ModelViewSet):
     @action(methods=['GET'], detail=True)
     def friends_short_list(self, request, pk=None):
 
-        try:
-            profile = Profile.objects.get(user_id=pk)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong username')
+        profile = self.get_object()
 
         serialized = ProfileSerializer(profile.friends, many=True, fields=('avatar', 'user'))
         return response['ok_data'](serialized.data)
@@ -205,10 +190,7 @@ class ProfileView(viewsets.ModelViewSet):
     @action(methods=['GET'], detail=True)
     def communities(self, request, pk=None):
 
-        try:
-            profile = Profile.objects.get(user_id=pk)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong username')
+        profile = self.get_object()
 
         serialized = CommunitySerializer(profile.communities, many=True,
                                          fields=('name', 'address', 'occupation', 'avatar'))
@@ -220,10 +202,7 @@ class ProfileView(viewsets.ModelViewSet):
             if key not in request.data:
                 return response['invalid_data']
 
-        try:
-            profile = Profile.objects.get(user_id=pk)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong username')
+        profile = self.get_object()
 
         try:
             community = Community.objects.get(address=request.data['community'])
@@ -239,10 +218,7 @@ class ProfileView(viewsets.ModelViewSet):
             if key not in request.data:
                 return response['invalid_data']
 
-        try:
-            profile = Profile.objects.get(user_id=pk)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong username')
+        profile = self.get_object()
 
         if profile.intro:
             profile.intro[0][request.data['title']] = request.data['text']
@@ -362,6 +338,6 @@ def root(request):
 def jwt_response_payload_handler(token, user=None, request=None):
     return {
         'token': token,
-        'id': user.id
+        'id': user.profile.id
     }
 
