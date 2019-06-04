@@ -44,7 +44,7 @@ class ProfileHeader extends Component {
 
   render() {
     const { location, first_name, last_name, avatar, header } = this.state;
-    const currentUser = localStorage.getItem('currentUser');
+    const id = localStorage.getItem('currentUserId');
 
     return (
       <div className="col col-12">
@@ -58,7 +58,7 @@ class ProfileHeader extends Component {
             </div>
             <ProfileMenu />
             <div className="top-header-author">
-              <Link to={`/${currentUser}/timeline`} className="author-thumb">
+              <Link to={`/user${id}/newsfeed`} className="author-thumb">
                 <img
                   src={avatar? `http://localhost:8000/media/profiles/${avatar}` : defaultAvatar}
                   alt="user-img"
@@ -66,7 +66,7 @@ class ProfileHeader extends Component {
                 />
               </Link>
               <div className="author-content">
-                <Link to={`/${currentUser}/timeline`} className="author-name">
+                <Link to={`/user${id}/newsfeed`} className="author-name">
                   <h4>{first_name + ' ' + last_name}</h4>
                 </Link>
                 <span className="country">

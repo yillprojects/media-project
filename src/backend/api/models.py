@@ -25,16 +25,15 @@ class Community(models.Model):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     first_name = models.CharField(max_length=25, default='Name', blank=True)
     last_name = models.CharField(max_length=25, default='Surname', blank=True)
     friends = models.ManyToManyField('self', symmetrical=True)
     followers = models.ManyToManyField('self', symmetrical=False)
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, related_name='profiles')
     avatar = models.ImageField(upload_to='profiles/avatars', null=True)
-    # TODO: separate paths ('profiles/avatars' or 'avatars/profiles')
     header = models.ImageField(upload_to='profiles/headers', null=True)
-    status = models.CharField(max_length=20, default="")
+    status = models.CharField(max_length=20, default="", blank=True)
     communities = models.ManyToManyField(Community, related_name='members')
     intro = PickledObjectField(null=True)
     # TODO Q: intro data structure, e.g. [ {'title1': 'text1'}, ... , {'sns': [ {'facebook': 'url1'}, ... ]} ]

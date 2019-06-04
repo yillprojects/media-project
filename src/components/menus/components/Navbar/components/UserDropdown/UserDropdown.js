@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-
 import { connect } from "react-redux";
+import client from '../../../../../../axiosClient';
 
 import { userActions, authenticationActions } from "redux/actions/index.js";
 
@@ -30,7 +30,8 @@ class UserDropdown extends Component {
     this.state = {
       dropdownOpen: false,
       status: '',
-      text: '',
+      inputText: '',
+      statusText: '',
       loggedIn: true
     };
 
@@ -39,7 +40,23 @@ class UserDropdown extends Component {
     this.onMouseLeave = this.onMouseLeave.bind(this);
     this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
     this.handleLogOut = this.handleLogOut.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleStatusSubmit = this.handleStatusSubmit.bind(this);
+  }
+
+  componentDidMount() {
+    const token = localStorage.getItem('token');
+    const axios = client(token);
+    const id = localStorage.getItem('currentUserId');
+
+    axios
+        .post(`api/profiles/${id}/get_fields`, {
+          fields: ['status']
+        })
+        .then(res => this.setState({
+          inputText: res.data.data.status,
+          statusText: res.data.data.status
+        }));
+
   }
 
   componentWillMount() {
@@ -59,7 +76,12 @@ class UserDropdown extends Component {
   }
 
   onMouseLeave() {
-    this.setState({ dropdownOpen: false });
+    const { statusText } = this.state;
+
+    this.setState({
+      dropdownOpen: false,
+      inputText: statusText
+    })
   }
 
   onRadioBtnClick(rSelected) {
@@ -87,17 +109,30 @@ class UserDropdown extends Component {
     const { value } = event.target;
 
     this.setState({
-      text: value
+      inputText: value,
     })
   };
 
-  handleSubmit(event) {
+  handleStatusSubmit(event) {
     event.preventDefault();
 
+    const token = localStorage.getItem('token');
+    const axios = client(token);
+    const id = localStorage.getItem('currentUserId');
+    const { inputText } = this.state;
+
+    axios
+        .patch(`api/profiles/${id}`, {
+          status: inputText
+        })
+        .then(res => this.setState({
+          statusText: inputText,
+          inputText: ''
+        }));
   }
 
   render() {
-    const { dropdownOpen, status, loggedIn, text } = this.state;
+    const { dropdownOpen, status, loggedIn, inputText, statusText } = this.state;
 
     if (!loggedIn)
       return (<Redirect to='/' />);
@@ -115,7 +150,7 @@ class UserDropdown extends Component {
           data-toggle="dropdown"
           aria-expanded={dropdownOpen}
         >
-          <User status={status} />
+          <User statusText={statusText} status={status} />
         </DropdownToggle>
         <DropdownMenu>
           <div className="ui-block-title">
@@ -201,14 +236,14 @@ class UserDropdown extends Component {
           <div className="ui-block-title">
             <h6 className="title">Custom Status</h6>
           </div>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleStatusSubmit}>
             <InputGroup className="status-input">
               <InputGroupAddon addonType="prepend">
                 <Button>
                   <FaCheck />
                 </Button>
               </InputGroupAddon>
-              <Input value={text} onChange={this.handleStatusChange} />
+              <Input value={inputText} onChange={this.handleStatusChange} />
             </InputGroup>
           </form>
           <div className="ui-block-title">

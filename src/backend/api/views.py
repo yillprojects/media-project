@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from cities_light.models import Country, City
 
-from .serializers import UserSerializer, ProfileSerializer, PostSerializer, ProfileHeaderSerializer, \
+from .serializers import UserSerializer, ProfileSerializer, PostSerializer, \
     CommentSerializer, CommunitySerializer
 from .models import Profile, Post, Comment, Community
 
@@ -107,7 +107,7 @@ class ProfileView(viewsets.ModelViewSet):
     def get_fields(self, request, pk=None):
 
         try:
-            profile = Profile.objects.get(user__id=pk)
+            profile = Profile.objects.get(user_id=pk)
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong username')
 
@@ -123,7 +123,7 @@ class ProfileView(viewsets.ModelViewSet):
                 return response['invalid_data']
 
         try:
-            profile = Profile.objects.get(user__id=pk)
+            profile = Profile.objects.get(user_id=pk)
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong username')
 
@@ -144,7 +144,7 @@ class ProfileView(viewsets.ModelViewSet):
             return response['ok_message']('Wrong receiver username')
 
         try:
-            sender = Profile.objects.get(user__id=pk)
+            sender = Profile.objects.get(user_id=pk)
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong sender username')
 
@@ -168,7 +168,7 @@ class ProfileView(viewsets.ModelViewSet):
     def posts(self, request, pk=None):
 
         try:
-            profile = Profile.objects.get(user__id=pk)
+            profile = Profile.objects.get(user_id=pk)
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong username')
 
@@ -176,10 +176,26 @@ class ProfileView(viewsets.ModelViewSet):
         return response['ok_data'](serialized.data)
 
     @action(methods=['GET'], detail=True)
+    def newsfeed(self, request, pk=None):
+
+        try:
+            profile = Profile.objects.get(user_id=pk)
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong username')
+
+        authors_list = profile.friends.all()
+        author = Profile.objects.filter(user_id=pk)
+        authors_list |= author
+
+        posts = Post.objects.filter(author__in=authors_list)
+        serialized = PostSerializer(posts, many=True)
+        return response['ok_data'](serialized.data)
+
+    @action(methods=['GET'], detail=True)
     def friends_short_list(self, request, pk=None):
 
         try:
-            profile = Profile.objects.get(user__id=pk)
+            profile = Profile.objects.get(user_id=pk)
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong username')
 
@@ -190,7 +206,7 @@ class ProfileView(viewsets.ModelViewSet):
     def communities(self, request, pk=None):
 
         try:
-            profile = Profile.objects.get(user__id=pk)
+            profile = Profile.objects.get(user_id=pk)
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong username')
 
@@ -205,7 +221,7 @@ class ProfileView(viewsets.ModelViewSet):
                 return response['invalid_data']
 
         try:
-            profile = Profile.objects.get(user__id=pk)
+            profile = Profile.objects.get(user_id=pk)
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong username')
 
@@ -224,7 +240,7 @@ class ProfileView(viewsets.ModelViewSet):
                 return response['invalid_data']
 
         try:
-            profile = Profile.objects.get(user__id=pk)
+            profile = Profile.objects.get(user_id=pk)
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong username')
 
@@ -238,11 +254,7 @@ class ProfileView(viewsets.ModelViewSet):
 
 class PostView(viewsets.ModelViewSet):
     serializer_class = PostSerializer
-
-    def get_queryset(self):
-        if self.request.user:
-            return Post.objects.filter(author__user=self.request.user)
-        return Post.objects.all()
+    queryset = Post.objects.all()
 
     @action(methods=['POST'], detail=True)
     def get_fields(self, request, pk=None):

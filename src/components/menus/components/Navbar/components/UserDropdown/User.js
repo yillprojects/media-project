@@ -11,7 +11,6 @@ export default class User extends Component {
 
   state = {
       name: '',
-      status: ''
   };
 
   componentDidMount() {
@@ -22,14 +21,13 @@ export default class User extends Component {
 
     axios
         .post(`api/profiles/${id}/get_fields`, {
-            fields: ['status', 'first_name', 'last_name']
+            fields: ['first_name', 'last_name']
         })
         .then(res => {
             if (this._isMounted) {
-                const {first_name, last_name, status} = res.data.data;
+                const { first_name, last_name } = res.data.data;
                 this.setState({
                     name: first_name + ' ' + last_name,
-                    status
                 })
             }
         })
@@ -40,7 +38,7 @@ export default class User extends Component {
   }
 
   render() {
-  	const { status } = this.props;
+  	const { status, statusText } = this.props;
     const { name } = this.state;
 
     return (
@@ -60,7 +58,7 @@ export default class User extends Component {
             <h5>{name}</h5>
             <FaChevronDown />
           </div>
-          <span className="user-subtitle">{this.state.status}</span>
+          <span className="user-subtitle">{statusText}</span>
         </div>
       </div>
     );

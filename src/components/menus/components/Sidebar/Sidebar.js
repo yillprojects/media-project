@@ -124,7 +124,7 @@ class SidebarItem extends Component {
         <div className="sidebar-laptop">
           <header className="fixed-sidebar-header">
             <h1>
-              <Link to={`/${user}/timeline`} className="sidebar-logo sidebar-logo-icon">
+              <Link to={`/${user}/newsfeed`} className="sidebar-logo sidebar-logo-icon">
                 <IoIosCube />
                 <span className="sr-only">Website logo</span>
               </Link>
