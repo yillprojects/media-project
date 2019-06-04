@@ -58,7 +58,37 @@ class PersonalSettings extends Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		console.log(this.state);
+
+		const labels = [ 'firstName', 'lastName', 'email', 'website', 'personInfo', 'personShows', 'personMusic',
+			'facebook', 'twitter', 'dribbble' ];
+		const names = [ 'first_name', 'last_name', 'email', 'website', 'about', 'shows', 'bands',
+			'facebook', 'twitter', 'dribbble' ];
+		let data = {};
+
+		for(let i = 0; i < labels.length; i++) {
+			if (this.state.hasOwnProperty(labels[i])) {
+				data[names[i]] = this.state[labels[i]]
+			}
+		}
+
+
+		const { selectedCity, selectedCountry } = this.state;
+
+		const token = localStorage.getItem("token");
+		const id = localStorage.getItem("currentUserId");
+		const axios = client(token);
+
+		axios
+			.patch(`api/profiles/${id}`, data);
+
+		if (selectedCity && selectedCountry) {
+			axios
+				.post(`api/profiles/${id}/set_location`, {
+					city: selectedCity.label,
+					country: selectedCountry.label
+				})
+		}
+
 	}
 
 	handleChangeCountry(selectedCountry) {
@@ -171,6 +201,7 @@ class PersonalSettings extends Component {
 													name="personInfo"
 													id="personal-info"
 													rows={8}
+													onChange={this.handleInputChange}
 												/>
 											</FormGroup>
 										</div>

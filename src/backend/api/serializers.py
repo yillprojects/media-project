@@ -46,7 +46,6 @@ class ProfileSerializer(DynamicFieldsModelSerializer):
     followers = serializers.StringRelatedField(many=True)
     avatar = serializers.ImageField(use_url=False)
     header = serializers.ImageField(use_url=False)
-    intro = serializers.ListField()
     communities = serializers.StringRelatedField(many=True)
     liked_posts = serializers.StringRelatedField(many=True)
 
