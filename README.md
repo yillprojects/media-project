@@ -12,7 +12,7 @@ yarn start
 Run commands below in `src/backend` folder to work with api
 
 ```
-pip install -r requirments.txt
+pip install -r requirements.txt
 py manage.py migrate
 py manage.py runserver
 ```
