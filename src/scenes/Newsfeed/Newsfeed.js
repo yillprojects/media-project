@@ -44,8 +44,6 @@ class Newsfeed extends Component {
         });
       }
     });
-
-    axios.get(`api/users/${id}`).then(res => console.log(res));
   }
 
   componentWillMount() {
@@ -57,15 +55,11 @@ class Newsfeed extends Component {
     this._isMounted = false;
   }
 
-  handleSubmit() {
-    // const token = localStorage.getItem("token");
-    // const id = localStorage.getItem("currentUserId");
-    // const axios = client(token);
-    // axios.get(`api/profiles/${id}/newsfeed`).then(res => {
-    //   this.setState({
-    //     posts: res.data.data.reverse()
-    //   });
-    // });
+  handleSubmit(post) {
+    this.setState(prev => ({
+      posts: [post, ...prev.posts]
+    }))
+
   }
 
   loadMore() {
@@ -83,7 +77,7 @@ class Newsfeed extends Component {
           <div className="col col-xl-6 order-xl-2 col-lg-12 col-md-12 col-sm-12 col-12">
             <NewsfeedForm addPost={this.handleSubmit} />
 
-            {posts.slice(0, visible).map(post => (
+            {posts.map(post => (
               <Post data={post} key={post.id} />
             ))}
             {visible < posts.length && (
