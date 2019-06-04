@@ -139,8 +139,8 @@ class UserDropdown extends Component {
 
     return (
       <Dropdown
-        onMouseOver={this.onMouseEnter}
-        onMouseLeave={this.onMouseLeave}
+        // onMouseOver={this.onMouseEnter}
+        // onMouseLeave={this.onMouseLeave}
         isOpen={dropdownOpen}
         toggle={this.toggle}
         className="user-dropdown"
