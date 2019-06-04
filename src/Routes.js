@@ -8,6 +8,7 @@ import LandingPage from './scenes/Landing/LandingPage.js';
 import NotFound from './scenes/404/NotFound.js';
 import ProfilePage from './scenes/ProfilePage/ProfilePage.js';
 import Newsfeed from './scenes/Newsfeed/Newsfeed.js';
+import Settings from './scenes/Settings/Settings.js';
 
 class Routes extends Component {
   componentDidMount() {
@@ -40,7 +41,9 @@ class Routes extends Component {
         <Switch>
           <Route exact path="/" component={LandingPage} />
           <DefaultLayout path="/:username/newsfeed" component={Newsfeed} />
+          <DefaultLayout path="/:username/settings" component={Settings} />
           <DefaultLayout path="/:username/" component={ProfilePage} />
+
         </Switch>
       </Router>
     );

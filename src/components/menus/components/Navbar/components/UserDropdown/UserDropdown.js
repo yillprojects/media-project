@@ -42,6 +42,9 @@ class UserDropdown extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+  }
+
   componentWillMount() {
     this.setState({
       status: this.props.status
@@ -98,6 +101,7 @@ class UserDropdown extends Component {
 
   render() {
     const { dropdownOpen, status, loggedIn, text } = this.state;
+    const id = localStorage.getItem("currentUserId");
 
     if (!loggedIn)
       return (<Redirect to='/' />);
@@ -123,7 +127,7 @@ class UserDropdown extends Component {
           </div>
           <ul className="left-menu account-section">
             <li>
-              <Link to="/settings" className="left-menu-title">
+              <Link to={`/user${id}/settings`} className="left-menu-title">
                 <FaSlidersH />
                 <span>Profile Settings</span>
               </Link>

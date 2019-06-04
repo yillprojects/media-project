@@ -1,0 +1,72 @@
+// colors
+$color-border: #ced4da;
+$color-facebook: #2f5b9d;
+$color-twitter: #38bff1;
+$color-dribbble: #f74881;
+$color-secondary: #ff5e3a;
+
+.personal-settings {
+	.input-group {
+		input::placeholder {
+			font-size: 12px;
+		}
+
+		&-prepend {
+			justify-content: center;
+			align-items: center;
+			border: 1px solid $color-border;
+			padding: 0 10px;
+			border-top-left-radius: 0.25rem;
+			border-bottom-left-radius: 0.25rem;
+		}
+	}
+
+	.ui-block-title {
+		border-top: none;
+	}
+
+	.icon {
+		&-facebook {
+			svg {
+				fill: $color-facebook;
+			}
+		}
+
+		&-twitter {
+			svg {
+				fill: $color-twitter;
+			}
+		}
+
+		&-dribbble {
+			svg {
+				fill: $color-dribbble;
+			}
+		}
+	}
+
+	.button-control {
+		text-align: center;
+
+		.btn {
+			padding: 12px 50px;
+			font-size: 13px;
+			font-weight: 500;
+
+			&-primary {
+				border-color: $color-secondary;
+				background-color: $color-secondary;
+			}
+		}
+	}
+}
+
+.personal-label {
+	margin-bottom: 3px;
+	font-size: 13px;
+}
+
+.custom-form {
+	margin-bottom: 8px !important;
+}
+

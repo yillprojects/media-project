@@ -21,6 +21,7 @@ class ProfileHeader extends Component {
 
   componentDidMount() {
     this._isMounted = true;
+    
     const token = localStorage.getItem('token');
     const id = localStorage.getItem('currentUserId');
     const axios = client(token);
