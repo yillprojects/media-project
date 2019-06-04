@@ -87,13 +87,13 @@ class SidebarItem extends Component {
     const { page } = this.props;
 
     this.setState({
-      activeTab: page
+      activeTab: Number(page)
     });
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      activeTab: nextProps.page
+      activeTab: Number(nextProps.page)
     });
   }
 
