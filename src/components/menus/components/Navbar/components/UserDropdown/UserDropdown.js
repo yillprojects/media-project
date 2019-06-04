@@ -135,7 +135,7 @@ class UserDropdown extends Component {
   }
 
   render() {
-    const { dropdownOpen, status, loggedIn, text } = this.state;
+    const { dropdownOpen, status, loggedIn, inputText, statusText } = this.state;
     const id = localStorage.getItem("currentUserId");
 
     if (!loggedIn)

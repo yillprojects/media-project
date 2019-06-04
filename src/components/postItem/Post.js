@@ -31,13 +31,12 @@ export default class Post extends Component {
     this.toggleDropdown = this.toggleDropdown.bind(this);
     this.toggleCollapse = this.toggleCollapse.bind(this);
 
-    const { data, currentUser } = this.props;
+    const { data } = this.props;
     this.state = {
       dropdownOpen: false,
       collapse: false,
       ...data,
-      commentsNum: data.comments.length,
-      currentUser
+      commentsNum: data.comments.length
     };
   }
 
@@ -88,7 +87,7 @@ export default class Post extends Component {
         id, author, avatar, created_time, comments, commentsNum, text, likes, reposts
     } = this.state;
     return (
-      <div className="ui-block">
+      <div className="ui-block fade-in">
         <article className="post">
           <div className="post-author">
             <div className="user-title">
@@ -165,11 +164,11 @@ export default class Post extends Component {
               <FaTrophy />
               <span className="sr-only">Add to saved posts</span>
             </button>
-            <button type="button" className="btn btn-control">
+            <button type="button" className="btn btn-control"  onClick={() => this.likePost(id)}>
               <FaRegHeart />
               <span className="sr-only">Like post</span>
             </button>
-            <button type="button" className="btn btn-control">
+            <button type="button" className="btn btn-control" onClick={this.toggleCollapse}>
               <FaRegComments />
               <span className="sr-only">Leave a comment</span>
             </button>

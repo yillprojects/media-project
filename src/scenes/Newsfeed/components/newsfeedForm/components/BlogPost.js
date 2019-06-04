@@ -1,20 +1,24 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import client  from '../../../../../axiosClient';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import client from "../../../../../axiosClient";
 
-import _map from 'lodash/map';
+import _map from "lodash/map";
 
-import { withStyles, MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import Tooltip from '@material-ui/core/Tooltip';
-import { Button } from 'reactstrap';
+import {
+  withStyles,
+  MuiThemeProvider,
+  createMuiTheme
+} from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
+import Tooltip from "@material-ui/core/Tooltip";
+import { Button } from "reactstrap";
 
-import { FiCamera } from 'react-icons/fi';
-import { FaDesktop, FaMapMarkerAlt } from 'react-icons/fa';
+import { FiCamera } from "react-icons/fi";
+import { FaDesktop, FaMapMarkerAlt } from "react-icons/fa";
 
-import { styles } from 'config/tooltipConfig.js';
+import { styles } from "config/tooltipConfig.js";
 
-import './blogpost.scss';
+import "./blogpost.scss";
 
 import defaultAvatar from "../../../../../backend/static/profiles/defaultProfileAvatar.jpg";
 
@@ -22,19 +26,19 @@ const theme = createMuiTheme({
   overrides: {
     MuiInput: {
       underline: {
-        '&:hover:not($disabled):after': {
-          borderBottomColor: '#FF5E3A'
+        "&:hover:not($disabled):after": {
+          borderBottomColor: "#FF5E3A"
         },
 
-        '&:after': {
-          borderBottomColor: '#FF5E3A'
+        "&:after": {
+          borderBottomColor: "#FF5E3A"
         },
 
-        '&:hover:not($disabled):not($error):not($focused):before': {
-          borderBottom: '1.5px solid #FF5E3A'
+        "&:hover:not($disabled):not($error):not($focused):before": {
+          borderBottom: "1.5px solid #FF5E3A"
         },
-        '&:before': {
-          borderBottomWidth: '0.5px'
+        "&:before": {
+          borderBottomWidth: "0.5px"
         }
       }
     }
@@ -44,17 +48,17 @@ const theme = createMuiTheme({
 const btn = [
   {
     id: 1,
-    tooltip: 'ADD PHOTOS',
+    tooltip: "ADD PHOTOS",
     icon: <FiCamera />
   },
   {
     id: 2,
-    tooltip: 'TAG YOUR FRIENDS',
+    tooltip: "TAG YOUR FRIENDS",
     icon: <FaDesktop />
   },
   {
     id: 3,
-    tooltip: 'ADD LOCATION',
+    tooltip: "ADD LOCATION",
     icon: <FaMapMarkerAlt />
   }
 ];
@@ -65,7 +69,7 @@ class BlogPost extends Component {
 
     this.state = {
       arrowRef: null,
-      text: '',
+      text: ""
     };
 
     this.handleArrowRef = this.handleArrowRef.bind(this);
@@ -79,19 +83,20 @@ class BlogPost extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+
     const { text } = this.state;
-    const token = localStorage.getItem('token');
+    const { addPost } = this.props;
+    const token = localStorage.getItem("token");
     const axios = client(token);
 
-
-    if (text !== '') {
-      axios
-        .post('api/posts/add', {
-          text
-        });
+    if (text !== "") {
+      axios.post("api/posts/add", {
+        text
+      });
+      addPost();
       this.setState({
-        text: ''
-      })
+        text: ""
+      });
     }
   };
 
@@ -132,15 +137,12 @@ class BlogPost extends Component {
               <Tooltip
                 key={item.id}
                 placement="top"
-                title={(
+                title={
                   <React.Fragment>
                     {item.tooltip}
-                    <span
-                      className={classes.arrow}
-                      ref={this.handleArrowRef}
-                    />
+                    <span className={classes.arrow} ref={this.handleArrowRef} />
                   </React.Fragment>
-)}
+                }
                 classes={{ popper: classes.arrowPopper }}
                 PopperProps={{
                   popperOptions: {
@@ -166,7 +168,7 @@ class BlogPost extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   const { user } = state.authentication;
   return {
     currentUser: user

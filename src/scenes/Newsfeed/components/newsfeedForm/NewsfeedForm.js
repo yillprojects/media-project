@@ -76,7 +76,7 @@ class NewsfeedForm extends Component {
           </Tabs>
           {value === 0 && (
             <TabContainer>
-              <BlogPost />
+              <BlogPost addPost={this.props.addPost} />
             </TabContainer>
           )}
           {value === 1 && <TabContainer>to be updated</TabContainer>}
