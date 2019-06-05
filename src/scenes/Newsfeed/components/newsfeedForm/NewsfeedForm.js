@@ -49,14 +49,14 @@ class NewsfeedForm extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, addPost } = this.props;
     const { value } = this.state;
 
     return (
       <div className="newsfeed-form ui-block">
         <Paper square className={classes.root}>
           <Tabs
-            value={this.state.value}
+            value={value}
             onChange={this.handleChange}
             classes={{
               root: classes.tabRoot,
@@ -76,7 +76,7 @@ class NewsfeedForm extends Component {
           </Tabs>
           {value === 0 && (
             <TabContainer>
-              <BlogPost addPost={this.props.addPost} />
+              <BlogPost addPost={addPost} />
             </TabContainer>
           )}
           {value === 1 && <TabContainer>to be updated</TabContainer>}

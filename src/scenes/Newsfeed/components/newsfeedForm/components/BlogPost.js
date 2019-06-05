@@ -95,9 +95,11 @@ class BlogPost extends Component {
           text
         })
         .then(res => {
-          console.log(res.data.data)
-          addPost(res.data.data)
-        };
+          addPost(res.data.data);
+          this.setState({
+            text: ''
+          })
+        });
     }
   };
 
