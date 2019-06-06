@@ -46,7 +46,7 @@ export default class Post extends Component {
     const axios = client(token);
 
     axios
-        .patch(`api/posts/${id}/likes`, {
+        .patch(`api/posts/${id}/like`, {
           author
         })
         .then(res => {
@@ -90,7 +90,7 @@ x
         id, author, avatar, created_time, comments, commentsNum, text, likes, reposts
     } = this.state;
 
-    console.log(id,':', likes)
+    console.log(author)
     return (
       <div className="ui-block fade-in" id={id}>
         <article className="post">

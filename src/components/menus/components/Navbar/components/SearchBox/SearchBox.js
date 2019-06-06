@@ -30,7 +30,12 @@ class SearchBox extends Component {
 
     axios.get('api/profiles').then(res => {
       if (this._isMounted) {
-        console.log(res)
+
+        this.setState({
+          info: res.data
+        })
+
+        console.log(this.state.info)
       }
     });
   }
@@ -50,7 +55,7 @@ class SearchBox extends Component {
 
         if (query && query.length > 1) {
           const filteredData = info.filter((item) => {
-            const options = [item.username];
+            const options = [item.first_name, item.last_name];
             let isItemFound = 'notfound';
 
             options.map((data) => {
@@ -72,7 +77,7 @@ class SearchBox extends Component {
 
   render() {
     const { query, results } = this.state;
-    console.log(this.state.info);
+    console.log(this.state.info, results);
 
     return (
       <div className="search-wrap">

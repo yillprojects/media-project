@@ -59,7 +59,11 @@ class Profile(models.Model):
     def get_data(self):
         return {
             'name': '{} {}'.format(self.first_name, self.last_name),
+<<<<<<< Updated upstream
             'id': self.user.id,
+=======
+            'id': self.id,
+>>>>>>> Stashed changes
         }
 
     def save(self, *args, **kwargs):
