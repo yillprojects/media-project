@@ -38,6 +38,7 @@ class PersonalSettings extends Component {
 		this._isMounted = true;
 
 		const token = localStorage.getItem("token");
+		const id = localStorage.getItem("currentUserId");
 		const axios = client(token);
 
 		axios.get("api/countries").then(res => {
@@ -50,6 +51,50 @@ class PersonalSettings extends Component {
 				});
 			}
 		});
+
+		axios
+			.post(`api/profiles/${id}/get_fields`, {
+				fields: [
+					"first_name",
+					"last_name",
+					"email",
+					"website",
+					"location",
+					"about",
+					"shows",
+					"bands",
+					"facebook",
+					"twitter",
+					"dribbble"
+				]
+			})
+			.then(res => {
+				if (this._isMounted) {
+					const options = res.data.data;
+
+					Object.keys(options).map(key =>
+						this.setState({
+							[key]: options[key]
+						})
+					);
+
+					if (options.location.country !== null) {
+						this.setState({
+							selectedCountry: {
+								label: options.location.country
+							}
+						});
+
+						if (options.location.city !== null) {
+							this.setState({
+								selectedCity: {
+									label: options.location.city
+								}
+							});
+						}
+					}
+				}
+			});
 	}
 
 	componentWillUnmount() {
@@ -58,7 +103,53 @@ class PersonalSettings extends Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		console.log(this.state);
+
+		const labels = [
+			"firstName",
+			"lastName",
+			"email",
+			"website",
+			"personInfo",
+			"personShows",
+			"personMusic",
+			"facebook",
+			"twitter",
+			"dribbble"
+		];
+		const names = [
+			"first_name",
+			"last_name",
+			"email",
+			"website",
+			"about",
+			"shows",
+			"bands",
+			"facebook",
+			"twitter",
+			"dribbble"
+		];
+		let data = {};
+
+		for (let i = 0; i < names.length; i++) {
+				data[names[i]] = this.state[names[i]];
+		}
+		console.log('a', data);
+
+		const { selectedCity, selectedCountry } = this.state;
+
+		const token = localStorage.getItem("token");
+		const id = localStorage.getItem("currentUserId");
+		const axios = client(token);
+
+
+		axios.patch(`api/profiles/${id}`, data).then(res => console.log(res.data));
+
+		if (selectedCity && selectedCountry) {
+			axios.post(`api/profiles/${id}/set_location`, {
+				city: selectedCity.label,
+				country: selectedCountry.label
+			});
+		}
 	}
 
 	handleChangeCountry(selectedCountry) {
@@ -88,16 +179,31 @@ class PersonalSettings extends Component {
 
 		this.setState({
 			[name]: value
-		})
+		});
+	};
+
+	handleTextareaChange = event => {
+		const { name, value } = event.target;
 	};
 
 	render() {
-		const { selectedCountry, selectedCity, countries, cities } = this.state;
-		console.log(
-			"selected",
-			this.state.selectedCountry,
-			this.state.selectedCity
-		);
+		const {
+			countries,
+			cities,
+			selectedCountry,
+			selectedCity,
+			first_name,
+			last_name,
+			email,
+			website,
+			about,
+			shows,
+			bands,
+			facebook,
+			twitter,
+			dribbble
+		} = this.state;
+		console.log(this.state);
 
 		return (
 			<div className="container">
@@ -113,10 +219,11 @@ class PersonalSettings extends Component {
 										<div className="col col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
 											<FormGroup className="form-label-group">
 												<Input
-													name="firstName"
+													name="first_name"
 													id="settings-first-name"
 													placeholder="First Name"
 													onChange={this.handleInputChange}
+													defaultValue={first_name}
 												/>
 												<Label for="settings-first-name">First Name</Label>
 											</FormGroup>
@@ -126,6 +233,7 @@ class PersonalSettings extends Component {
 													id="settings-email"
 													placeholder="Your Email"
 													onChange={this.handleInputChange}
+													defaultValue={email}
 												/>
 												<Label for="settings-email">Your Email</Label>
 											</FormGroup>
@@ -139,10 +247,11 @@ class PersonalSettings extends Component {
 										<div className="col col-lg-6 col-md-6 col-sm-12 col-12 mb-4">
 											<FormGroup className="form-label-group">
 												<Input
-													name="lastName"
+													name="last_name"
 													id="settings-last-name"
 													placeholder="Last Name"
 													onChange={this.handleInputChange}
+													defaultValue={last_name}
 												/>
 												<Label for="settings-last-name">Last Name</Label>
 											</FormGroup>
@@ -151,6 +260,8 @@ class PersonalSettings extends Component {
 													name="website"
 													id="settings-website"
 													placeholder="Your Website"
+													onChange={this.handleInputChange}
+													defaultValue={website}
 												/>
 												<Label for="settings-website">Your Website</Label>
 											</FormGroup>
@@ -168,9 +279,11 @@ class PersonalSettings extends Component {
 												</Label>
 												<Input
 													type="textarea"
-													name="personInfo"
+													name="about"
 													id="personal-info"
 													rows={8}
+													onChange={this.handleInputChange}
+													value={about}
 												/>
 											</FormGroup>
 										</div>
@@ -181,10 +294,11 @@ class PersonalSettings extends Component {
 												</Label>
 												<Input
 													type="textarea"
-													name="personShows"
+													name="shows"
 													id="tv-shows"
 													rows={3}
 													onChange={this.handleInputChange}
+													value={shows}
 												/>
 											</FormGroup>
 											<FormGroup>
@@ -193,10 +307,11 @@ class PersonalSettings extends Component {
 												</Label>
 												<Input
 													type="textarea"
-													name="personMusic"
+													name="bands"
 													id="music-bands"
 													rows={3}
 													onChange={this.handleInputChange}
+													value={bands}
 												/>
 											</FormGroup>
 										</div>
@@ -212,6 +327,7 @@ class PersonalSettings extends Component {
 													placeholder="Your Facebook Account"
 													name="facebook"
 													onChange={this.handleInputChange}
+													defaultValue={facebook}
 												/>
 											</InputGroup>
 											<InputGroup className="mb-3">
@@ -225,6 +341,7 @@ class PersonalSettings extends Component {
 													placeholder="Your Twitter Account"
 													name="twitter"
 													onChange={this.handleInputChange}
+													defaultValue={twitter}
 												/>
 											</InputGroup>
 											<InputGroup className="mb-3">
@@ -238,6 +355,7 @@ class PersonalSettings extends Component {
 													placeholder="Your Dribbble Account"
 													name="dribbble"
 													onChange={this.handleInputChange}
+													defaultValue={dribbble}
 												/>
 											</InputGroup>
 										</div>
