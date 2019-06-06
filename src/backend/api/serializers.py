@@ -41,32 +41,23 @@ class CommunitySerializer(DynamicFieldsModelSerializer):
 
 class ProfileSerializer(DynamicFieldsModelSerializer):
     location = LocationSerializer(read_only='True')
-    user = serializers.StringRelatedField()
-    friends = serializers.StringRelatedField(many=True)
-    followers = serializers.StringRelatedField(many=True)
+    friends = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    followers = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     avatar = serializers.ImageField(use_url=False)
     header = serializers.ImageField(use_url=False)
     communities = serializers.StringRelatedField(many=True)
-    liked_posts = serializers.StringRelatedField(many=True)
+    liked_posts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    full_name = serializers.CharField()
+    friends_cnt = serializers.IntegerField()
 
     class Meta:
         model = Profile
         fields = '__all__'
 
 
-class ProfileHeaderSerializer(DynamicFieldsModelSerializer):
-    location = LocationSerializer(read_only='True')
-    avatar = serializers.ImageField(use_url=False)
-    header = serializers.ImageField(use_url=False)
-
-    class Meta:
-        model = Profile
-        fields = ('location', 'first_name', 'last_name', 'avatar', 'header', 'status')
-
-
 class CommentSerializer(DynamicFieldsModelSerializer):
     author = serializers.DictField(source='author.get_data')
-    username = serializers.CharField(source='author.user')
+    # username = serializers.CharField(source='author.user')
     avatar = serializers.ImageField(source='author.avatar', use_url=False)
 
     class Meta:

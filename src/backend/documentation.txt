@@ -15,7 +15,7 @@ endpoints: url = 'api/', all responses except marked 'no_success' contain 'succe
 -- '/': method: GET, returns: array of all profiles, no_success
 -- '/get_fields/': method: POST, returns: data of fields of authorized user, fields: 'fields' (array of strings)
 -- '/<profile_id>/': method: GET, returns: profiles with requested id, no_success
--- '/friends_short_list/': method: GET, returns: data for friends short list
+-- '/friends_short/': method: GET, returns: data for friends short list
 -- '/set_location/': set location for requested user, method: POST, fields: 'city' (city from array, received from any '/api/cities/'),
                                                                             'country' (country from array, received from '/api/countries/'
 -- '/communities/': method: GET, returns: data for list of favourite pages

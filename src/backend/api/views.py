@@ -134,15 +134,9 @@ class ProfileView(viewsets.ModelViewSet):
             if key not in request.data:
                 return response['invalid_data']
 
-        try:
-            receiver = Profile.objects.get(user__username=request.data['receiver'])
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong receiver username')
+        receiver = self.get_object()
 
-        try:
-            sender = Profile.objects.get(user_id=pk)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong sender username')
+        sender = Profile.objects.get(id=request.data['receiver'])
 
         if sender in receiver.followers.all():
             receiver.followers.remove(sender)
@@ -158,6 +152,7 @@ class ProfileView(viewsets.ModelViewSet):
 
         else:
             receiver.followers.add(sender)
+
         return response['ok']
 
     @action(methods=['GET'], detail=True)
@@ -182,11 +177,20 @@ class ProfileView(viewsets.ModelViewSet):
         return response['ok_data'](serialized.data)
 
     @action(methods=['GET'], detail=True)
-    def friends_short_list(self, request, pk=None):
+    def friends(self, request, pk=None):
 
         profile = self.get_object()
 
-        serialized = ProfileSerializer(profile.friends, many=True, fields=('avatar', 'user'))
+        serialized = ProfileSerializer(profile.friends, many=True,
+                                       fields=('avatar', 'id', 'header', 'full_name', 'friends_cnt', 'location'))
+        return response['ok_data'](serialized.data)
+
+    @action(methods=['GET'], detail=True)
+    def friends_short(self, request, pk=None):
+
+        profile = self.get_object()
+
+        serialized = ProfileSerializer(profile.friends, many=True, fields=('avatar', 'id'))
         return response['ok_data'](serialized.data)
 
     @action(methods=['GET'], detail=True)

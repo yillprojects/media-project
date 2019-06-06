@@ -56,10 +56,16 @@ class Profile(models.Model):
         self.save()
         return True
 
+    def full_name(self):
+        return '{} {}'.format(self.first_name, self.last_name)
+
+    def friends_cnt(self):
+        return self.friends.all().count()
+
     def get_data(self):
         return {
-            'name': '{} {}'.format(self.first_name, self.last_name),
-            'id': self.user.id,
+            'name': self.full_name(),
+            'id': self.id,
         }
 
     def save(self, *args, **kwargs):
