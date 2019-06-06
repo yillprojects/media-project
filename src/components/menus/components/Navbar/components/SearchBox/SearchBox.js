@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import client from 'axiosClient';
 
 import SearchMobile from './components/SearchMobile.js';
 import SearchLaptop from './components/SearchLaptop.js';
@@ -25,11 +25,12 @@ class SearchBox extends Component {
   componentDidMount() {
     this._isMounted = true;
 
-    axios.get('http://localhost:8000/api/users/').then((res) => {
+    const token = localStorage.getItem('token');
+    const axios = client(token);
+
+    axios.get('api/profiles').then(res => {
       if (this._isMounted) {
-        this.setState({
-          info: res.data
-        });
+        console.log(res)
       }
     });
   }
@@ -71,6 +72,7 @@ class SearchBox extends Component {
 
   render() {
     const { query, results } = this.state;
+    console.log(this.state.info);
 
     return (
       <div className="search-wrap">
