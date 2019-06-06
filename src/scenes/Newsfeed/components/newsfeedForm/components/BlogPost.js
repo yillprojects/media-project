@@ -20,7 +20,7 @@ import { styles } from "config/tooltipConfig.js";
 
 import "./blogpost.scss";
 
-import defaultAvatar from "../../../../../backend/static/profiles/defaultProfileAvatar.jpg";
+import defaultAvatar from "backend/static/profiles/defaultProfileAvatar.jpg";
 
 const theme = createMuiTheme({
   overrides: {
@@ -64,15 +64,42 @@ const btn = [
 ];
 
 class BlogPost extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
 
     this.state = {
       arrowRef: null,
-      text: ""
+      text: "",
+      avatar: null
     };
 
     this.handleArrowRef = this.handleArrowRef.bind(this);
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("currentUserId");
+    const axios = client(token);
+
+    axios
+      .post(`api/profiles/${id}/get_fields`, { fields: ["avatar"] })
+      .then(res => {
+        if (this._isMounted) {
+          const { avatar } = res.data.data;
+
+          this.setState({
+            avatar: avatar
+          });
+        }
+      });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   handleChange = e => {
@@ -95,11 +122,12 @@ class BlogPost extends Component {
           text
         })
         .then(res => {
+          console.log(res.data.data);
           addPost(res.data.data);
-          this.setState({
-            text: ''
-          })
         });
+      this.setState({
+        text: ""
+      });
     }
   };
 
@@ -111,13 +139,17 @@ class BlogPost extends Component {
 
   render() {
     const { classes } = this.props;
-    const { arrowRef, text } = this.state;
+    const { arrowRef, text, avatar } = this.state;
 
     return (
       <form className="blogpost-form form mt-1" onSubmit={this.handleSubmit}>
         <div className="author-thumb">
           <img
-            src="https://via.placeholder.com/35"
+            src={
+              avatar
+                ? `http://localhost:8000/media/profiles/${avatar}`
+                : defaultAvatar
+            }
             alt="user-img"
             style={{ height: 35, width: 35 }}
           />

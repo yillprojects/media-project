@@ -5,8 +5,8 @@ import client from '../../../../axiosClient';
 
 import ProfileMenu from "./components/ProfileMenu.js";
 
-import defaultAvatar from "../../../../backend/static/profiles/defaultProfileAvatar.jpg";
-import defaultHeader from "../../../../backend/static/profiles/defaultProfileHeader.jpg";
+import defaultAvatar from "backend/static/profiles/defaultProfileAvatar.jpg";
+import defaultHeader from "backend/static/profiles/defaultProfileHeader.jpg";
 
 import "./profileheader.scss";
 
@@ -31,6 +31,7 @@ class ProfileHeader extends Component {
         fields: ['avatar', 'header', 'last_name', 'first_name', 'location']
       })
       .then(res => {
+        console.log('header', res.data.data);
         if (this._isMounted) {
           this.setState({
             ...res.data.data
