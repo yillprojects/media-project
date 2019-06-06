@@ -127,18 +127,6 @@ class PersonalSettings extends Component {
 	handleSubmit(event) {
 		event.preventDefault();
 
-		const labels = [
-			"firstName",
-			"lastName",
-			"email",
-			"website",
-			"personInfo",
-			"personShows",
-			"personMusic",
-			"facebook",
-			"twitter",
-			"dribbble"
-		];
 		const names = [
 			"first_name",
 			"last_name",
@@ -180,6 +168,8 @@ class PersonalSettings extends Component {
 				.post(`api/profiles/${id}/set_location`, data)
 				.then(res => console.log('location', res.data.data));
 		}
+
+		location.reload(true);
 	}
 
 	handleChangeCountry(selectedCountry) {

@@ -70,7 +70,7 @@ class Newsfeed extends Component {
 
   render() {
     const { posts, visible } = this.state;
-    console.log(posts, visible);
+    
     return (
       <div className="container">
         <div className="row mt-4">

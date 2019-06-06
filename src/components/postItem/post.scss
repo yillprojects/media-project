@@ -8,177 +8,183 @@ $btn-color: #9a9fbf;
 $featured-post-hover: #ffc923;
 
 .post {
-	position: relative;
-	padding: 25px;
+  position: relative;
+  padding: 25px;
 
-	&-author {
-		margin-bottom: 20px;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+  &-author {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-		.user-title {
-			display: flex;
-			align-items: center;
+    .user-title {
+      display: flex;
+      align-items: center;
 
-			img {
-				border-radius: 100%;
-				overflow: hidden;
-				margin-right: 12px;
-			}
+      img {
+        border-radius: 100%;
+        overflow: hidden;
+        margin-right: 12px;
+      }
 
-			.author-date {
-				.author-name {
-					color: $title-color;
+      .author-date {
+        .author-name {
+          color: $title-color;
 
-					h6 {
-						font-weight: 700;
-						font-size: 0.875rem;
-						line-height: 1.3rem;
-					}
-				}
+          h6 {
+            font-weight: 700;
+            font-size: 0.875rem;
+            line-height: 1.3rem;
+          }
+        }
 
-				.post-date {
-					line-height: 0.852rem;
-					color: $text-color;
-					font-size: 0.812rem;
-				}
-			}
-		}
-	}
+        .post-date {
+          line-height: 0.852rem;
+          color: $text-color;
+          font-size: 0.812rem;
+        }
+      }
+    }
+  }
 
-	p {
-		margin: 20px 0;
-		font-size: 0.875rem;
+  p {
+    margin: 20px 0;
+    font-size: 0.875rem;
 
-		overflow: hidden;
-		text-overflow: ellipsis;
-		display: -webkit-box;
-		max-height: 3.8rem;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-	}
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    max-height: 3.8rem;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
 
-	&-additional-info {
-		padding: 20px 0 0;
-		border-top: 1px solid #e6ecf5;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+  &-additional-info {
+    padding: 20px 0 0;
+    border-top: 1px solid #e6ecf5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-		.btn {
-			padding: 0;
-			color: $icon-color;
-			font-size: 12px;
-			transition: 0.2s;
+    .btn {
+      padding: 0;
+      color: $icon-color;
+      font-size: 12px;
+      transition: 0.2s;
 
-			&:first-child {
-				margin-right: 15px;
-			}
+      &:first-child {
+        margin-right: 15px;
+      }
 
-			&:hover,
-			&.collapse-open {
-				color: $color-secondary;
+      &:hover,
+      &.collapse-open {
+        color: $color-secondary;
 
-				svg {
-					fill: $color-secondary;
-				}
-			}
+        svg {
+          fill: $color-secondary;
+        }
+      }
 
-			span {
-				vertical-align: middle;
-			}
+      span {
+        vertical-align: middle;
+      }
 
-			svg {
-				fill: $icon-color;
-				margin-right: 8px;
-				width: 20px;
-				height: 20px;
-			}
-		}
-	}
+      svg {
+        fill: $icon-color;
+        margin-right: 8px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
 
-	.control-block-button {
-		flex-direction: column;
-		top: 20px;
-		right: -13px;
+  .control-block-button {
+    flex-direction: column;
+    top: 20px;
+    right: -13px;
 
-		@media (max-width: 768px) {
-			top: -12px;
-			left: 90%;
-			transform: translate(-90%, 0);
-			flex-direction: row;
-			width: fit-content;
-		}
+    @media (max-width: 768px) {
+      top: -12px;
+      left: 90%;
+      transform: translate(-90%, 0);
+      flex-direction: row;
+      width: fit-content;
+    }
 
-		.btn {
-			&-control {
-				display: block;
-				background-color: $btn-color;
-				margin-right: 0;
-				margin-bottom: 6px;
-				width: 34px;
-				height: 34px;
-				line-height: 34px;
+    .btn {
+      &-control {
+        display: block;
+        background-color: $btn-color;
+        margin-right: 0;
+        margin-bottom: 6px;
+        width: 34px;
+        height: 34px;
+        line-height: 34px;
 
-				@media (max-width: 768px) {
-					margin-right: 3px;
-				}
+        @media (max-width: 768px) {
+          margin-right: 3px;
+        }
 
-				svg {
-					width: 15px;
-					height: 15px;
-					vertical-align: middle;
-					margin-bottom: 2px;
-				}
+        svg {
+          width: 15px;
+          height: 15px;
+          vertical-align: middle;
+          margin-bottom: 2px;
+        }
 
-				&:last-child {
-					svg {
-						margin-left: 3px;
-						margin-bottom: 5px;
-					}
-				}
-			}
+        &:last-child {
+          svg {
+            margin-left: 3px;
+            margin-bottom: 5px;
+          }
+        }
+      }
 
-			&:hover {
-				background-color: $color-secondary;
-			}
+      &:hover {
+        background-color: $color-secondary;
+      }
 
-			&.featured-post:hover {
-				background-color: $featured-post-hover;
-			}
-		}
-	}
+      &.featured-post:hover {
+        background-color: $featured-post-hover;
+      }
+    }
+  }
 
-	.btn-secondary:not(:disabled):not(.disabled):active {
-		color: $color-secondary;
-	}
+  .btn-secondary:not(:disabled):not(.disabled):active {
+    color: $color-secondary;
+  }
 }
 
 .more .dropdown {
-	.btn {
-		padding: 0;
-		&-secondary {
-			color: $icon-color;
-		}
-	}
+  .btn {
+    padding: 0;
+    &-secondary {
+      color: $icon-color;
+    }
+  }
 
-	.more-settings {
-		padding: 15px 20px;
-		width: 180px;
+  .more-settings {
+    padding: 15px 20px;
+    width: 180px;
 
-		.profile-menu-link {
-			background: transparent;
-			border: none;
-			padding: 7px;
-			font-size: 12px;
-			display: block;
-			color: $title-color;
-			transition: 0.2s;
+    .profile-menu-link {
+      background: transparent;
+      border: none;
+      padding: 7px;
+      font-size: 12px;
+      display: block;
+      color: $title-color;
+      transition: 0.2s;
 
-			&:hover {
-				color: $color-secondary;
-			}
-		}
-	}
+      &:hover {
+        color: $color-secondary;
+      }
+    }
+  }
 }
+
+.fade-out {
+  opacity: 0;
+  transition: width 0.5s 0.5s, height 0.5s, opacity 0.5s;
+}
+

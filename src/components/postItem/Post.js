@@ -46,14 +46,17 @@ export default class Post extends Component {
     const axios = client(token);
 
     axios
-        .patch(`api/posts/${id}/like`, {
+        .patch(`api/posts/${id}/likes`, {
           author
         })
-        .then(res => this.setState({
+        .then(res => {
+          console.log(res);
+          this.setState({
           likes: res.data.data
-        }));
+        })
+        });
   };
-
+x
   toggleDropdown() {
     this.setState(prevState => ({
       dropdownOpen: !prevState.dropdownOpen
@@ -86,8 +89,10 @@ export default class Post extends Component {
     const {
         id, author, avatar, created_time, comments, commentsNum, text, likes, reposts
     } = this.state;
+
+    console.log(id,':', likes)
     return (
-      <div className="ui-block fade-in">
+      <div className="ui-block fade-in" id={id}>
         <article className="post">
           <div className="post-author">
             <div className="user-title">

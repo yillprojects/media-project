@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import client from '../../../../axiosClient';
+import client from 'axiosClient';
 
 import ProfileMenu from "./components/ProfileMenu.js";
 
@@ -39,7 +39,6 @@ class ProfileHeader extends Component {
         fields: ['avatar', 'header', 'full_name', 'location']
       })
       .then(res => {
-        console.log('header', res.data.data);
         if (this._isMounted) {
           this.setState({
             ...res.data.data
