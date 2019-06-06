@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import ReactTimeAgo from 'react-time-ago';
+import client from '../../../../axiosClient';
 
 import { Collapse } from "reactstrap";
 import { FaRegHeart } from "react-icons/fa";
@@ -14,20 +15,38 @@ class Comment extends Component {
   constructor(props) {
     super(props);
 
+    const { likes } = this.props.commentData;
+
     this.state = {
-      collapse: false
+      collapse: false,
+      likes
     };
 
     this.toggleCollapse = this.toggleCollapse.bind(this);
+    this.like = this.like.bind(this);
   }
+
+  like(commentId) {
+    const token = localStorage.getItem('token');
+    const id = localStorage.getItem('currentUserId');
+    const axios = client(token);
+
+    axios
+        .patch(`api/comments/${commentId}/like`, {
+          author: id
+        })
+        .then(res => this.setState({
+          likes: res.data.data
+        }));
+  };
 
   toggleCollapse() {
     this.setState(state => ({ collapse: !state.collapse }));
   }
 
   render() {
-    const { collapse } = this.state;
-    const { author, avatar, created_time, id, likes, post, text } = this.props.commentData;
+    const { collapse, likes } = this.state;
+    const { author, avatar, created_time, id, post, text } = this.props.commentData;
     return (
       <li className="comment-item">
         <div className="post">
@@ -52,8 +71,9 @@ class Comment extends Component {
           </div>
           <p>{text}</p>
           <div className="post-additional-info">
-            <button type="button" className="btn btn-control">
+            <button type="button" className="btn btn-control" onClick={() => this.like(id)}>
               <FaRegHeart />
+              {likes}
               <span className="sr-only">Like post</span>
             </button>
             <button

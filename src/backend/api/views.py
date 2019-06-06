@@ -259,13 +259,10 @@ class PostView(viewsets.ModelViewSet):
     @action(methods=['PATCH'], detail=True)
     def like(self, request, pk=None):
 
-        try:
-            post = Post.objects.get(pk=pk)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong post id')
+        post = self.get_object()
 
         try:
-            profile = Profile.objects.get(user__id=request.data['author'])
+            profile = Profile.objects.get(id=request.data['author'])
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong username')
 
@@ -286,10 +283,7 @@ class PostView(viewsets.ModelViewSet):
             if key not in request.data:
                 return response['invalid_data']
 
-        try:
-            post = Post.objects.get(pk=pk)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong post id')
+        post = self.get_object()
 
         try:
             author = Profile.objects.get(user=request.user)
@@ -304,6 +298,27 @@ class PostView(viewsets.ModelViewSet):
 class CommentView(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
+
+    @action(methods=['PATCH'], detail=True)
+    def like(self, request, pk=None):
+
+        comment = self.get_object()
+
+        try:
+            profile = Profile.objects.get(id=request.data['author'])
+        except ObjectDoesNotExist:
+            return response['ok_message']('Wrong username')
+
+        if comment.liked_by.filter(id=profile.id).exists():
+            comment.likes -= 1
+            comment.liked_by.remove(profile)
+            comment.save()
+        else:
+            comment.liked_by.add(profile)
+            comment.likes += 1
+            comment.save()
+
+        return response['ok_data'](comment.likes)
 
 
 class CommunityView(viewsets.ModelViewSet):

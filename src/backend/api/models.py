@@ -69,7 +69,7 @@ class Profile(models.Model):
 
     def get_data(self):
         return {
-            'name': self.full_name,
+            'name': '{} {}'.format(self.first_name, self.last_name),
             'id': self.id,
         }
 
@@ -101,6 +101,7 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments', null=True)
     text = models.TextField()
+    liked_by = models.ManyToManyField(Profile, related_name='liked_comments')
     likes = models.PositiveIntegerField(default=0)
     created_time = models.DateTimeField(default=timezone.now, editable=False)
 
