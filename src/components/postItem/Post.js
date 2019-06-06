@@ -87,7 +87,7 @@ export default class Post extends Component {
         id, author, avatar, created_time, comments, commentsNum, text, likes, reposts
     } = this.state;
     return (
-      <div className="ui-block fade-in">
+      <div className="ui-block fade-in" id={id}>
         <article className="post">
           <div className="post-author">
             <div className="user-title">

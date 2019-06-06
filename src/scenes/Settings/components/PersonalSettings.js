@@ -104,18 +104,6 @@ class PersonalSettings extends Component {
 	handleSubmit(event) {
 		event.preventDefault();
 
-		const labels = [
-			"firstName",
-			"lastName",
-			"email",
-			"website",
-			"personInfo",
-			"personShows",
-			"personMusic",
-			"facebook",
-			"twitter",
-			"dribbble"
-		];
 		const names = [
 			"first_name",
 			"last_name",
@@ -150,6 +138,8 @@ class PersonalSettings extends Component {
 				country: selectedCountry.label
 			});
 		}
+
+		location.reload(true);
 	}
 
 	handleChangeCountry(selectedCountry) {

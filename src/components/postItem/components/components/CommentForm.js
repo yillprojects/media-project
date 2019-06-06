@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import client from '../../../../axiosClient';
+import client from "../../../../axiosClient";
 
 import { commentActions } from "redux/actions/index.js";
 
@@ -10,6 +10,7 @@ import { Button } from "reactstrap";
 
 import uuidv4 from "uuid/v4";
 
+import defaultAvatar from "backend/static/profiles/defaultProfileAvatar.jpg";
 import "./commentForm.scss";
 
 const styles = theme => ({
@@ -24,6 +25,8 @@ const styles = theme => ({
 });
 
 class CommentFormConnected extends Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
 
@@ -31,8 +34,33 @@ class CommentFormConnected extends Component {
     this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      text: ""
+      text: "",
+      avatar: null
     };
+  }
+
+  componentDidMount() {
+    this._isMounted = true;
+
+    const token = localStorage.getItem("token");
+    const id = localStorage.getItem("currentUserId");
+    const axios = client(token);
+
+    axios
+      .post(`api/profiles/${id}/get_fields`, { fields: ["avatar"] })
+      .then(res => {
+        if (this._isMounted) {
+          const { avatar } = res.data.data;
+
+          this.setState({
+            avatar: avatar
+          });
+        }
+      });
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   handleSubmit(event) {
@@ -41,14 +69,16 @@ class CommentFormConnected extends Component {
     const { text } = this.state;
     const { addComment, post } = this.props;
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     const axios = client(token);
 
-    axios.post(`api/posts/${post}/add_comment`, {
+    axios
+      .post(`api/posts/${post}/add_comment`, {
         post_id: post,
-        author: localStorage.getItem('currentUser'),
+        author: localStorage.getItem("currentUser"),
         text
-    }).then(res => addComment(res.data.data));
+      })
+      .then(res => addComment(res.data.data));
 
     this.setState({
       text: ""
@@ -65,13 +95,17 @@ class CommentFormConnected extends Component {
 
   render() {
     const { classes, loading } = this.props;
-    const { text } = this.state;
+    const { text, avatar } = this.state;
 
     return (
       <form className="comment-form form" onSubmit={this.handleSubmit}>
         <div className="post-author">
           <img
-            src="https://via.placeholder.com/28"
+            src={
+              avatar
+                ? `http://localhost:8000/media/profiles/${avatar}`
+                : defaultAvatar
+            }
             alt="user-img"
             style={{ height: 28, width: 28 }}
           />
