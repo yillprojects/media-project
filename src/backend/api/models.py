@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from cities_light.models import Country, City
-from picklefield import PickledObjectField
 
 
 class Location(models.Model):
@@ -28,9 +27,12 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     first_name = models.CharField(max_length=25, default='Name', blank=True)
     last_name = models.CharField(max_length=25, default='Surname', blank=True)
+    full_name = models.CharField(max_length=51, blank=True)
     friends = models.ManyToManyField('self', symmetrical=True)
     followers = models.ManyToManyField('self', symmetrical=False)
-    location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, related_name='profiles')
+    # location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, related_name='profiles')
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, related_name='people')
+    city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, related_name='people')
     avatar = models.ImageField(upload_to='profiles/avatars', null=True)
     header = models.ImageField(upload_to='profiles/headers', null=True)
     status = models.CharField(max_length=20, default="", blank=True)
@@ -44,32 +46,36 @@ class Profile(models.Model):
     twitter = models.URLField(blank=True)
     dribbble = models.URLField(blank=True)
 
-    def set_location(self, city_name, country_name):
-        try:
-            city = City.objects.get(name=city_name, country__name=country_name)
-        except ObjectDoesNotExist:
-            return False
+    def get_country(self):
+        return None if self.country is None else {
+            'name': self.country.name,
+            'id': self.country.id
+        }
 
-        country = Country.objects.get(name=country_name)
-        location, is_created = Location.objects.get_or_create(country=country, city=city)
-        self.location = location
-        self.save()
-        return True
+    def get_city(self):
+        return None if self.city is None else {
+            'name': self.city.name,
+            'id': self.city.id
+        }
 
-    def full_name(self):
-        return '{} {}'.format(self.first_name, self.last_name)
+    def get_location(self):
+        return {
+            'country': self.get_country(),
+            'city': self.get_city()
+        }
 
-    def friends_cnt(self):
+    def get_friends_cnt(self):
         return self.friends.all().count()
 
     def get_data(self):
         return {
-            'name': self.full_name(),
+            'name': self.full_name,
             'id': self.id,
         }
 
     def save(self, *args, **kwargs):
         self.email = self.user.email
+        self.full_name = '{} {}'.format(self.first_name, self.last_name)
         super().save(*args, **kwargs)
 
     def __str__(self):

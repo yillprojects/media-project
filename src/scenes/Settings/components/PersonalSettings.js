@@ -43,7 +43,7 @@ class PersonalSettings extends Component {
 
 		axios.get("api/countries").then(res => {
 			const options = [];
-			res.data.data.map(country => options.push({ label: country }));
+			res.data.data.map(country => options.push({ label: country.name, id: country.id }));
 
 			if (this._isMounted) {
 				this.setState({
@@ -69,6 +69,8 @@ class PersonalSettings extends Component {
 				]
 			})
 			.then(res => {
+				console.log('received data', res.data.data.location);
+
 				if (this._isMounted) {
 					const options = res.data.data;
 
@@ -78,17 +80,38 @@ class PersonalSettings extends Component {
 						})
 					);
 
-					if (options.location.country !== null) {
+					if (options.location.country) {
+						const { name, id } = options.location.country;
+
 						this.setState({
 							selectedCountry: {
-								label: options.location.country
+								label: name,
+								id
 							}
 						});
 
-						if (options.location.city !== null) {
+						axios
+							.post('api/cities', {
+								country: id
+							})
+							.then(res => {
+								const options = [];
+								res.data.data.map(city => options.push({ label: city.name, id: city.id }));
+
+								if (this._isMounted) {
+									this.setState({
+										cities: options
+									});
+								}
+							});
+
+						if (options.location.city) {
+							const { name, id } = options.location.city;
+
 							this.setState({
 								selectedCity: {
-									label: options.location.city
+									label: name,
+									id
 								}
 							});
 						}
@@ -133,7 +156,7 @@ class PersonalSettings extends Component {
 		for (let i = 0; i < names.length; i++) {
 				data[names[i]] = this.state[names[i]];
 		}
-		console.log('a', data);
+		console.log('data', data);
 
 		const { selectedCity, selectedCountry } = this.state;
 
@@ -142,13 +165,20 @@ class PersonalSettings extends Component {
 		const axios = client(token);
 
 
-		axios.patch(`api/profiles/${id}`, data).then(res => console.log(res.data));
+		axios.patch(`api/profiles/${id}`, data).then(res => console.log('patch', res.data));
 
-		if (selectedCity && selectedCountry) {
-			axios.post(`api/profiles/${id}/set_location`, {
-				city: selectedCity.label,
-				country: selectedCountry.label
-			});
+		if (selectedCountry) {
+			let data = {
+				country: selectedCountry.id
+			};
+
+			if (selectedCity) {
+				data.city = selectedCity.id
+			}
+
+			axios
+				.post(`api/profiles/${id}/set_location`, data)
+				.then(res => console.log('location', res.data.data));
 		}
 	}
 
@@ -158,9 +188,9 @@ class PersonalSettings extends Component {
 		const token = localStorage.getItem("token");
 		const axios = client(token);
 
-		axios.post("api/cities", { country: selectedCountry.label }).then(res => {
+		axios.post("api/cities", { country: selectedCountry.id }).then(res => {
 			const options = [];
-			res.data.data.map(city => options.push({ label: city }));
+			res.data.data.map(city => options.push({ label: city.name, id: city.id }));
 
 			this.setState({
 				cities: options,
@@ -170,7 +200,7 @@ class PersonalSettings extends Component {
 	}
 
 	handleChangeCity(selectedCity) {
-		console.log(selectedCity);
+		// console.log(selectedCity);
 		this.setState({ selectedCity });
 	}
 
@@ -203,7 +233,7 @@ class PersonalSettings extends Component {
 			twitter,
 			dribbble
 		} = this.state;
-		console.log(this.state);
+		// console.log(this.state);
 
 		return (
 			<div className="container">

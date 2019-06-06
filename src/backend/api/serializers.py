@@ -40,7 +40,7 @@ class CommunitySerializer(DynamicFieldsModelSerializer):
 
 
 class ProfileSerializer(DynamicFieldsModelSerializer):
-    location = LocationSerializer(read_only='True')
+    location = serializers.DictField(source='get_location')
     friends = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     followers = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     avatar = serializers.ImageField(use_url=False)
@@ -48,7 +48,7 @@ class ProfileSerializer(DynamicFieldsModelSerializer):
     communities = serializers.StringRelatedField(many=True)
     liked_posts = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     full_name = serializers.CharField()
-    friends_cnt = serializers.IntegerField()
+    friends_cnt = serializers.IntegerField(source='get_friends_cnt')
 
     class Meta:
         model = Profile

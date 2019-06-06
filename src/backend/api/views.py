@@ -117,16 +117,25 @@ class ProfileView(viewsets.ModelViewSet):
 
     @action(methods=['POST'], detail=True)
     def set_location(self, request, pk=None):
-        for key in ['city', 'country']:
+        for key in ['country']:
             if key not in request.data:
                 return response['invalid_data']
 
         profile = self.get_object()
+        country = Country.objects.get(id=request.data['country'])
+        profile.country = country
+        profile.save()
 
-        if not profile.set_location(request.data['city'], request.data['country']):
-            return response['ok_message']('Wrong location')
+        profile.city = None
+        profile.save()
+        if 'city' in request.data:
+            city = City.objects.get(id=request.data['city'])
+            profile.city = city
+            profile.save()
 
-        return response['ok']
+        profile.save(update_fields=['city', 'country'])
+        serialized = ProfileSerializer(profile)
+        return response['ok_data'](serialized.data)
 
     @action(methods=['POST'], detail=True)
     def follow(self, request, pk=None):
@@ -304,19 +313,28 @@ class CommunityView(viewsets.ModelViewSet):
 
 @api_view(['GET'])
 def get_countries_list(request):
-    response_data = [country.name for country in Country.objects.all()]
+    response_data = [{
+        'name': country.name,
+        'id': country.id
+    } for country in Country.objects.all()]
     return response['ok_data'](response_data)
 
 
 @api_view(['GET', 'POST'])
 def get_cities_list(request):
     if request.method == 'GET':
-        response_data = [city.name for city in City.objects.all()]
+        response_data = [{
+            'name': city.name,
+            'id': city.id
+        } for city in City.objects.all()]
         return response['ok_data'](response_data)
 
     if 'country' in request.data:
-        cities = City.objects.filter(country__name=request.data['country'])
-        response_data = [city.name for city in cities]
+        cities = City.objects.filter(country__id=request.data['country'])
+        response_data = [{
+            'name': city.name,
+            'id': city.id
+        } for city in cities]
         return response['ok_data'](response_data)
 
     return response['invalid_data']

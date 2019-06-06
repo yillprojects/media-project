@@ -16,19 +16,27 @@ class ProfileHeader extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      avatar: '',
+      header: '',
+      full_name: '',
+      location: {
+        city: null,
+        country: null
+      }
+    };
   }
 
   componentDidMount() {
     this._isMounted = true;
-    
+
     const token = localStorage.getItem('token');
     const id = localStorage.getItem('currentUserId');
     const axios = client(token);
 
     axios
       .post(`api/profiles/${id}/get_fields`, {
-        fields: ['avatar', 'header', 'last_name', 'first_name', 'location']
+        fields: ['avatar', 'header', 'full_name', 'location']
       })
       .then(res => {
         console.log('header', res.data.data);
@@ -45,8 +53,9 @@ class ProfileHeader extends Component {
   }
 
   render() {
-    const { location, first_name, last_name, avatar, header } = this.state;
+    const { location, full_name, avatar, header } = this.state;
     const id = localStorage.getItem('currentUserId');
+    console.log(location);
 
     return (
       <div className="col col-12">
@@ -69,10 +78,13 @@ class ProfileHeader extends Component {
               </Link>
               <div className="author-content">
                 <Link to={`/user${id}/newsfeed`} className="author-name">
-                  <h4>{first_name + ' ' + last_name}</h4>
+                  <h4>{full_name}</h4>
                 </Link>
                 <span className="country">
-                  {location ? location.city + ", " + location.country : ""}
+                  {`
+                    ${location.city ? location.city.name + ', ': ''}
+                    ${location.country ? location.country.name : ''}
+                  `}
                 </span>
               </div>
             </div>
