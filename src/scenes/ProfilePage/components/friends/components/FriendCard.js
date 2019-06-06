@@ -35,7 +35,8 @@ const FriendCard = props => {
 								</Link>
 							</h5>
 							<div className="country">
-								{location? `${location.city}, ${location.country}` : ''}
+								{`${location.city ? `${location.city.name}, ` : ''}
+					  			  ${location.country ? location.country.name : ''}`}
 							</div>
 						</div>
 					</div>
