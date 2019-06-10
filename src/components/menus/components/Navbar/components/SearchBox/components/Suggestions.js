@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import client from 'axiosClient';
 
 import { Button } from "reactstrap";
 import { FaRegSmileWink } from "react-icons/fa";
@@ -18,7 +19,7 @@ const Suggestions = props => {
 				className="notification-item-img"
 			/>
 			<div className="notification-event">
-				<Link to="#" className="notification-friend">
+				<Link to={`/user${person.id}/timeline`} className="notification-friend">
 					{`${person.first_name} ${person.last_name}`}
 				</Link>
 				<p className="chat-message-item">
@@ -27,7 +28,18 @@ const Suggestions = props => {
 				</p>
 			</div>
 			<div className="notification-icon">
-				<Button className="send-request transparent-btn">
+				<Button className="send-request transparent-btn" onClick={
+					() => {
+						const token = localStorage.getItem('token');
+						const id = localStorage.getItem('currentUserId');
+						const axios = client(token);
+
+						axios
+							.post(`api/profiles/${id}/follow`, {
+								receiver: person.id
+							})
+					}
+				}>
 					<FaRegSmileWink />
 				</Button>
 			</div>
