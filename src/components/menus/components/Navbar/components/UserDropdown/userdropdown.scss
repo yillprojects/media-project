@@ -69,7 +69,7 @@ $color-btn: #7c5ac2;
 
 .user-dropdown {
   height: 100%;
-  position: relative; 
+  position: relative;
 
   .ui-block-title {
     padding: 10px 25px;
@@ -88,6 +88,9 @@ $color-btn: #7c5ac2;
 
   .dropdown-menu {
     min-width: 200px !important;
+    transform: none!important;
+    top: 70px!important;
+    left: -20px!important;
   }
 }
 
