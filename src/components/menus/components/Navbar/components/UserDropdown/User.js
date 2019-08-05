@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import client from "../../../../../../axiosClient";
+import { connect } from 'react-redux';
 
 import { FaChevronDown } from "react-icons/fa";
 
 import defaultAvatar from "backend/static/profiles/defaultProfileAvatar.jpg";
 
-export default class User extends Component {
+class User extends Component {
   _isMounted = false;
 
   state = {
@@ -40,8 +40,10 @@ export default class User extends Component {
   }
 
   render() {
-    const { status, statusText } = this.props;
-    const { name, avatar } = this.state;
+    const { status, statusText, name } = this.props;
+    const { avatar } = this.state;
+
+    console.log(this.props);
 
     return (
       <div className="user">
@@ -61,7 +63,7 @@ export default class User extends Component {
         </div>
         <div className="user-name">
           <div className="user-title">
-            <h5>{name}</h5>
+            <h5>{name? name : this.state.name}</h5>
             <FaChevronDown />
           </div>
           <span className="user-subtitle">{statusText}</span>
@@ -70,3 +72,13 @@ export default class User extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  console.log(state);
+  return {
+    name: state.user.name
+  }
+};
+
+export default connect(mapStateToProps)(User);
+

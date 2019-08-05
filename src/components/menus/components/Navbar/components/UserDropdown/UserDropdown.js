@@ -34,10 +34,10 @@ class UserDropdown extends Component {
       status: '',
       inputText: '',
       statusText: '',
-      loggedIn: true
+      loggedIn: true,
+      activeSection: undefined
     };
 
-    this.toggle = this.toggle.bind(this);
     this.onMouseEnter = this.onMouseEnter.bind(this);
     this.onMouseLeave = this.onMouseLeave.bind(this);
     this.onRadioBtnClick = this.onRadioBtnClick.bind(this);
@@ -69,6 +69,23 @@ class UserDropdown extends Component {
 
   }
 
+  handleSectionToggle = event => {
+    let { activeSection } = this.state;
+    const selectedSection = event.target.getAttribute('name')?
+        event.target.getAttribute('name') :
+        event.target.parentElement.getAttribute('name');
+
+    if (activeSection === selectedSection) {
+      activeSection = undefined;
+    } else{
+      activeSection = selectedSection;
+    }
+
+    this.setState({
+      activeSection,
+    });
+  };
+
   componentWillMount() {
     this.setState({
       status: this.props.status
@@ -79,7 +96,7 @@ class UserDropdown extends Component {
     this._isMounted = false;
   }
 
-  toggle() {
+  handleDropdownToggle = () => {
     const { statusText, dropdownOpen } = this.state;
 
     if (!dropdownOpen) {
@@ -91,7 +108,8 @@ class UserDropdown extends Component {
     this.setState({
       dropdownOpen: !dropdownOpen
     });
-  }
+
+  };
 
   onMouseEnter() {
     this.setState({ dropdownOpen: true });
@@ -160,16 +178,15 @@ class UserDropdown extends Component {
   render() {
     const { dropdownOpen, status, loggedIn, statusText, inputText } = this.state;
     const id = localStorage.getItem("currentUserId");
+    const { activeSection } = this.state;
 
     if (!loggedIn)
       return (<Redirect to='/' />);
 
     return (
       <Dropdown
-        // onMouseOver={this.onMouseEnter}
-        // onMouseLeave={this.onMouseLeave}
         isOpen={dropdownOpen}
-        toggle={this.toggle}
+        toggle={this.handleDropdownToggle}
         className="user-dropdown"
       >
         <DropdownToggle
@@ -305,7 +322,8 @@ class UserDropdown extends Component {
 }
 
 const mapStateToProps = state => {
-  const { status } = state.status;
+  const { status } = state.user;
+
   return {
     status
   };

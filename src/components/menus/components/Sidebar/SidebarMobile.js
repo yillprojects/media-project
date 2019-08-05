@@ -290,7 +290,7 @@ class SidebarMobile extends Component {
 }
 
 const mapStateToProps = state => {
-  const { status } = state.status;
+  const { status } = state.user;
   return {
     status
   };

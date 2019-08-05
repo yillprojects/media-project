@@ -1,10 +1,17 @@
-import { statusConstants } from '../constants/status.constants';
+import { userConstants } from '../constants/user.constants';
 import { pageConstants } from '../constants/page.constants';
 
 function changeStatus(status) {
   return {
-    type: statusConstants.CURRENT_STATUS,
+    type: userConstants.CURRENT_STATUS,
     status
+  };
+}
+
+function changeName(name) {
+  return {
+    type: userConstants.NAME,
+    name
   };
 }
 
@@ -22,5 +29,6 @@ function currentProfileTab(tab) {
 export const userActions = {
   changeStatus,
   currentPage,
-  currentProfileTab
+  currentProfileTab,
+  changeName,
 };

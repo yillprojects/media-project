@@ -30,7 +30,6 @@ class Profile(models.Model):
     full_name = models.CharField(max_length=51, blank=True)
     friends = models.ManyToManyField('self', symmetrical=True)
     followers = models.ManyToManyField('self', symmetrical=False)
-    # location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, related_name='profiles')
     country = models.ForeignKey(Country, on_delete=models.CASCADE, null=True, related_name='people')
     city = models.ForeignKey(City, on_delete=models.CASCADE, null=True, related_name='people')
     avatar = models.ImageField(upload_to='profiles/avatars', null=True)

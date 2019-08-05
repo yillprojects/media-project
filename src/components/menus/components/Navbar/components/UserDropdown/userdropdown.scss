@@ -71,6 +71,12 @@ $color-btn: #7c5ac2;
   height: 100%;
   position: relative;
 
+  .menu-section {
+    //&.closed {
+    //  display: none;
+    //}
+  }
+
   .ui-block-title {
     padding: 10px 25px;
 
@@ -87,10 +93,19 @@ $color-btn: #7c5ac2;
   }
 
   .dropdown-menu {
-    min-width: 200px !important;
+    max-height: calc(100vh - 100px);
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    position: absolute;
+    right: 0!important;
+    width: 210px!important;
     transform: none!important;
     top: 70px!important;
-    left: -20px!important;
+    left: initial!important;
   }
 }
 

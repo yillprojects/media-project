@@ -42,7 +42,7 @@ class ProfileTimeline extends Component {
           const { twitter } = res.data.data;
 
           if (twitter) {
-            const link = twitter.replace("https://twitter.com/", "");
+            const link = twitter.replace("https://twitter.com/", "").replace("http://twitter.com/", "");
             this.setState({
               twitterLink: link
             });
@@ -74,6 +74,7 @@ class ProfileTimeline extends Component {
   render() {
     const { posts, twitterLink } = this.state;
 
+    console.log(twitterLink);
     return [
       <div
         className=" col col-3 display-sm-none display-md-none"

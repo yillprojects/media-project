@@ -18,7 +18,8 @@ import {
   FaRegGrinWink,
   FaHeadphonesAlt,
   FaRegCalendarAlt,
-  FaRegChartBar
+  FaRegChartBar,
+  FaSlidersH,
 } from 'react-icons/fa';
 
 import { arrowGenerator, styles } from 'config/tooltipConfig.js';
@@ -68,6 +69,12 @@ const btn = [
     link: '/statistic',
     tooltip: 'ACCOUNT STATS',
     icon: <FaRegChartBar />
+  },
+  {
+    id: 8,
+    link: '/settings',
+    tooltip: 'SETTINGS',
+    icon: <FaSlidersH />
   }
 ];
 
@@ -108,7 +115,7 @@ class SidebarItem extends Component {
 
     const { dispatch } = this.props;
     dispatch(userActions.currentPage(tab));
-    if (tab == 2) {
+    if (tab === 2) {
       dispatch(userActions.currentProfileTab(1));
     }
   }
