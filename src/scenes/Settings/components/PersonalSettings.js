@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import client from "../../../axiosClient.js";
+import { connect } from 'react-redux';
 
 import {
 	Button,
@@ -15,6 +16,7 @@ import Select from "react-select";
 import { FaFacebookF, FaTwitter, FaDribbble } from "react-icons/fa";
 
 import "./personalSettings.scss";
+import {userActions} from "../../../redux/actions";
 
 class PersonalSettings extends Component {
 	_isMounted = false;
@@ -69,7 +71,6 @@ class PersonalSettings extends Component {
 				]
 			})
 			.then(res => {
-				console.log('received data', res.data.data.location);
 
 				if (this._isMounted) {
 					const options = res.data.data;
@@ -144,7 +145,6 @@ class PersonalSettings extends Component {
 		for (let i = 0; i < names.length; i++) {
 				data[names[i]] = this.state[names[i]];
 		}
-		console.log('data', data);
 
 		const { selectedCity, selectedCountry } = this.state;
 
@@ -153,7 +153,7 @@ class PersonalSettings extends Component {
 		const axios = client(token);
 
 
-		axios.patch(`api/profiles/${id}`, data).then(res => console.log('patch', res.data));
+		axios.patch(`api/profiles/${id}`, data);
 
 		if (selectedCountry) {
 			let data = {
@@ -165,11 +165,13 @@ class PersonalSettings extends Component {
 			}
 
 			axios
-				.post(`api/profiles/${id}/set_location`, data)
-				.then(res => console.log('location', res.data.data));
+				.post(`api/profiles/${id}/set_location`, data);
 		}
 
-		location.reload(true);
+		const { changeName } = this.props;
+		const { first_name, last_name } = this.state;
+
+		changeName(`${first_name} ${last_name}`)
 	}
 
 	handleChangeCountry(selectedCountry) {
@@ -190,7 +192,6 @@ class PersonalSettings extends Component {
 	}
 
 	handleChangeCity(selectedCity) {
-		// console.log(selectedCity);
 		this.setState({ selectedCity });
 	}
 
@@ -223,7 +224,6 @@ class PersonalSettings extends Component {
 			twitter,
 			dribbble
 		} = this.state;
-		// console.log(this.state);
 
 		return (
 			<div className="container">
@@ -398,4 +398,8 @@ class PersonalSettings extends Component {
 	}
 }
 
-export default PersonalSettings;
+const mapDispatchToProps = {
+  changeName: userActions.changeName
+};
+
+export default connect(null, mapDispatchToProps)(PersonalSettings);
