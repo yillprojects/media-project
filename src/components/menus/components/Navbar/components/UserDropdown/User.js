@@ -43,8 +43,6 @@ class User extends Component {
     const { status, statusText, name } = this.props;
     const { avatar } = this.state;
 
-    console.log(this.props);
-
     return (
       <div className="user">
         <div className="user-thumb">
@@ -74,7 +72,6 @@ class User extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     name: state.user.name
   }

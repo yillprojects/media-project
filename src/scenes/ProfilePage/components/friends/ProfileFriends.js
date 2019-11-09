@@ -76,9 +76,7 @@ class ProfileFriends extends Component {
 					</div>
 				</div>
 				{
-					friendsData.length === 0 ? (
-						<span className="none-posts">Nothing to see</span>
-					) : (
+					friendsData.length === 0 ? '' : (
 						_map(friendsData, friend => (
 							<div className="col col-xl-3 col-lg-6 col-md-6 col-sm-6 col-12" key={friend.id}>
 								<FriendCard data={friend} />

@@ -43,7 +43,6 @@ class Routes extends Component {
           <DefaultLayout path="/:username/newsfeed" component={Newsfeed} />
           <DefaultLayout path="/:username/settings" component={Settings} />
           <DefaultLayout path="/:username/" component={ProfilePage} />
-
         </Switch>
       </Router>
     );

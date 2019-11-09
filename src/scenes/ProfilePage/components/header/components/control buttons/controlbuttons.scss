@@ -8,7 +8,7 @@ $color-secondary: rgb(255, 94, 58);
 
 .control-block-button {
 	position: absolute;
-	display: flex;	
+	display: flex;
 	justify-content: center;
 	right: 38px;
 	top: -31px;
@@ -34,7 +34,7 @@ $color-secondary: rgb(255, 94, 58);
 
 		&:hover {
 			color: $fill-color;
-			background-color: rgba(56, 169, 255, 0.6);
+			//background-color: rgba(56, 169, 255, 0.6);
 		}
 
 		&-control {

@@ -7,7 +7,9 @@ import { alert } from './alert.reducer';
 import { authentication } from './authentication.reducer';
 import { comment } from './comment.reducer';
 
-const rootReducer = combineReducers({
+import { authenticationConstants } from '../constants/authentication.constants';
+
+const appReducer = combineReducers({
   user,
   direction,
   registration,
@@ -15,5 +17,12 @@ const rootReducer = combineReducers({
   authentication,
   comment
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === authenticationConstants.LOGOUT) {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
 
 export default rootReducer;
