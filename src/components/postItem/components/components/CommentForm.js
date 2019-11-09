@@ -8,10 +8,12 @@ import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 import { Button } from "reactstrap";
 
-import uuidv4 from "uuid/v4";
 
 import defaultAvatar from "backend/static/profiles/defaultProfileAvatar.jpg";
 import "./commentForm.scss";
+
+import commentTypes from '../constants';
+
 
 const styles = theme => ({
   cssFocused: {},
@@ -67,18 +69,27 @@ class CommentFormConnected extends Component {
     event.preventDefault();
 
     const { text } = this.state;
-    const { addComment, post } = this.props;
-
+    const { id, type  } = this.props;
     const token = localStorage.getItem("token");
     const axios = client(token);
 
-    axios
-      .post(`api/posts/${post}/add_comment`, {
-        post_id: post,
-        author: localStorage.getItem("currentUser"),
+    if (type === commentTypes.COMMENT) {
+      const { addComment } = this.props;
+
+      axios
+      .post(`api/posts/${id}/add_comment`, {
         text
       })
       .then(res => addComment(res.data.data));
+    } else {
+      const { addReply } = this.props;
+
+      axios
+      .post(`api/comments/${id}/add_reply`, {
+        text
+      })
+      .then(res => addReply(res.data.data));
+    }
 
     this.setState({
       text: ""
@@ -94,7 +105,7 @@ class CommentFormConnected extends Component {
   }
 
   render() {
-    const { classes, loading } = this.props;
+    const { classes, loading, type } = this.props;
     const { text, avatar } = this.state;
 
     return (
@@ -128,7 +139,7 @@ class CommentFormConnected extends Component {
           />
         </div>
         <Button className="send-btn mt-2" disabled={!text || loading}>
-          Post Comment
+          { type === commentTypes.COMMENT? "Post Comment" : "Add Reply" }
         </Button>
       </form>
     );

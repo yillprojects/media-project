@@ -16,6 +16,17 @@
 			border-top: none;
 			padding: 0;
 			justify-content: flex-start;
+			position: relative;
+
+			.replies-control {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+
+				&:focus {
+					box-shadow: none;
+				}
+			}
 		}
 
 		&:last-child {

@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Profile, Location, Post, Comment, Community
+from .models import Profile, Location, Post, Comment, Community, Reply
 
 
 class DynamicFieldsModelSerializer(serializers.ModelSerializer):
@@ -55,10 +55,19 @@ class ProfileSerializer(DynamicFieldsModelSerializer):
         fields = '__all__'
 
 
-class CommentSerializer(DynamicFieldsModelSerializer):
+class AbstractCommentSerializer(DynamicFieldsModelSerializer):
     author = serializers.DictField(source='author.get_data')
-    # username = serializers.CharField(source='author.user')
     avatar = serializers.ImageField(source='author.avatar', use_url=False)
+
+
+class ReplySerializer(AbstractCommentSerializer):
+    class Meta:
+        model = Reply
+        fields = '__all__'
+
+
+class CommentSerializer(AbstractCommentSerializer):
+    replies = ReplySerializer(many=True)
 
     class Meta:
         model = Comment

@@ -6,6 +6,8 @@ import CommentForm from './components/CommentForm.js';
 
 import "./commentSection.scss";
 
+import commentTypes from './constants';
+
 
 class CommentSection extends Component {
   state = {
@@ -30,10 +32,9 @@ class CommentSection extends Component {
       <div className="comment-section">
         <ul className="comment-list">
           {_map(commentsData, item => {
-            return <Comment key={item.id} commentData={item} post={post} />;
+            return <Comment key={item.id} commentData={item} />;
           })}
         </ul>
-        <CommentForm post={post} addComment={this.handleCommentAdding} />
       </div>
     );
   }

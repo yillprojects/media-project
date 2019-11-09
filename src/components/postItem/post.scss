@@ -72,6 +72,10 @@ $featured-post-hover: #ffc923;
       font-size: 12px;
       transition: 0.2s;
 
+      &:focus {
+        box-shadow: none;
+      }
+
       &:first-child {
         margin-right: 15px;
       }

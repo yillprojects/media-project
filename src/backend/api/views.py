@@ -8,8 +8,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from cities_light.models import Country, City
 
 from .serializers import UserSerializer, ProfileSerializer, PostSerializer, \
-    CommentSerializer, CommunitySerializer
-from .models import Profile, Post, Comment, Community
+    CommentSerializer, ReplySerializer, CommunitySerializer
+from .models import Profile, Post,  Community, Comment, Reply
 
 
 def user_data(resp_message='', is_success=False, resp_status=status.HTTP_200_OK):
@@ -262,7 +262,7 @@ class PostView(viewsets.ModelViewSet):
         post = self.get_object()
 
         try:
-            profile = Profile.objects.get(id=request.data['author'])
+            profile = Profile.objects.get(user=request.user)
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong username')
 
@@ -305,7 +305,7 @@ class CommentView(viewsets.ModelViewSet):
         comment = self.get_object()
 
         try:
-            profile = Profile.objects.get(id=request.data['author'])
+            profile = Profile.objects.get(user=request.user)
         except ObjectDoesNotExist:
             return response['ok_message']('Wrong username')
 
@@ -319,6 +319,19 @@ class CommentView(viewsets.ModelViewSet):
             comment.save()
 
         return response['ok_data'](comment.likes)
+
+    @action(methods=['POST'], detail=True)
+    def add_reply(self, request, pk=None):
+        for key in ['text']:
+            if key not in request.data:
+                return response['invalid_data']
+
+        comment = self.get_object()
+        author = Profile.objects.get(user=request.user)
+
+        reply = Reply.objects.create(comment_field=comment, author=author, text=request.data['text'])
+        serialized = ReplySerializer(reply)
+        return response['ok_data'](serialized.data)
 
 
 class CommunityView(viewsets.ModelViewSet):

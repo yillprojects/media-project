@@ -96,13 +96,23 @@ class Post(models.Model):
         return self.text[:17] + ('...' if len(str(self.text)) > 17 else '')
 
 
-class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments', null=True)
-    text = models.TextField()
-    liked_by = models.ManyToManyField(Profile, related_name='liked_comments')
+class AbstractComment(models.Model):
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='%(class)ss', null=True)
+    text = models.TextField(null=True)
+    liked_by = models.ManyToManyField(Profile, related_name='liked_%(class)ss')
     likes = models.PositiveIntegerField(default=0)
     created_time = models.DateTimeField(default=timezone.now, editable=False)
 
     def pretty_time(self):
         return '{:%Y-%m-%dT%H:%M:%S}'.format(self.created_time)
+
+    class Meta:
+        abstract = True
+
+
+class Comment(AbstractComment):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+
+
+class Reply(AbstractComment):
+    comment_field = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name='replies')

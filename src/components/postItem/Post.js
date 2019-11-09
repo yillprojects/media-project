@@ -23,18 +23,21 @@ import {
 import CommentSection from './components/CommentSection.js';
 
 import "./post.scss";
+import CommentForm from "./components/components/CommentForm";
+import commentTypes from "./components/constants";
 
 export default class Post extends Component {
   constructor(props) {
     super(props);
 
     this.toggleDropdown = this.toggleDropdown.bind(this);
-    this.toggleCollapse = this.toggleCollapse.bind(this);
+    this.toggleComments = this.toggleComments.bind(this);
 
     const { data } = this.props;
     this.state = {
       dropdownOpen: false,
-      collapse: false,
+      isCommentsOpen: false,
+      isFormOpen: false,
       ...data,
       commentsNum: data.comments.length
     };
@@ -50,10 +53,9 @@ export default class Post extends Component {
           author
         })
         .then(res => {
-          console.log(res);
           this.setState({
-          likes: res.data.data
-        })
+            likes: res.data.data
+          })
         });
   };
 
@@ -63,9 +65,13 @@ export default class Post extends Component {
     }));
   }
 
-  toggleCollapse() {
-    this.setState(state => ({ collapse: !state.collapse }));
+  toggleComments() {
+    this.setState(state => ({ isCommentsOpen: !state.isCommentsOpen }));
   }
+
+  toggleForm = () => {
+    this.setState(state => ({ isFormOpen: !state.isFormOpen }));
+  };
 
   addComment = () => {
     const { commentsNum } = this.state;
@@ -85,12 +91,11 @@ export default class Post extends Component {
   };
 
   render() {
-    const { dropdownOpen, users, collapse } = this.state;
+    const { dropdownOpen, isCommentsOpen, isFormOpen } = this.state;
     const {
         id, author, avatar, created_time, comments, commentsNum, text, likes, reposts
     } = this.state;
 
-    console.log(author)
     return (
       <div className="ui-block fade-in" id={id}>
         <article className="post">
@@ -145,15 +150,24 @@ export default class Post extends Component {
           </div>
           <p>{text}</p>
           <div className="post-additional-info">
-            <Button className="transparent-btn" onClick={() => this.likePost(id)}>
-              <FaRegHeart />
-              <span>{likes}</span>
-            </Button>
+            <div>
+              <Button className="transparent-btn" onClick={() => this.likePost(id)}>
+                <FaRegHeart />
+                <span>{likes}</span>
+              </Button>
+              <button
+                type="button"
+                className="btn btn-control"
+                onClick={this.toggleForm}
+              >
+                Comment
+              </button>
+            </div>
             <div className="comments-shared">
               <Button
                 type="button"
-                className={`transparent-btn ${collapse ? 'collapse-open' : ''}`}
-                onClick={this.toggleCollapse}
+                className={`transparent-btn ${isCommentsOpen ? 'collapse-open' : ''}`}
+                onClick={this.toggleComments}
               >
                 <FaRegComments />
                 <span>{commentsNum}</span>
@@ -173,7 +187,7 @@ export default class Post extends Component {
               <FaRegHeart />
               <span className="sr-only">Like post</span>
             </button>
-            <button type="button" className="btn btn-control" onClick={this.toggleCollapse}>
+            <button type="button" className="btn btn-control" onClick={this.toggleComments}>
               <FaRegComments />
               <span className="sr-only">Leave a comment</span>
             </button>
@@ -183,8 +197,11 @@ export default class Post extends Component {
             </button>
           </div>
         </article>
-        <Collapse isOpen={collapse}>
+        <Collapse isOpen={isCommentsOpen}>
           <CommentSection commentsData={comments} post={id} addComment={this.addComment} />
+        </Collapse>
+        <Collapse isOpen={isFormOpen}>
+          <CommentForm id={id} addComment={this.handleCommentAdding} type={commentTypes.COMMENT} />
         </Collapse>
       </div>
     );
