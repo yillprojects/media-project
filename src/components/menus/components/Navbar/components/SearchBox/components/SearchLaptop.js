@@ -10,6 +10,7 @@ import Suggestions from './Suggestions.js';
 class SearchLaptop extends Component {
   constructor(props) {
     super(props);
+    this.container = React.createRef();
 
     this.state = {
       focused: false
@@ -17,11 +18,23 @@ class SearchLaptop extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onFocus = this.onFocus.bind(this);
-    this.onBlur = this.onBlur.bind(this);
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  handleClick = event => {
+    console.log(this.container.current);
+    if (this.container.current && !this.container.current.contains(event.target)) {
+      this.setState({
+        focused: false
+      })
+    }
+  };
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClick);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClick);
   }
 
   onFocus() {
@@ -30,10 +43,8 @@ class SearchLaptop extends Component {
     });
   }
 
-  onBlur() {
-    this.setState({
-      focused: false
-    });
+  handleSubmit(event) {
+    event.preventDefault();
   }
 
   render() {
@@ -41,29 +52,29 @@ class SearchLaptop extends Component {
     const { query, handleInputChange, results } = this.props;
 
     return (
-      <Form
-        className="search-bar w-search"
-        autoComplete="off"
-        onSubmit={this.handleSubmit}
-      >
-        <Input
-          name="search-box"
-          id="search-box"
-          placeholder="Search for..."
-          ref={input => (this.search = input)}
-          onChange={handleInputChange}
+      <div ref={this.container} style={{ width: "inherit" }}>
+        <Form
+          className="search-bar w-search"
+          autoComplete="off"
+          onSubmit={this.handleSubmit}
           onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          className="search-bar-input with-button"
-        />
-        <Label for="search-box" className="sr-only">
-          Search
-        </Label>
-        <Button className="search-bar-btn">
-          <FaSearch />
-        </Button>
-        {(query && focused) ? <Suggestions results={results} /> : ''}
-      </Form>
+        >
+            <Input
+              name="search-box"
+              id="search-box"
+              placeholder="Search for..."
+              onChange={handleInputChange}
+              className="search-bar-input with-button"
+            />
+            <Label for="search-box" className="sr-only">
+              Search
+            </Label>
+            <Button className="search-bar-btn">
+              <FaSearch />
+            </Button>
+            {(query && focused) ? <Suggestions results={results} /> : ''}
+        </Form>
+      </div>
     );
   }
 }

@@ -7,11 +7,24 @@ import { FaRegSmileWink } from "react-icons/fa";
 
 import defaultAvatar from '../../../../../../../backend/static/profiles/defaultProfileAvatar.jpg';
 
+
 const host = 'http://localhost:8000/';
 
-const Suggestions = props => {
-	const options = props.results.map((person, index) => index <= 7 ? (
+const follow = receiver => {
+	const token = localStorage.getItem('token');
+	const id = localStorage.getItem('currentUserId');
+	const axios = client(token);
+
+	axios
+		.post(`api/profiles/${id}/follow`, {
+			receiver,
+		})
+};
+
+const Suggestions = ({ results }) => {
+	const options = results.slice(0, Math.max(7, results.length)).map(person => (
 		<li key={person.id} className="user-search-item notification-item">
+			{/* eslint-disable-next-line no-tabs */}
 			<img
 				src={person.avatar? `${host}media/${person.avatar}` : defaultAvatar}
 				alt="user-img"
@@ -20,7 +33,7 @@ const Suggestions = props => {
 			/>
 			<div className="notification-event">
 				<Link to={`/user${person.id}/timeline`} className="notification-friend">
-					{`${person.first_name} ${person.last_name}`}
+					{person.full_name}
 				</Link>
 				<p className="chat-message-item">
 					{`${person.location.city? `${person.location.city.name}, ` : ''}
@@ -28,23 +41,15 @@ const Suggestions = props => {
 				</p>
 			</div>
 			<div className="notification-icon">
-				<Button className="send-request transparent-btn" onClick={
-					() => {
-						const token = localStorage.getItem('token');
-						const id = localStorage.getItem('currentUserId');
-						const axios = client(token);
-
-						axios
-							.post(`api/profiles/${id}/follow`, {
-								receiver: person.id
-							})
-					}
-				}>
+				<Button
+					className="send-request transparent-btn"
+					onClick={() => follow(person.id)}
+				>
 					<FaRegSmileWink />
 				</Button>
 			</div>
 		</li>
-	) : '');
+	));
 	return <ul className="user-search">{options}</ul>;
 };
 

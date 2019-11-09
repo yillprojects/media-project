@@ -17,27 +17,12 @@ class SearchBox extends Component {
 
     this.state = {
       query: '',
-      info: [],
       results: []
     };
   }
 
   componentDidMount() {
     this._isMounted = true;
-
-    const token = localStorage.getItem('token');
-    const axios = client(token);
-
-    axios.get('api/profiles').then(res => {
-      if (this._isMounted) {
-
-        this.setState({
-          info: res.data
-        })
-
-        console.log(this.state.info)
-      }
-    });
   }
 
   componentWillUnmount() {
@@ -46,38 +31,51 @@ class SearchBox extends Component {
 
   handleInputChange(event) {
     const { value } = event.target;
-    this.setState(
-      {
-        query: value
-      },
-      () => {
-        const { query, info } = this.state;
 
-        if (query && query.length > 1) {
-          const filteredData = info.filter((item) => {
-            const options = [item.first_name, item.last_name];
-            let isItemFound = 'notfound';
+    const token = localStorage.getItem('token');
+    const axios = client(token);
 
-            options.map((data) => {
-              if (data.toLowerCase().includes(query)) {
-                isItemFound = 'found';
-              }
-            });
-
-            return isItemFound == 'found' ? item : '';
-          });
-
+    axios
+        .post('api/profiles/search', {
+          query: value,
+        })
+        .then(res => {
           this.setState({
-            results: filteredData
-          });
-        }
-      }
-    );
+            query: value,
+            results: res.data.data,
+          })
+        })
+    // this.setState(
+    //   {
+    //     query: value
+    //   },
+    //   () => {
+    //     const { query, info } = this.state;
+    //
+    //     if (query && query.length > 1) {
+    //       const filteredData = info.filter((item) => {
+    //         const options = [item.first_name, item.last_name];
+    //         let isItemFound = 'notfound';
+    //
+    //         options.map((data) => {
+    //           if (data.toLowerCase().includes(query)) {
+    //             isItemFound = 'found';
+    //           }
+    //         });
+    //
+    //         return isItemFound === 'found' ? item : '';
+    //       });
+    //
+    //       this.setState({
+    //         results: filteredData
+    //       });
+    //     }
+    //   }
+    // );
   }
 
   render() {
     const { query, results } = this.state;
-    console.log(this.state.info, results);
 
     return (
       <div className="search-wrap">

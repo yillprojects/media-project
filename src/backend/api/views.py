@@ -67,11 +67,13 @@ response = {
     'created': created
 }
 
+
 # checks if data contains all the required fields
 def check_for_keys(data, keys):
     for key in keys:
         if key not in data:
             return False
+    return True
 
 
 class UserView(viewsets.ModelViewSet):
@@ -232,6 +234,29 @@ class ProfileView(viewsets.ModelViewSet):
 
         profile.communities.add(community)
         return response['ok']
+
+    @action(methods=['POST'], detail=False)
+    def search(self, request):
+        if not check_for_keys(request.data, ['query']):
+            return response['invalid_data']
+
+        query = request.data['query']
+        keywords = query.strip().split(' ')
+        profiles = Profile.objects.all()
+        result = []
+
+        for profile in profiles:
+            is_match = True
+            for keyword in keywords:
+                if profile.full_name.lower().find(keyword) == -1:
+                    is_match = False
+                    break
+            if is_match:
+                result.append(profile)
+
+        serialized = ProfileSerializer(result, many=True,
+                                       fields=['avatar', 'full_name', 'id', 'location'])
+        return response['ok_data'](serialized.data)
 
 
 class PostView(viewsets.ModelViewSet):
