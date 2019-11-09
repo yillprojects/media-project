@@ -67,6 +67,12 @@ response = {
     'created': created
 }
 
+# checks if data contains all the required fields
+def check_for_keys(data, keys):
+    for key in keys:
+        if key not in data:
+            return False
+
 
 class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
@@ -258,13 +264,8 @@ class PostView(viewsets.ModelViewSet):
 
     @action(methods=['PATCH'], detail=True)
     def like(self, request, pk=None):
-
         post = self.get_object()
-
-        try:
-            profile = Profile.objects.get(user=request.user)
-        except ObjectDoesNotExist:
-            return response['ok_message']('Wrong username')
+        profile = Profile.objects.get(user=request.user)
 
         if post.liked_by.filter(id=profile.id).exists():
             post.likes -= 1
@@ -337,6 +338,27 @@ class CommentView(viewsets.ModelViewSet):
 class CommunityView(viewsets.ModelViewSet):
     serializer_class = CommunitySerializer
     queryset = Community.objects.all()
+
+
+@api_view(['PATCH'])
+def like_reply(request, **kwargs):
+    profile = Profile.objects.get(user=request.user)
+
+    try:
+        reply = Reply.objects.get(id=kwargs['id'])
+    except ObjectDoesNotExist:
+        return response['invalid_data_message']('Invalid reply id.')
+
+    if reply.liked_by.filter(id=profile.id).exists():
+        reply.liked_by.remove(profile)
+        reply.likes -= 1
+        reply.save()
+    else:
+        reply.liked_by.add(profile)
+        reply.likes += 1
+        reply.save()
+
+    return response['ok_data'](reply.likes)
 
 
 @api_view(['GET'])

@@ -49,9 +49,7 @@ export default class Post extends Component {
     const axios = client(token);
 
     axios
-        .patch(`api/posts/${id}/like`, {
-          author
-        })
+        .patch(`api/posts/${id}/like`)
         .then(res => {
           this.setState({
             likes: res.data.data

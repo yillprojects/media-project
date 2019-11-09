@@ -23,7 +23,8 @@ urlpatterns = [
     path('verify/', verify_jwt_token),
     path('api/', include(router.urls)),
     path('api/countries/', views.get_countries_list),
-    path('api/cities/', views.get_cities_list)
+    path('api/cities/', views.get_cities_list),
+    path('api/replies/<int:id>/like/', views.like_reply),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

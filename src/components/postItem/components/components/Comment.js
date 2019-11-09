@@ -37,9 +37,7 @@ class Comment extends Component {
     const axios = client(token);
 
     axios
-        .patch(`api/comments/${commentId}/like`, {
-          author: id
-        })
+        .patch(`api/comments/${commentId}/like`)
         .then(res => this.setState({
           likes: res.data.data
         }));
