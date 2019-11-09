@@ -39,13 +39,11 @@ export default class Post extends Component {
       isCommentsOpen: false,
       isFormOpen: false,
       ...data,
-      commentsNum: data.comments.length
     };
   }
 
   likePost = id => {
     const token = localStorage.getItem('token');
-    const author = localStorage.getItem('currentUserId');
     const axios = client(token);
 
     axios
@@ -63,19 +61,38 @@ export default class Post extends Component {
     }));
   }
 
+  handleCommentAdding = comment => {
+      const { comments } = this.state;
+
+      this.setState({
+          comments: [ ...comments, comment ],
+          isCommentsOpen: true,
+      })
+  };
+
   toggleComments() {
-    this.setState(state => ({ isCommentsOpen: !state.isCommentsOpen }));
+    const { comments, isFormOpen, isCommentsOpen } = this.state;
+
+    if (!comments.length) return;
+    if (!isCommentsOpen && isFormOpen) {
+      this.setState({
+        isCommentsOpen: !isCommentsOpen,
+      })
+    } else {
+      this.setState({
+        isCommentsOpen: !isCommentsOpen,
+        isFormOpen: !isFormOpen,
+      })
+    }
   }
 
   toggleForm = () => {
-    this.setState(state => ({ isFormOpen: !state.isFormOpen }));
-  };
+    const { isFormOpen, isCommentsOpen } = this.state;
 
-  addComment = () => {
-    const { commentsNum } = this.state;
+    if (isCommentsOpen) return;
     this.setState({
-        commentsNum: commentsNum + 1
-    })
+      isFormOpen: !isFormOpen
+    });
   };
 
   deletePost = id => {
@@ -91,7 +108,7 @@ export default class Post extends Component {
   render() {
     const { dropdownOpen, isCommentsOpen, isFormOpen } = this.state;
     const {
-        id, author, avatar, created_time, comments, commentsNum, text, likes, reposts
+        id, author, avatar, created_time, comments, text, likes, reposts
     } = this.state;
 
     return (
@@ -168,7 +185,7 @@ export default class Post extends Component {
                 onClick={this.toggleComments}
               >
                 <FaRegComments />
-                <span>{commentsNum}</span>
+                <span>{comments.length}</span>
               </Button>
               <Button type="button" className="transparent-btn">
                 <FaShareSquare />
@@ -196,7 +213,7 @@ export default class Post extends Component {
           </div>
         </article>
         <Collapse isOpen={isCommentsOpen}>
-          <CommentSection commentsData={comments} post={id} addComment={this.addComment} />
+          <CommentSection commentsData={comments} />
         </Collapse>
         <Collapse isOpen={isFormOpen}>
           <CommentForm id={id} addComment={this.handleCommentAdding} type={commentTypes.COMMENT} />

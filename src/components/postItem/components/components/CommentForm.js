@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import client from "../../../../axiosClient";
 
-import { commentActions } from "redux/actions/index.js";
-
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core/styles";
 import { Button } from "reactstrap";
@@ -109,7 +107,10 @@ class CommentFormConnected extends Component {
     const { text, avatar } = this.state;
 
     return (
-      <form className="comment-form form" onSubmit={this.handleSubmit}>
+      <form
+          className={`comment-form form${type === commentTypes.REPLY? " reply-form" : ""}`}
+          onSubmit={this.handleSubmit}
+      >
         <div className="post-author">
           <img
             src={

@@ -18,6 +18,10 @@
 		.send-btn {
 			float: right;
 		}
+
+		&.reply-form {
+			padding-left: 45px;
+		}
 	}
 
 	&-textarea {

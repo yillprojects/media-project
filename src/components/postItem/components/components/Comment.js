@@ -47,16 +47,34 @@ class Comment extends Component {
       const { replies } = this.state;
 
       this.setState({
-        replies: [ ...replies, reply ]
+        replies: [ ...replies, reply ],
+        isRepliesOpen: true,
       });
   };
 
   toggleForm() {
-    this.setState(state => ({ isFormOpen: !state.isFormOpen }));
+    const { isFormOpen, isRepliesOpen } = this.state;
+
+    if (isRepliesOpen) return;
+    this.setState({
+      isFormOpen: !isFormOpen
+    });
   }
 
   toggleReplies = () => {
-    this.setState(state => ({ isRepliesOpen: !state.isRepliesOpen }));
+    const { replies, isFormOpen, isRepliesOpen } = this.state;
+
+    if (!replies.length) return;
+    if (!isRepliesOpen && isFormOpen) {
+      this.setState({
+        isRepliesOpen: !isRepliesOpen,
+      })
+    } else {
+      this.setState({
+        isRepliesOpen: !isRepliesOpen,
+        isFormOpen: !isFormOpen,
+      })
+    }
   };
 
   render() {
