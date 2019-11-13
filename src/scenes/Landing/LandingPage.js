@@ -14,11 +14,10 @@ export default class LandingPage extends Component {
 
   render() {
     const token = localStorage.getItem('token');
-    const id = localStorage.getItem('currentUserId');
 
     if (token) {
       return (
-          <Redirect to={`/user${id}/newsfeed`} />
+          <Redirect to={`/newsfeed`} />
       );
     }
 

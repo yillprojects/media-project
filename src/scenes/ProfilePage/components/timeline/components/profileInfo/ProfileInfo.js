@@ -27,14 +27,13 @@ class ProfileInfo extends Component {
     dribbble: ""
   };
 
-  componentDidMount() {
-    this._isMounted = true;
+  loadData = () => {
     const token = localStorage.getItem("token");
-    const id = localStorage.getItem("currentUserId");
+    let { userId } = this.props;
     const axios = client(token);
 
     axios
-      .post(`api/profiles/${id}/get_fields`, {
+      .post(`api/profiles/${userId}/get_fields`, {
         fields: ["about", "shows", "bands", "facebook", "twitter", "dribbble"]
       })
       .then(res => {
@@ -57,6 +56,17 @@ class ProfileInfo extends Component {
           });
         }
       });
+  };
+
+  componentDidMount() {
+    this._isMounted = true;
+    this.loadData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if(this.props.userId !== prevProps.userId) {
+      this.loadData();
+    }
   }
 
   componentWillUnmount() {

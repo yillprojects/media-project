@@ -34,14 +34,13 @@ class ProfileFriends extends Component {
 		}
 	}
 
-	componentDidMount() {
-		this._isMounted = true;
+	loadData = () => {
 		const token = localStorage.getItem('token');
-        const id = localStorage.getItem('currentUserId');
+        const { userId } = this.props;
         const axios = client(token);
 
         axios
-			.get(`api/profiles/${id}/friends`)
+			.get(`api/profiles/${userId}/friends`)
 			.then(res => {
 				if (this._isMounted) {
 					this.setState({
@@ -50,7 +49,7 @@ class ProfileFriends extends Component {
 				}
 			});
         axios
-			.post(`api/profiles/${id}/get_fields`, {
+			.post(`api/profiles/${userId}/get_fields`, {
 				fields: ['first_name']
 			})
 			.then(res => {
@@ -60,6 +59,17 @@ class ProfileFriends extends Component {
 					})
 				}
 			});
+	};
+
+	componentDidMount() {
+		this._isMounted = true;
+		this.loadData();
+	}
+
+	componentDidUpdate(prevProps) {
+		if (this.props.userId !== prevProps.userId) {
+			this.loadData();
+		}
 	}
 
 	render() {

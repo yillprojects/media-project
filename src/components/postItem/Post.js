@@ -116,13 +116,15 @@ export default class Post extends Component {
         <article className="post">
           <div className="post-author">
             <div className="user-title">
-              <img
-                src={avatar? `http://localhost:8000/media/${avatar}` : defaultAvatar}
-                alt="user-img"
-                style={{ height: 40, width: 40 }}
-              />
+              <Link to={`/user${author.id}/timeline`} className="author-name">
+                  <img
+                    src={avatar? `http://localhost:8000/media/${avatar}` : defaultAvatar}
+                    alt="user-img"
+                    style={{ height: 40, width: 40 }}
+                  />
+                </Link>
               <div className="author-date">
-                <Link to={`/user${author.id}/newsfeed/`} className="author-name">
+                <Link to={`/user${author.id}/timeline`} className="author-name">
                   <h6>{author.name}</h6>
                 </Link>
                 <div className="post-date">

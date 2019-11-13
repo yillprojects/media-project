@@ -33,14 +33,13 @@ export default class FriendsList extends Component {
       friendsData: []
   };
 
-  componentDidMount() {
-    this._isMounted = true;
+  loadData = () => {
     const token = localStorage.getItem('token');
-    const id = localStorage.getItem('currentUserId');
+    const { userId } = this.props;
     const axios = client(token);
 
     axios
-        .get(`api/profiles/${id}/friends_short`)
+        .get(`api/profiles/${userId}/friends_short`)
         .then(res => {
             if (this._isMounted) {
                 this.setState({
@@ -48,6 +47,17 @@ export default class FriendsList extends Component {
                 })
             }
         })
+  };
+
+  componentDidMount() {
+    this._isMounted = true;
+    this.loadData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.userId !== prevProps.userId) {
+        this.loadData();
+    }
   }
 
   componentWillUnmount() {
@@ -69,8 +79,8 @@ Friends (
         <div className="ui-block-content">
           <ul className="widget w-friends">
             {
-                _map(friendsData.slice(0, 14), item => (
-                        <Friend avatar={item.avatar} id={item.id} key={item.id} />
+                _map(friendsData.slice(0, 14), ({ avatar, id}) => (
+                        <Friend avatar={avatar} id={id} key={id} />
                     )
                 )
             }

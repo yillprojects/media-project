@@ -115,12 +115,9 @@ class ProfileView(viewsets.ModelViewSet):
 
     @action(methods=['POST'], detail=True)
     def get_fields(self, request, pk=None):
-
         profile = self.get_object()
-
         requested_fields = request.data['fields']
         serialized = ProfileSerializer(profile, fields=requested_fields)
-
         return response['ok_data'](serialized.data)
 
     @action(methods=['POST'], detail=True)
@@ -145,49 +142,50 @@ class ProfileView(viewsets.ModelViewSet):
         serialized = ProfileSerializer(profile)
         return response['ok_data'](serialized.data)
 
-    @action(methods=['POST'], detail=True)
-    def follow(self, request, pk=None):
-        for key in ['receiver']:
-            if key not in request.data:
-                return response['invalid_data']
+    @action(methods=['POST'], detail=False)
+    def follow(self, request):
+        if not check_for_keys(request.data, ['receiver']):
+            return response['invalid_data']
 
-        receiver = self.get_object()
-
-        sender = Profile.objects.get(id=request.data['receiver'])
+        sender = Profile.objects.get(user=request.user)
+        receiver = Profile.objects.get(id=request.data['receiver'])
+        print(sender, receiver)
 
         if sender in receiver.followers.all():
+            print("sender follows receiver")
             receiver.followers.remove(sender)
+            print("and now they are nobody to each other")
 
         elif receiver in sender.followers.all():
-            receiver.followers.remove(sender)
+            print("receiver follows sender")
             sender.followers.remove(receiver)
             receiver.friends.add(sender)
+            print("and now they are friends")
 
         elif sender in receiver.friends.all():
+            print("sender and receiver are friends")
             receiver.friends.remove(sender)
             sender.followers.add(receiver)
+            print("and now receiver follows sender")
 
         else:
+            print("they are nobody to each other")
             receiver.followers.add(sender)
+            print("and now sender follows receiver")
 
         return response['ok']
 
     @action(methods=['GET'], detail=True)
     def posts(self, request, pk=None):
-
         profile = self.get_object()
-
         serialized = PostSerializer(profile.posts, many=True)
         return response['ok_data'](serialized.data)
 
-    @action(methods=['GET'], detail=True)
-    def newsfeed(self, request, pk=None):
-
-        profile = self.get_object()
-
-        authors_list = profile.friends.all()
-        author = Profile.objects.filter(id=pk)
-        authors_list |= author
+    @action(methods=['GET'], detail=False)
+    def newsfeed(self, request):
+        profile = Profile.objects.filter(user=request.user)
+        authors_list = profile[0].friends.all()
+        authors_list |= profile
 
         posts = Post.objects.filter(author__in=authors_list)
         serialized = PostSerializer(posts, many=True)
@@ -256,6 +254,18 @@ class ProfileView(viewsets.ModelViewSet):
 
         serialized = ProfileSerializer(result, many=True,
                                        fields=['avatar', 'full_name', 'id', 'location'])
+        for profile in serialized.data:
+            current = Profile.objects.get(id=profile['id'])
+            profile['is_friend'] = current.friends.filter(user=request.user).exists()
+            profile['is_current'] = request.user == current.user
+
+        return response['ok_data'](serialized.data)
+
+    @action(methods=['GET'], detail=False)
+    def friend_requests(self, request):
+        profile = Profile.objects.get(user=request.user)
+        serialized = ProfileSerializer(profile.followers.all(), many=True, fields=['id', 'avatar', 'full_name'])
+        print(serialized.data)
         return response['ok_data'](serialized.data)
 
 

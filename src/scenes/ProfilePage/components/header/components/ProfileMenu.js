@@ -71,7 +71,8 @@ class ProfileMenu extends Component {
 
   render() {
     const { dropdownOpen, activeTab } = this.state;
-    const id = localStorage.getItem('currentUserId');
+    const { userId } = this.props;
+    const cur = localStorage.getItem("currentUserId") === userId;
 
     return (
       <div className="profile-section">
@@ -80,7 +81,7 @@ class ProfileMenu extends Component {
             <ul className="profile-menu menu-position">
               <li className="list-item">
                 <Link
-                  to={`/user${id}/timeline`}
+                  to={cur? "/timeline" : `/user${userId}/timeline`}
                   className={`profile-menu-link ${
                     activeTab === '1' ? 'active' : ''
                   }`}
@@ -94,7 +95,7 @@ class ProfileMenu extends Component {
               </li>
               <li className="list-item">
                 <Link
-                  to={`/user${id}/about`}
+                  to={cur? "/about" : `/user${userId}/about`}
                   className={`profile-menu-link ${
                     activeTab === '2' ? 'active' : ''
                   }`}
@@ -112,7 +113,7 @@ class ProfileMenu extends Component {
             <ul className="profile-menu">
               <li className="list-item">
                 <Link
-                  to={`/user${id}/friends`}
+                  to={cur? "/friends" : `/user${userId}/friends`}
                   className={`profile-menu-link ${
                     activeTab === '3' ? 'active' : ''
                   }`}
@@ -158,7 +159,7 @@ class ProfileMenu extends Component {
             </ul>
           </div>
         </div>
-        <ProfileControlButtons />
+        <ProfileControlButtons show={cur} />
       </div>
     );
   }

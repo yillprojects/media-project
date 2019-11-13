@@ -10,6 +10,8 @@ import defaultHeader from "backend/static/profiles/defaultProfileHeader.jpg";
 
 import "./profileheader.scss";
 
+const host = "http://localhost:8000/media/profiles/";
+
 class ProfileHeader extends Component {
   _isMounted = false;
 
@@ -27,15 +29,13 @@ class ProfileHeader extends Component {
     };
   }
 
-  componentDidMount() {
-    this._isMounted = true;
-
+  loadData = () => {
     const token = localStorage.getItem('token');
-    const id = localStorage.getItem('currentUserId');
+    const { userId } = this.props;
     const axios = client(token);
 
     axios
-      .post(`api/profiles/${id}/get_fields`, {
+      .post(`api/profiles/${userId}/get_fields`, {
         fields: ['avatar', 'header', 'full_name', 'location']
       })
       .then(res => {
@@ -45,16 +45,26 @@ class ProfileHeader extends Component {
           });
         }
       });
+  };
+
+  componentDidMount() {
+    this._isMounted = true;
+    this.loadData();
   }
 
   componentWillUnmount() {
     this._isMounted = false;
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.userId !== prevProps.userId) {
+      this.loadData();
+    }
+  }
+
   render() {
     const { location, full_name, avatar, header } = this.state;
-    const id = localStorage.getItem('currentUserId');
-    console.log(location);
+    const { userId } = this.props;
 
     return (
       <div className="col col-12">
@@ -62,21 +72,21 @@ class ProfileHeader extends Component {
           <div className="top-header">
             <div className="top-header-thumb">
               <img
-                src={header? `http://localhost:8000/media/profiles/${header}` : defaultHeader}
+                src={header? `${host}${header}` : defaultHeader}
                 alt="user-header"
               />
             </div>
-            <ProfileMenu />
+            <ProfileMenu userId={userId} />
             <div className="top-header-author">
-              <Link to={`/user${id}/newsfeed`} className="author-thumb">
+              <Link to={`/user${userId}/timeline`} className="author-thumb">
                 <img
-                  src={avatar? `http://localhost:8000/media/profiles/${avatar}` : defaultAvatar}
+                  src={avatar? `${host}/${avatar}` : defaultAvatar}
                   alt="user-img"
                   style={{ height: 124, width: 124 }}
                 />
               </Link>
               <div className="author-content">
-                <Link to={`/user${id}/newsfeed`} className="author-name">
+                <Link to={`/user${userId}/timeline`} className="author-name">
                   <h4>{full_name}</h4>
                 </Link>
                 <span className="country">

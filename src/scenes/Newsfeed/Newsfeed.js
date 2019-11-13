@@ -34,10 +34,9 @@ class Newsfeed extends Component {
     this._isMounted = true;
 
     const token = localStorage.getItem("token");
-    const id = localStorage.getItem("currentUserId");
     const axios = client(token);
 
-    axios.get(`api/profiles/${id}/newsfeed`).then(res => {
+    axios.get(`api/profiles/newsfeed`).then(res => {
       if (this._isMounted) {
         this.setState({
           posts: res.data.data.reverse()
@@ -70,7 +69,7 @@ class Newsfeed extends Component {
 
   render() {
     const { posts, visible } = this.state;
-    
+
     return (
       <div className="container">
         <div className="row mt-4">

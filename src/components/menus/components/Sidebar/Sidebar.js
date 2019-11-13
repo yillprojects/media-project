@@ -124,14 +124,12 @@ class SidebarItem extends Component {
     const { activeTab } = this.state;
     const { classes } = this.props;
 
-    const user = `user${localStorage.getItem('currentUserId')}`;
-
     return (
       <div className="fixed-sidebar">
         <div className="sidebar-laptop">
           <header className="fixed-sidebar-header">
             <h1>
-              <Link to={`/${user}/newsfeed`} className="sidebar-logo sidebar-logo-icon">
+              <Link to={`/timeline`} className="sidebar-logo sidebar-logo-icon">
                 <IoIosCube />
                 <span className="sr-only">Website logo</span>
               </Link>
@@ -141,7 +139,7 @@ class SidebarItem extends Component {
             {_map(btn, item => (
               <li className="sidebar-nav-item" key={item.id}>
                 <Link
-                  to={`/${user}${item.link}`}
+                  to={item.link}
                   className={`sidebar-nav-link ${
                     activeTab === item.id ? 'active ' : ''
                   }`}

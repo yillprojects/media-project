@@ -14,20 +14,22 @@ import FavouritePages from "./components/favouritePages/FavouritePages.js";
 import "./profileTimeline.scss";
 
 class ProfileTimeline extends Component {
-  _isMounted = false;
-  state = {
-    posts: [],
-    twitterLink: ""
-  };
+  constructor(props) {
+    super(props);
 
-  componentDidMount() {
-    this._isMounted = true;
+    this._isMounted = false;
+    this.state = {
+      posts: [],
+      twitterLink: ""
+    };
+  }
 
+  loadData = () => {
     const token = localStorage.getItem("token");
-    const id = localStorage.getItem("currentUserId");
+    const { userId } = this.props;
     const axios = client(token);
 
-    axios.get(`api/profiles/${id}/posts`).then(res => {
+    axios.get(`api/profiles/${userId}/posts`).then(res => {
       if (this._isMounted) {
         this.setState({
           posts: res.data.data.reverse()
@@ -36,7 +38,7 @@ class ProfileTimeline extends Component {
     });
 
     axios
-      .post(`api/profiles/${id}/get_fields`, { fields: ["twitter"] })
+      .post(`api/profiles/${userId}/get_fields`, { fields: ["twitter"] })
       .then(res => {
         if (this._isMounted) {
           const { twitter } = res.data.data;
@@ -49,6 +51,11 @@ class ProfileTimeline extends Component {
           }
         }
       });
+  };
+
+  componentDidMount() {
+    this._isMounted = true;
+    this.loadData();
   }
 
   componentWillUnmount() {
@@ -71,44 +78,49 @@ class ProfileTimeline extends Component {
     }, 500);
   };
 
+  componentDidUpdate(prevProps) {
+    if (this.props.userId !== prevProps.userId) {
+        this.loadData();
+    }
+  }
+
   render() {
     const { posts, twitterLink } = this.state;
-
-    console.log(twitterLink);
+    const { userId } = this.props;
     return [
-      <div
-        className=" col col-3 display-sm-none display-md-none"
-        key="profile-info"
-      >
-        <ProfileInfo />
-        {twitterLink ? (
-          <TwitterTimelineEmbed
-            sourceType="profile"
-            screenName={twitterLink}
-            options={{ height: 400 }}
-          />
-        ) : (
-          ""
-        )}
-      </div>,
-      <div className="col col-12 col-md-6 order-lg-2" key="posts">
-        {posts.length === 0 ? (
-          <span className="none-posts">Nothing to see</span>
-        ) : (
-          _map(posts, item => (
-            <Post key={item.id} data={item} deletePost={this.deletePost} />
-          ))
-        )}
-      </div>,
-      <div
-        className="col col-md-6 col-lg-3 order-md-2 order-lg-3 display-sm-none"
-        key="friends-list"
-      >
-        <FriendsList />
-        <FavouritePages />
-      </div>
-    ];
-  }
+        <div
+          className=" col col-3 display-sm-none display-md-none"
+          key="profile-info"
+        >
+          <ProfileInfo userId={userId} />
+          {twitterLink ? (
+            <TwitterTimelineEmbed
+              sourceType="profile"
+              screenName={twitterLink}
+              options={{ height: 400 }}
+            />
+          ) : (
+            ""
+          )}
+        </div>,
+        <div className="col col-12 col-md-6 order-lg-2" key="posts">
+          {posts.length === 0 ? (
+            <span className="none-posts">Nothing to see</span>
+          ) : (
+            _map(posts, item => (
+              <Post key={item.id} data={item} deletePost={this.deletePost} />
+            ))
+          )}
+        </div>,
+        <div
+          className="col col-md-6 col-lg-3 order-md-2 order-lg-3 display-sm-none"
+          key="friends-list"
+        >
+          <FriendsList userId={userId} />
+          <FavouritePages />
+        </div>
+      ];
+    }
 }
 
 const mapStateToProps = state => {

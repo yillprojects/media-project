@@ -77,6 +77,22 @@ $color-text: #9a9fbf;
 						fill: $color-secondary;
 					}
 				}
+
+				&.current:hover svg {
+					fill: $color-main;
+				}
+
+				&.already-friends {
+					svg {
+						fill: $color-secondary;
+					}
+
+					&:hover {
+						svg {
+							fill: $color-main;
+						}
+					}
+				}
 			}
 		}
 	}

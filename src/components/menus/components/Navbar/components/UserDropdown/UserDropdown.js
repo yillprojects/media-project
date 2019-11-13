@@ -202,7 +202,7 @@ class UserDropdown extends Component {
           </div>
           <ul className="left-menu account-section">
             <li>
-              <Link to={`/user${id}/settings`} className="left-menu-title" onClick={this.handleTabChange}>
+              <Link to="settings" className="left-menu-title" onClick={this.handleTabChange}>
                 <FaSlidersH />
                 <span>Profile Settings</span>
               </Link>

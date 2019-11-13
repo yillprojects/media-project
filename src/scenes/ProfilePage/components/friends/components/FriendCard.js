@@ -41,15 +41,15 @@ const FriendCard = props => {
 						</div>
 					</div>
 					<div className="friend-count">
-						<a href="#" className="friend-count-item">
+						<Link to={`/user${id}/friends`} className="friend-count-item">
 							<p className="count-number">{friends_cnt}</p> Friend{(friends_cnt === 1)? '' : 's'}
-						</a>
-						<a href="#" className="friend-count-item">
+						</Link>
+						<Link to={`/user${id}/timeline`} className="friend-count-item">
 							<p className="count-number">0</p> Photos
-						</a>
-						<a href="#" className="friend-count-item">
+						</Link>
+						<Link to={`/user${id}/timeline`} className="friend-count-item">
 							<p className="count-number">0</p> Videos
-						</a>
+						</Link>
 					</div>
 					<div className="control-block-button">
 						<a href="#" className="btn btn-control bg-blue">

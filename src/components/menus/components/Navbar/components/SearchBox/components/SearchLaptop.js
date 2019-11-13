@@ -21,7 +21,6 @@ class SearchLaptop extends Component {
   }
 
   handleClick = event => {
-    console.log(this.container.current);
     if (this.container.current && !this.container.current.contains(event.target)) {
       this.setState({
         focused: false
@@ -46,6 +45,12 @@ class SearchLaptop extends Component {
   handleSubmit(event) {
     event.preventDefault();
   }
+
+  handlePageLeft = () => {
+    this.setState({
+      focused: false
+    })
+  };
 
   render() {
     const { focused } = this.state;
@@ -72,7 +77,7 @@ class SearchLaptop extends Component {
             <Button className="search-bar-btn">
               <FaSearch />
             </Button>
-            {(query && focused) ? <Suggestions results={results} /> : ''}
+            {(query && focused) ? <Suggestions results={results} handlePageLeft={this.handlePageLeft} /> : ''}
         </Form>
       </div>
     );

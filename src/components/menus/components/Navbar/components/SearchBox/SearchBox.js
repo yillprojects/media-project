@@ -3,7 +3,6 @@ import client from 'axiosClient';
 
 import SearchMobile from './components/SearchMobile.js';
 import SearchLaptop from './components/SearchLaptop.js';
-import Suggestions from './components/Suggestions.js';
 
 import './searchbox.scss';
 
@@ -31,7 +30,6 @@ class SearchBox extends Component {
 
   handleInputChange(event) {
     const { value } = event.target;
-
     const token = localStorage.getItem('token');
     const axios = client(token);
 
@@ -44,34 +42,7 @@ class SearchBox extends Component {
             query: value,
             results: res.data.data,
           })
-        })
-    // this.setState(
-    //   {
-    //     query: value
-    //   },
-    //   () => {
-    //     const { query, info } = this.state;
-    //
-    //     if (query && query.length > 1) {
-    //       const filteredData = info.filter((item) => {
-    //         const options = [item.first_name, item.last_name];
-    //         let isItemFound = 'notfound';
-    //
-    //         options.map((data) => {
-    //           if (data.toLowerCase().includes(query)) {
-    //             isItemFound = 'found';
-    //           }
-    //         });
-    //
-    //         return isItemFound === 'found' ? item : '';
-    //       });
-    //
-    //       this.setState({
-    //         results: filteredData
-    //       });
-    //     }
-    //   }
-    // );
+        });
   }
 
   render() {

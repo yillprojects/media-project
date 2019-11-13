@@ -11,18 +11,14 @@ import Newsfeed from './scenes/Newsfeed/Newsfeed.js';
 import Settings from './scenes/Settings/Settings.js';
 
 class Routes extends Component {
-  componentDidMount() {
-      const token = localStorage.getItem('token');
-      const axios = client(token);
-  }
-
   render() {
-    const token = localStorage.getItem('token');
+    const DefaultLayout = ({ component: Component, path, }) => {
+        const token = localStorage.getItem('token');
 
-    const DefaultLayout = ({ component: Component }) => {
-        if (token)
+        if (token) {
             return (
                 <Route
+                    path={path}
                     render={props => (
                         <div>
                             <Menus />
@@ -33,6 +29,8 @@ class Routes extends Component {
                     )}
                 />
             );
+        }
+
         return (<Redirect to='/' />);
     };
 
@@ -40,9 +38,11 @@ class Routes extends Component {
       <Router>
         <Switch>
           <Route exact path="/" component={LandingPage} />
-          <DefaultLayout path="/:username/newsfeed" component={Newsfeed} />
-          <DefaultLayout path="/:username/settings" component={Settings} />
-          <DefaultLayout path="/:username/" component={ProfilePage} />
+          <DefaultLayout exact path="/newsfeed" component={Newsfeed} />
+          <DefaultLayout exact path="/settings" component={Settings} />
+          <DefaultLayout exact path="/:page" component={ProfilePage} />
+          <DefaultLayout strict path="/:username/" component={ProfilePage} />
+          <Route component={NotFound} />
         </Switch>
       </Router>
     );

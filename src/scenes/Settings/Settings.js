@@ -1,11 +1,18 @@
 import React, { Component } from "react";
-
+import Prompt from "react-router/Prompt";
 import PersonalSettings from './components/PersonalSettings.js';
 
 import Background from "./img/account-bottom.png";
 import './settings.scss';
 
+
 class Settings extends Component {
+	constructor(props) {
+		super(props);
+
+		this.unsavedChanges = false;
+	}
+
 	render() {
 		return (
 			<React.Fragment>

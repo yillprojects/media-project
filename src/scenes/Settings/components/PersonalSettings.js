@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import client from "../../../axiosClient.js";
+import Prompt from "react-router/Prompt";
 import { connect } from 'react-redux';
+import client from "../../../axiosClient.js";
 
 import {
 	Button,
@@ -18,6 +19,8 @@ import { FaFacebookF, FaTwitter, FaDribbble } from "react-icons/fa";
 import "./personalSettings.scss";
 import {userActions} from "../../../redux/actions";
 
+const promptMessage = "You have unsaved changes. Are you sure you want to leave this page and discard the changes?";
+
 class PersonalSettings extends Component {
 	_isMounted = false;
 
@@ -28,7 +31,8 @@ class PersonalSettings extends Component {
 			countries: [],
 			cities: [],
 			selectedCountry: null,
-			selectedCity: null
+			selectedCity: null,
+			confirmLeave: false
 		};
 
 		this.handleSubmit = this.handleSubmit.bind(this);
@@ -171,11 +175,17 @@ class PersonalSettings extends Component {
 		const { changeName } = this.props;
 		const { first_name, last_name } = this.state;
 
-		changeName(`${first_name} ${last_name}`)
+		changeName(`${first_name} ${last_name}`);
+		this.setState({
+			confirmLeave: false
+		})
 	}
 
 	handleChangeCountry(selectedCountry) {
-		this.setState({ selectedCountry });
+		this.setState({
+			selectedCountry,
+			confirmLeave: true,
+		});
 
 		const token = localStorage.getItem("token");
 		const axios = client(token);
@@ -186,25 +196,25 @@ class PersonalSettings extends Component {
 
 			this.setState({
 				cities: options,
-				selectedCity: null
+				selectedCity: null,
 			});
 		});
 	}
 
 	handleChangeCity(selectedCity) {
-		this.setState({ selectedCity });
+		this.setState({
+			selectedCity,
+			confirmLeave: true
+		});
 	}
 
 	handleInputChange = event => {
 		const { name, value } = event.target;
 
 		this.setState({
-			[name]: value
+			[name]: value,
+			confirmLeave: true,
 		});
-	};
-
-	handleTextareaChange = event => {
-		const { name, value } = event.target;
 	};
 
 	render() {
@@ -222,11 +232,18 @@ class PersonalSettings extends Component {
 			bands,
 			facebook,
 			twitter,
-			dribbble
+			dribbble,
+			confirmLeave
 		} = this.state;
+
+		console.log(confirmLeave);
 
 		return (
 			<div className="container">
+				<Prompt
+					message={promptMessage}
+					when={confirmLeave}
+				/>
 				<div className="row">
 					<div className="col col-12 personal-settings">
 						<div className="ui-block">

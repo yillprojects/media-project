@@ -35,7 +35,7 @@ export default class ProfileControlButtons extends Component {
 
   render() {
     const { dropdownOpen } = this.state;
-    const id = localStorage.getItem('currentUserId');
+    const { show } = this.props;
 
     return (
       <div className="control-block-button">
@@ -45,41 +45,45 @@ export default class ProfileControlButtons extends Component {
         <a href="#" className="btn btn-control bg-purple">
           <FaRegEnvelope />
         </a>
-        <Dropdown
-          onMouseOver={this.onMouseEnter}
-          onMouseLeave={this.onMouseLeave}
-          onFocus={this.onMouseEnter}
-          direction={screen.width < 768 ? 'down' : 'up'}
-          isOpen={dropdownOpen}
-          toggle={this.toggle}
-          className="btn btn-control bg-orange"
-        >
-          <DropdownToggle className="transparent-btn">
-            <FaSlidersH />
-          </DropdownToggle>
-          <DropdownMenu right>
-            <ul className="more-settings">
-              <li>
-                <Link to="#" className="settings-link">
+        {
+          show?
+              <Dropdown
+                onMouseOver={this.onMouseEnter}
+                onMouseLeave={this.onMouseLeave}
+                onFocus={this.onMouseEnter}
+                direction={screen.width < 768 ? 'down' : 'up'}
+                isOpen={dropdownOpen}
+                toggle={this.toggle}
+                className="btn btn-control bg-orange"
+              >
+                <DropdownToggle className="transparent-btn">
+                  <FaSlidersH />
+                </DropdownToggle>
+                <DropdownMenu right>
+                  <ul className="more-settings">
+                    <li>
+                      <Link to="#" className="settings-link">
 
-                  Update Profile Photo
-                </Link>
-              </li>
-              <li>
-                <Link to="#" className="settings-link">
+                        Update Profile Photo
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="#" className="settings-link">
 
-                  Update Header Photo
-                </Link>
-              </li>
-              <li>
-                <Link to={`/user${id}/settings`} className="settings-link">
+                        Update Header Photo
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to={`/settings`} className="settings-link">
 
-                  Account Settings
-                </Link>
-              </li>
-            </ul>
-          </DropdownMenu>
-        </Dropdown>
+                        Account Settings
+                      </Link>
+                    </li>
+                  </ul>
+                </DropdownMenu>
+              </Dropdown> :
+              null
+        }
       </div>
     );
   }
