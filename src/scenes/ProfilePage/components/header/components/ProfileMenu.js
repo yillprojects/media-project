@@ -159,7 +159,7 @@ class ProfileMenu extends Component {
             </ul>
           </div>
         </div>
-        <ProfileControlButtons show={cur} />
+        <ProfileControlButtons userId={userId} isCurrent={cur} />
       </div>
     );
   }

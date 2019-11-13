@@ -5,6 +5,7 @@ import { Dropdown, DropdownToggle, DropdownMenu } from 'reactstrap';
 import { FaRegGrinBeam, FaRegEnvelope, FaSlidersH } from 'react-icons/fa';
 
 import './controlbuttons.scss';
+import client from "../../../../../../axiosClient";
 
 export default class ProfileControlButtons extends Component {
   constructor(props) {
@@ -33,20 +34,36 @@ export default class ProfileControlButtons extends Component {
     }));
   }
 
+  follow = receiver => {
+	const token = localStorage.getItem('token');
+	const axios = client(token);
+
+	axios
+		.post(`api/profiles/follow`, {
+			receiver,
+		})
+};
+
   render() {
     const { dropdownOpen } = this.state;
-    const { show } = this.props;
+    const { isCurrent, userId } = this.props;
 
     return (
       <div className="control-block-button">
-        <a href="#" className="btn btn-control bg-blue">
-          <FaRegGrinBeam />
-        </a>
-        <a href="#" className="btn btn-control bg-purple">
-          <FaRegEnvelope />
-        </a>
         {
-          show?
+          !isCurrent?
+              <button
+                type="button"
+                onClick={() => this.follow(userId)}
+                className="btn btn-control bg-blue">
+              <FaRegGrinBeam />
+            </button> : ""
+        }
+        <button type="button" className="btn btn-control bg-purple">
+          <FaRegEnvelope />
+        </button>
+        {
+          isCurrent?
               <Dropdown
                 onMouseOver={this.onMouseEnter}
                 onMouseLeave={this.onMouseLeave}

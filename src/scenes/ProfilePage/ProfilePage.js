@@ -10,7 +10,6 @@ const ProfilePage = ({ match: { params: { username } } }) => {
     const userId = username? username.substr(4) : localStorage.getItem("currentUserId");
     const cur = userId === localStorage.getItem("currentUserId");
 
-    console.log(cur);
     return (
       <div className="container">
         <div className="mt-4 row">
