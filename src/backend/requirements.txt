@@ -7,7 +7,7 @@ django-livereload-server==0.3.2
 django-picklefield==2.0
 djangorestframework==3.9.2
 djangorestframework-jwt==1.11.0
-Pillow==6.0.0
+Pillow==7.1.0
 progressbar2==3.39.3
 PyJWT==1.7.1
 python-utils==2.3.0
