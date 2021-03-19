@@ -5,7 +5,7 @@ django-cities-light==3.5.0
 django-cors-headers==2.5.2
 django-livereload-server==0.3.2
 django-picklefield==2.0
-djangorestframework==3.9.2
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 Pillow==6.0.0
 progressbar2==3.39.3
