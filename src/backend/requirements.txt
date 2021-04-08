@@ -1,5 +1,5 @@
 ﻿beautifulsoup4==4.7.1
-Django==2.2.13
+Django==2.2.20
 django-autoslug-iplweb==1.9.4.dev0
 django-cities-light==3.5.0
 django-cors-headers==2.5.2
